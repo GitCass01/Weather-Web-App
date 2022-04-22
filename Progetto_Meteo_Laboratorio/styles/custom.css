@@ -1,0 +1,21 @@
+#carouselExampleInterval {
+    margin-bottom: 50px;
+}
+
+.carousel-inner img {
+    width: 600px;
+    height: 600px;
+}
+
+#round-img img {
+    width: 140px;
+    height: 140px;
+}
+
+.featurette-divider {
+    margin: 4rem 0;
+}
+
+.temp {
+    margin-bottom: 0px;
+}
