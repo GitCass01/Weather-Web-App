@@ -39,124 +39,104 @@
 <body>
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Meteo Live</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
+                <a class="navbar-brand" href="#">
+                    <img src="images/favicon.ico" alt="logo" width="30" height="24"
+                        class="d-inline-block align-text-top">
+                    Meteo Live
+                </a>
             </div>
         </nav>
     </header>
 
     <main>
-        <!-- slideshow città -->
+        <div class="container py-3">
+            <div class="p-3 pb-md-4 mx-auto text-center">
+                <h1>Meteo Live nel Mondo</h1>
+                <p>Usa la barra di ricerca per cercare una città specifica oppure consulta le principali città nelle
+                    card sottostanti.</p>
+            </div>
 
-        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="6000">
-                    <img src="images/milano.jpg" class=" w-100" alt="Milano">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4>Milano</h4>
+            <div class="p-3 input-group">
+                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                    aria-describedby="search-addon" />
+                <button type="button" class="btn btn-outline-primary">search</button>
+            </div>
+
+            <div class="p-3 row row-cols-1 row-cols-md-4 mb-2 mt-4 text-center">
+                <div class="col">
+                    <div class="card rounded-3" style="width: 18rem;">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 f2-normal">Milano</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">data</p>
+                            <img src="images/favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                            <h5 class="card-title">meteo(es. nuvoloso)</h5>
+                            <p class="card-text">temperatura (massima e minima)</p>
+                            <p class="card-text">umidità</p>
+                            <p class="card-text">vento</p>
+                            <a href="#" class="btn btn-primary">Altro</a>
+                        </div>
                     </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="6000">
-                    <img src="images/londra.jpg" class="d-block w-100 img-fluid" alt="Londra">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4>Londra</h4>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 f2-normal">Londra</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">data</p>
+                            <img src="images/favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                            <h5 class="card-title">meteo(es. nuvoloso)</h5>
+                            <p class="card-text">temperatura (massima e minima)</p>
+                            <p class="card-text">umidità</p>
+                            <p class="card-text">vento</p>
+                            <a href="#" class="btn btn-primary">Altro</a>
+                        </div>
                     </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="6000">
-                    <img src="images/tokyo.jpg" class="d-block w-100 img-fluid" alt="Tokyo">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4>Tokyo</h4>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 f2-normal">Tokyo</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">data</p>
+                            <img src="images/favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                            <h5 class="card-title">meteo(es. nuvoloso)</h5>
+                            <p class="card-text">temperatura (massima e minima)</p>
+                            <p class="card-text">umidità</p>
+                            <p class="card-text">vento</p>
+                            <a href="#" class="btn btn-primary">Altro</a>
+                        </div>
                     </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="6000">
-                    <img src="images/newyork.jpg" class="d-block w-100 img-fluid" alt="New York">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h4>New York</h4>
+                <div class="col">
+                    <div class="card " style="width: 18rem;">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 f2-normal">New York</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">data</p>
+                            <img src="images/favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                            <h5 class="card-title">meteo(es. nuvoloso)</h5>
+                            <p class="card-text">temperatura (massima e minima)</p>
+                            <p class="card-text">umidità</p>
+                            <p class="card-text">vento</p>
+                            <a href="#" class="btn btn-primary">Altro</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-        <!-- città con temperatura -->
-        <div id="round-img" class="container">
-            <div class="row">
-                <div class="col-md text-center">
-                    <img src="images/milano.jpg" class="rounded-circle img-thumbnail" alt="Milano">
-                    <h2>Milano</h2>
-                    <p class="temp">22°C</p>
-                    <p>Soleggiato</p>
-                </div>
-                <div class="col-md text-center">
-                    <img src="images/londra.jpg" class="rounded-circle img-thumbnail" alt="Londra">
-                    <h2>Londra</h2>
-                    <p class="temp">9°C</p>
-                    <p>Nuvoloso</p>
-                </div>
-                <div class="col-md text-center">
-                    <img src="images/tokyo.jpg" class="rounded-circle img-thumbnail" alt="Tokyo">
-                    <h2>Tokyo</h2>
-                    <p class="temp">16°C</p>
-                    <p>Nuvoloso</p>
-                </div>
-                <div class="col-md text-center">
-                    <img src="images/newyork.jpg" class="rounded-circle img-thumbnail" alt="New York">
-                    <h2>New York</h2>
-                    <p class="temp">9°C</p>
-                    <p>Parzialmente Nuvoloso</p>
-                </div>
-            </div>
-
-            <hr class="featurette-divider">
         </div>
 
         <!-- FOOTER -->
-        <footer class="container">
-            <p class="float-end"><a href="#">Back to top</a></p>
-            <p>&copy; 2022-2022 Carniselli Davide - Unimi Informatica <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <footer class="container pt-4 my-md-5 pt-md-5 border-top">
+            <p class="float-end"><a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Back to
+                    top</a></p>
+            <p>&copy; 2022-2022 Carniselli Davide - Unimi Informatica </p>
         </footer>
     </main>
 
