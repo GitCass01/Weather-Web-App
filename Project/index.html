@@ -32,6 +32,8 @@
             }
         }
     </script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <title>Progetto Meteo Live</title>
 </head>
@@ -67,84 +69,94 @@
             </div>
 
             <div id="hidden-card" class="p-3 text-center">
-                <div class="card rounded-3" style="width: 18rem;">
+                <div class="card rounded-3 mx-auto" style="width: 50rem;">
                     <div class="card-header py-3">
                         <h4 id="city" class="my-0 f2-normal">Città Inserita</h4>
                     </div>
                     <div class="card-body">
                         <p class="card-text">data</p>
-                        <img src="favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                        <img src="favicon.ico" class="card-img-top">
                         <h5 class="card-title">meteo</h5>
-                        <p class="card-text">temperatura (massima e minima)</p>
-                        <p class="card-text">umidità</p>
-                        <p class="card-text">vento</p>
-                        <a href="#" class="btn btn-primary">Altro</a>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">temperatura (massima e minima)</li>
+                            <li class="list-group-item">umidità</li>
+                            <li class="list-group-item">vento</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary stretched-link">Altro</a>
                     </div>
                 </div>
             </div>
 
-            <div class="p-3 row row-cols-1 row-cols-md-4 mb-2 mt-4 text-center">
+            <div class="p-3 row row-cols-1 row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 mb-2 mt-4 text-center">
                 <div class="col">
-                    <div class="card rounded-3" style="width: 18rem;">
+                    <div class="card rounded-3 mx-auto" style="width: 18rem;">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Milano</h4>
                         </div>
                         <div class="card-body">
                             <p class="card-text">data</p>
-                            <img src="favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                            <img src="favicon.ico" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
-                            <p class="card-text">temperatura (massima e minima)</p>
-                            <p class="card-text">umidità</p>
-                            <p class="card-text">vento</p>
-                            <a href="#" class="btn btn-primary">Altro</a>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">temperatura (massima e minima)</li>
+                                <li class="list-group-item">umidità</li>
+                                <li class="list-group-item">vento</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary stretched-link">Altro</a>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card rounded-3 mx-auto" style="width: 18rem;">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Londra</h4>
                         </div>
                         <div class="card-body">
                             <p class="card-text">data</p>
-                            <img src="favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                            <img src="favicon.ico" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
-                            <p class="card-text">temperatura (massima e minima)</p>
-                            <p class="card-text">umidità</p>
-                            <p class="card-text">vento</p>
-                            <a href="#" class="btn btn-primary">Altro</a>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">temperatura (massima e minima)</li>
+                                <li class="list-group-item">umidità</li>
+                                <li class="list-group-item">vento</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary stretched-link">Altro</a>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card rounded-3 mx-auto" style="width: 18rem;">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Tokyo</h4>
                         </div>
                         <div class="card-body">
                             <p class="card-text">data</p>
-                            <img src="favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                            <img src="favicon.ico" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
-                            <p class="card-text">temperatura (massima e minima)</p>
-                            <p class="card-text">umidità</p>
-                            <p class="card-text">vento</p>
-                            <a href="#" class="btn btn-primary">Altro</a>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">temperatura (massima e minima)</li>
+                                <li class="list-group-item">umidità</li>
+                                <li class="list-group-item">vento</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary stretched-link">Altro</a>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card " style="width: 18rem;">
+                    <div class="card rounded-3 mx-auto" style="width: 18rem;">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">New York</h4>
                         </div>
                         <div class="card-body">
                             <p class="card-text">data</p>
-                            <img src="favicon.ico" class="card-img-top" style="width: 64px; height: 64px;">
+                            <img src="favicon.ico" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
-                            <p class="card-text">temperatura (massima e minima)</p>
-                            <p class="card-text">umidità</p>
-                            <p class="card-text">vento</p>
-                            <a href="#" class="btn btn-primary">Altro</a>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">temperatura (massima e minima)</li>
+                                <li class="list-group-item">umidità</li>
+                                <li class="list-group-item">vento</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary stretched-link">Altro</a>
                         </div>
                     </div>
                 </div>

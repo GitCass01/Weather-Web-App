@@ -13,3 +13,15 @@ function showMe() {
         }
     }
 }
+
+// shadow on mouse hover per le card - JQuery
+$(document).ready(function () {
+    $(".card").hover(
+      function () {
+        $(this).addClass("shadow");
+      },
+      function () {
+        $(this).removeClass("shadow");
+      }
+    );
+  });

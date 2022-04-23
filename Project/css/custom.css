@@ -2,10 +2,23 @@
     margin: 4rem 0;
 }
 
-.temp {
-    margin-bottom: 0px;
-}
-
 #hidden-card {
     display: none;
 }
+
+.card-body > img {
+    width: 64px;
+    height: 64px;
+}
+
+/* remove the shadow onclick */
+.btn{
+	box-shadow: none !important
+}
+
+.card {
+    &:hover {
+      box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      transition: all .55s ease-in-out;
+    }
+  }
