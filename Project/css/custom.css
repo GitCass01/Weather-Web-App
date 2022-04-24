@@ -16,6 +16,10 @@
     box-shadow: none !important
 }
 
+.form-floating {
+    width: 100px; /*altrimenti la width base non era responsiva per i dispositivi "mobile small"*/
+}
+
 .card-sizing {
     width: 18rem;
 }

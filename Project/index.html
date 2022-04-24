@@ -57,16 +57,16 @@
                 <h1>Meteo Live nel Mondo</h1>
                 <p>Usa la barra di ricerca per cercare una città specifica oppure consulta le principali città nelle
                     card sottostanti.</p>
-                <p>Cliccando su una città potrai vedere le previsioni settimanali e dei dati sulle previsioni precedenti.</p>
+                <p>Cliccando su una città potrai vedere le previsioni settimanali e dei dati sulle previsioni precedenti.<a href="#*">*</a></p>
             </div>
 
-            <div class="input-group p-3">
+            <div class="input-group p-3 d-flex">
                 <div class="form-floating flex-grow-1">
                     <input type="search" class="form-control rounded" id="floatingInput" placeholder="es. Milan, IT"
                         aria-label="Search" aria-describedby="search-addon" />
                     <label for="floatingInput">es. Milan, IT</label>
                 </div>
-                <button type="button" class="btn btn-outline-primary" onclick="showMe()">search</button>
+                <button type="button" class="btn btn-outline-primary flex-shrink-0" onclick="showMe()">search</button>
             </div>
 
             <div id="hidden-card" class="p-3 text-center">
@@ -162,6 +162,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div id="*">
+            <p>* I dati sono raccolti usando le API di <a href="https://openweathermap.org/">openweathermap.org</a></p>
         </div>
 
         <!-- FOOTER -->
