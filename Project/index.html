@@ -53,6 +53,7 @@
 
     <main>
         <div class="container py-3">
+            <!-- Main + search bar -->
             <div class="p-3 pb-md-4 mx-auto text-center">
                 <h1>Meteo Live nel Mondo</h1>
                 <p>Usa la barra di ricerca per cercare una città specifica oppure consulta le principali città nelle
@@ -69,6 +70,7 @@
                 <button type="button" class="btn btn-outline-primary flex-shrink-0" onclick="showMe()">search</button>
             </div>
 
+            <!-- card città inserita dall'utente -->
             <div id="hidden-card" class="p-3 text-center">
                 <div id="hidden-card-intern" class="card rounded-3 mx-auto">
                     <div class="card-header py-3">
@@ -88,8 +90,9 @@
                 </div>
             </div>
 
+            <!-- card città principali -->
             <div class="p-3 row row-cols-1 row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 mb-2 mt-4 text-center">
-                <div class="col">
+                <div class="col pt-3">
                     <div class="card-sizing card rounded-3 mx-auto">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Milano</h4>
@@ -107,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col pt-3">
                     <div class="card-sizing card rounded-3 mx-auto">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Londra</h4>
@@ -125,7 +128,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col pt-3">
                     <div class="card-sizing card rounded-3 mx-auto">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Tokyo</h4>
@@ -143,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col pt-3">
                     <div class="card-sizing card rounded-3 mx-auto">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">New York</h4>
@@ -162,14 +165,19 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="*">
-            <p>* I dati sono raccolti usando le API di <a href="https://openweathermap.org/">openweathermap.org</a></p>
+            <!-- form per suggerimento aggiunta città -->
+            <form>
+                
+            </form>
+
+            <div id="*" class="pt-5">
+                <p>* I dati sono raccolti usando le API di <a href="https://openweathermap.org/">openweathermap.org</a></p>
+            </div>
         </div>
 
         <!-- FOOTER -->
-        <footer class="container pt-4 my-md-5 pt-md-5 border-top">
+        <footer class="container py-3 my-4 border-top">
             <p class="float-end"><a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Back to
                     top</a></p>
             <p>&copy; 2022-2022 Carniselli Davide - Unimi Informatica </p>
