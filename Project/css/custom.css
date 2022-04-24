@@ -6,12 +6,26 @@
     display: none;
 }
 
-.card-body > img {
+.card-body>img {
     width: 64px;
     height: 64px;
 }
 
 /* remove the shadow onclick */
-.btn{
-	box-shadow: none !important
+.btn {
+    box-shadow: none !important
+}
+
+.card-sizing {
+    width: 18rem;
+}
+
+#hidden-card-intern {
+    width: 30rem;
+}
+
+@media only screen and (max-width: 767px) {
+    #hidden-card-intern {
+        width: 18rem;
+    }
 }
