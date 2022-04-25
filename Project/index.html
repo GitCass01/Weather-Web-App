@@ -32,7 +32,7 @@
             }
         }
     </script>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <title>Progetto Meteo Live</title>
@@ -58,7 +58,8 @@
                 <h1>Meteo Live nel Mondo</h1>
                 <p>Usa la barra di ricerca per cercare una città specifica oppure consulta le principali città nelle
                     card sottostanti.</p>
-                <p>Cliccando su una città potrai vedere le previsioni settimanali e dei dati sulle previsioni precedenti.<a href="#*">*</a></p>
+                <p>Cliccando su una città potrai vedere le previsioni settimanali e dei dati sulle previsioni
+                    precedenti.<a href="#*">*</a></p>
             </div>
 
             <div class="input-group p-3 d-flex">
@@ -167,16 +168,39 @@
             </div>
 
             <!-- form per suggerimento aggiunta città -->
-            <h3>Inserisci i tuoi dati e la città da aggiungere nel form sottostante.</h3>
-            <form>
-                <div class="mb-3">
-                    <label for="user-email" class="form-label">Indirizzo Email</label>
-                    <input type="email" class="form-control" id="user-email">
-                  </div>
-            </form>
+            <div class="contact-me mt-4 card rounded-3 mx-auto">
+                <div class="card-header text-center">
+                    <h3>Contattami</h3>
+                    <p>Puoi anche suggerirmi delle città da aggiungere in homepage.</p>
+                </div>
+                <form action="post" class="row g-3">
+                    <div class="col-md-6 px-5">
+                        <label for="user-name" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="user-name">
+                    </div>
+                    <div class="col-md-6 px-5">
+                        <label for="user-surname" class="form-label">Cognome</label>
+                        <input type="text" class="form-control" id="user-surname">
+                    </div>
+                    <div class="col pt-2 px-5 pb-4">
+                        <label for="user-email" class="form-label">Indirizzo Email</label>
+                        <input type="email" class="form-control" id="user-email" required>
+
+                        <div class="form-group pt-4">
+                            <label for="user-comment">Commenti</label>
+                            <textarea class="form-control" id="user-comment"></textarea>
+                        </div>
+
+                        <div class="form-group pt-4">
+                            <button type="submit" class="btn-primary rounded">invia</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
             <div id="*" class="pt-5">
-                <p>* I dati sono raccolti usando le API di <a href="https://openweathermap.org/">openweathermap.org</a></p>
+                <p>* I dati sono raccolti usando le API di <a href="https://openweathermap.org/">openweathermap.org</a>
+                </p>
             </div>
         </div>
 

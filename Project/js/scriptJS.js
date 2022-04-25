@@ -8,9 +8,6 @@ function showMe() {
       card.style.display = 'block';
       document.getElementById('city').innerHTML = city.value;
     }
-    else {
-      card.style.display = 'none';
-    }
   }
 }
 

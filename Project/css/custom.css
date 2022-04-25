@@ -33,3 +33,9 @@
         width: 18rem;
     }
 }
+
+@media only screen and (max-width: 320px) {
+    .card-sizing {
+        width: 16rem;
+    }
+}
