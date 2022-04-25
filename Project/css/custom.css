@@ -28,6 +28,10 @@
     width: 30rem;
 }
 
+.divider {
+    margin: 4rem 0;
+}
+
 @media only screen and (max-width: 767px) {
     #hidden-card-intern {
         width: 18rem;
