@@ -11,6 +11,23 @@ function showMe() {
   }
 }
 
+// geolocalizzazione
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, errorFunction);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  document.getElementById('floatingInput').value = "Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude;
+}
+
+function errorFunction() {
+  alert("Geocoder failed");
+}
+
 // shadow on mouse hover per le card - JQuery
 $(document).ready(function () {
   $(".card").hover(
