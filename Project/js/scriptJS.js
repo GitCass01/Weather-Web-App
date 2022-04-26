@@ -11,23 +11,6 @@ function showMe() {
   }
 }
 
-// geolocalizzazione
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition, errorFunction);
-  } else {
-    alert("Geolocation is not supported by this browser.");
-  }
-}
-
-function showPosition(position) {
-  document.getElementById('floatingInput').value = "Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude;
-}
-
-function errorFunction() {
-  alert("Geocoder failed");
-}
-
 // shadow on mouse hover per le card - JQuery
 $(document).ready(function () {
   $(".card").hover(
@@ -39,3 +22,43 @@ $(document).ready(function () {
     }
   );
 });
+
+// geolocalizzazione
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, errorFunction);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  const BASE_URL = 'https://nominatim.openstreetmap.org/reverse?';
+  const params = {
+    lat: latitude,
+    lon: longitude,
+    format: 'json',
+  };
+
+  const query = new URLSearchParams(params).toString();
+  const final_url = BASE_URL + query;
+
+  fetch(final_url)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+
+      const city_name = result['address']['town'];
+      const country = result['address']['country_code'].toUpperCase();
+      
+      document.getElementById('floatingInput').value = city_name + ", " + country;
+    })
+    .catch((err) => console.log("err: ", err));
+}
+
+function errorFunction() {
+  alert("Geocoder failed");
+}
