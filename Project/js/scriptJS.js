@@ -1,23 +1,3 @@
-// funzione per mostrare la card specifica per la città innserita nella search bar
-// + current weather
-// direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=city&limit=3&appid=fb1d036e9880437a98ec66f6e4daab01
-// one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&appid=fb1d036e9880437a98ec66f6e4daab01
-// icon url : http://openweathermap.org/img/wn/xxx@2x.png
-const icon_url = "http://openweathermap.org/img/wn/10d@2x.png";
-
-async function showMe() {
-  let card = document.getElementById('hidden-card');
-  let city = document.getElementById('floatingInput');
-
-  if (city.value.trim()) {
-    card.style.display = 'block';
-    document.getElementById('city').innerHTML = city.value;
-
-    const latLon = await getLatLon(city.value);
-    setWeather(latLon[0], latLon[1], 'hidden-card-body');
-  }
-}
-
 // shadow on mouse hover per le card - JQuery
 $(document).ready(function () {
   $(".card").hover(
@@ -76,6 +56,22 @@ function timestampToDate(timestamp) {
   var date = new Date(timestamp * 1000);
 
   return date.toLocaleString('it-IT');
+}
+
+// funzione per mostrare la card specifica per la città innserita nella search bar + current weather
+// direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=city&limit=3&appid=fb1d036e9880437a98ec66f6e4daab01
+// one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&appid=fb1d036e9880437a98ec66f6e4daab01
+async function showMe() {
+  let card = document.getElementById('hidden-card');
+  let city = document.getElementById('floatingInput');
+
+  if (city.value.trim()) {
+    card.style.display = 'block';
+    document.getElementById('city').innerHTML = city.value;
+
+    const latLon = await getLatLon(city.value);
+    setWeather(latLon[0], latLon[1], 'hidden-card-body');
+  }
 }
 
 // CURRENT WEATHER (card in homepage: Milano, Londra, Tokyo, New York)
@@ -138,7 +134,7 @@ function setWeather(lat, lon, id_card) {
       let citycard = document.getElementById(id_card).children;
 
       citycard[0].innerHTML = timestampToDate(result.current.dt);
-      citycard[1].src += result.current.weather[0].icon + "@2x.png";
+      citycard[1].src += result.current.weather[0].icon + "@2x.png";  // icon url : http://openweathermap.org/img/wn/xxx@2x.png
       citycard[2].innerHTML = result.current.temp + "° " + result.current.weather[0].description;
       if (result.alerts) {
         citycard[3].style.display = 'block';
