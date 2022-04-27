@@ -66,11 +66,15 @@ async function showMe() {
   let city = document.getElementById('floatingInput');
 
   if (city.value.trim()) {
-    card.style.display = 'block';
-    document.getElementById('city').innerHTML = city.value;
-
     const latLon = await getLatLon(city.value);
-    setWeather(latLon[0], latLon[1], 'hidden-card-body');
+
+    if (latLon[2] == 1) {
+      alert("Città non trovata!");
+    } else {
+      card.style.display = 'block';
+      document.getElementById('city').innerHTML = city.value;
+      setWeather(latLon[0], latLon[1], 'hidden-card-body');
+    }
   }
 }
 
@@ -101,16 +105,21 @@ async function getLatLon(city) {
 
   let lat = 0;
   let lon = 0;
+  let err = 0
 
   await fetch(final_url)
     .then(response => response.json())
     .then(result => {
-      lat = result[0].lat;
-      lon = result[0].lon;
+      if (result[0]) {
+        lat = result[0].lat;
+        lon = result[0].lon;
+      } else {
+        err = 1;
+      }
     })
     .catch(err => console.log("err: ", err));
 
-  return [lat, lon];
+  return [lat, lon, err];
 }
 
 // funzione per la ricerca e l'inserimento del meteo nelle card
@@ -133,7 +142,7 @@ function setWeather(lat, lon, id_card) {
       let citycard = document.getElementById(id_card).children;
 
       citycard[0].innerHTML = timestampToDate(result.current.dt);
-      citycard[1].src += result.current.weather[0].icon + "@2x.png";  // icon url : http://openweathermap.org/img/wn/xxx@2x.png
+      citycard[1].src = "http://openweathermap.org/img/wn/" + result.current.weather[0].icon + "@2x.png";
       citycard[1].alt = result.current.weather[0].description;
       citycard[2].innerHTML = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
       if (result.alerts) {
@@ -142,9 +151,9 @@ function setWeather(lat, lon, id_card) {
         citycard[3].classList.add("bg-danger");
       }
       const lis = citycard[4].getElementsByTagName("li");
-      lis[0].innerHTML += result.current.humidity + "%";
-      lis[1].innerHTML += result.current.pressure + " hPa";
-      lis[2].innerHTML += result.current.wind_speed + " m/s";
+      lis[0].innerHTML = "Umidità: " + result.current.humidity + "%";
+      lis[1].innerHTML = "Pressione: " + result.current.pressure + " hPa";
+      lis[2].innerHTML = "Vento" + result.current.wind_speed + " m/s";
     })
     .catch(err => console.log("err: ", err));
 }
