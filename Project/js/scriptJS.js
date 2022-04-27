@@ -134,6 +134,7 @@ function setWeather(lat, lon, id_card) {
 
       citycard[0].innerHTML = timestampToDate(result.current.dt);
       citycard[1].src += result.current.weather[0].icon + "@2x.png";  // icon url : http://openweathermap.org/img/wn/xxx@2x.png
+      citycard[1].alt = result.current.weather[0].description;
       citycard[2].innerHTML = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
       if (result.alerts) {
         citycard[3].style.display = 'block';
