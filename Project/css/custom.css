@@ -50,4 +50,7 @@ footer {
     .card-sizing {
         width: 16rem;
     }
+    #hidden-card-intern {
+        width: 16rem;
+    }
 }
