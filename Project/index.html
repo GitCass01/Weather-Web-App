@@ -38,7 +38,7 @@
     <title>Progetto Meteo Live</title>
 </head>
 
-<body>
+<body onload="currentWeatherHomePage()">
     <header>
         <!-- Navbar -->
         <nav class="navbar navbar-light bg-light">
@@ -58,8 +58,7 @@
                 <h1>Meteo Live nel Mondo</h1>
                 <p>Usa la barra di ricerca per cercare una città specifica oppure consulta le principali città nelle
                     card sottostanti.</p>
-                <p>Cliccando su una città potrai vedere le previsioni settimanali e dei dati sulle previsioni
-                    precedenti.<a href="#*">*</a></p>
+                <p>Cliccando su una città potrai vedere le previsioni settimanali e delle informazioni aggiuntive.<a href="#*">*</a></p>
             </div>
 
             <div class="input-group p-3 d-flex">
@@ -102,11 +101,10 @@
                         </div>
                         <div id="card-milano" class="card-body">
                             <p class="card-text">data</p>
-                            <img src="favicon.ico" class="card-img-top">
+                            <img src="http://openweathermap.org/img/wn/" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
                             <div id="alert-milano" class="badge rounded-pill text-dark"></div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">temperatura (massima e minima)</li>
                                 <li class="list-group-item">Umidità: </li>
                                 <li class="list-group-item">Pressione: </li>
                                 <li class="list-group-item">Vento: </li>
@@ -122,11 +120,10 @@
                         </div>
                         <div id="card-londra" class="card-body">
                             <p class="card-text">data</p>
-                            <img src="favicon.ico" class="card-img-top">
+                            <img src="http://openweathermap.org/img/wn/" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
                             <div id="alert-londra" class="badge rounded-pill text-dark"></div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">temperatura (massima e minima)</li>
                                 <li class="list-group-item">Umidità: </li>
                                 <li class="list-group-item">Pressione: </li>
                                 <li class="list-group-item">Vento: </li>
@@ -142,11 +139,10 @@
                         </div>
                         <div id="card-tokyo" class="card-body">
                             <p class="card-text">data</p>
-                            <img src="favicon.ico" class="card-img-top">
+                            <img src="http://openweathermap.org/img/wn/" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
                             <div id="alert-tokyo" class="badge rounded-pill text-dark"></div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">temperatura (massima e minima)</li>
                                 <li class="list-group-item">Umidità: </li>
                                 <li class="list-group-item">Pressione: </li>
                                 <li class="list-group-item">Vento: </li>
@@ -162,11 +158,10 @@
                         </div>
                         <div id="card-newyork" class="card-body">
                             <p class="card-text">data</p>
-                            <img src="favicon.ico" class="card-img-top">
+                            <img src="http://openweathermap.org/img/wn/" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
                             <div id="alert-newyork" class="badge rounded-pill text-dark"></div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">temperatura (massima e minima)</li>
                                 <li class="list-group-item">Umidità: </li>
                                 <li class="list-group-item">Pressione: </li>
                                 <li class="list-group-item">Vento: </li>
@@ -186,11 +181,11 @@
                     <p>Puoi anche suggerirmi delle città da aggiungere in homepage.</p>
                 </div>
                 <form action="post" class="row g-3">
-                    <div class="col-md-6 px-5">
+                    <div class="col-md-6 px-5 pt-2">
                         <label for="user-name" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="user-name">
                     </div>
-                    <div class="col-md-6 px-5">
+                    <div class="col-md-6 px-5 pt-2">
                         <label for="user-surname" class="form-label">Cognome</label>
                         <input type="text" class="form-control" id="user-surname">
                     </div>

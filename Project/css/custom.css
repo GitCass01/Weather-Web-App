@@ -15,8 +15,8 @@ footer {
 }
 
 .card-body>img {
-    width: 64px;
-    height: 64px;
+    width: 100px;
+    height: 100px;
 }
 
 /* remove the shadow onclick */

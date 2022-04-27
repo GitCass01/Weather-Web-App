@@ -5,7 +5,7 @@
 // icon url : http://openweathermap.org/img/wn/xxx@2x.png
 const icon_url = "http://openweathermap.org/img/wn/10d@2x.png";
 
-function showMe() {
+async function showMe() {
   let card = document.getElementById('hidden-card');
   let city = document.getElementById('floatingInput');
 
@@ -13,57 +13,8 @@ function showMe() {
     card.style.display = 'block';
     document.getElementById('city').innerHTML = city.value;
 
-    const geo_url = 'http://api.openweathermap.org/geo/1.0/direct?';
-    const params = {
-      q: city.value,
-      limit: 3,
-      appid: 'fb1d036e9880437a98ec66f6e4daab01'
-    };
-    const query = new URLSearchParams(params).toString().replace("%2C", ",");
-    const final_url = geo_url + query;
-
-    fetch(final_url)
-      .then(response => response.json())
-      .then(result => {
-        const lat = result[0].lat;
-        const lon = result[0].lon;
-
-        const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
-        const params = {
-          lat: lat,
-          lon: lon,
-          exclude: 'minutely,hourly,daily',
-          units: 'metric',
-          lang: 'it',
-          appid: 'fb1d036e9880437a98ec66f6e4daab01'
-        }
-        const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
-        const call = onecall_url + query_weather;
-
-        fetch(call)
-          .then(response => response.json())
-          .then(result => {
-            console.log(result);
-
-            let citycard = document.getElementById('hidden-card-body').children;
-
-            citycard[0].innerHTML = timestampToDate(result.current.dt);
-            citycard[1].src += result.current.weather[0].icon + "@2x.png";
-              citycard[2].innerHTML = result.current.temp + "° " + result.current.weather[0].description;
-            if (result.alerts) {
-              citycard[3].style.display = 'block';
-              citycard[3].innerHTML = result.alerts.event;
-              citycard[3].classList.add("bg-danger");
-            }
-            const lis = citycard[4].getElementsByTagName("li");
-            lis[0].innerHTML += result.current.humidity + "%";
-            lis[1].innerHTML += result.current.pressure + " hPa";
-            lis[2].innerHTML += result.current.wind_speed + " m/s";
-
-          })
-          .catch(err => console.log("err: ", err));
-      })
-      .catch(err => console.log("err: ", err));
+    const latLon = await getLatLon(city.value);
+    setWeather(latLon[0], latLon[1], 'hidden-card-body');
   }
 }
 
@@ -130,8 +81,77 @@ function timestampToDate(timestamp) {
 // CURRENT WEATHER (card in homepage: Milano, Londra, Tokyo, New York)
 // direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=Milano&limit=3&appid=fb1d036e9880437a98ec66f6e4daab01
 // one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&appid=fb1d036e9880437a98ec66f6e4daab01
+async function currentWeatherHomePage() {
+  let latLon = await getLatLon('Milano, IT');
+  setWeather(latLon[0], latLon[1], 'card-milano');
+  latLon = await getLatLon('Londra, GB');
+  setWeather(latLon[0], latLon[1], 'card-londra');
+  latLon = await getLatLon('Tokyo, JP');
+  setWeather(latLon[0], latLon[1], 'card-tokyo');
+  latLon = await getLatLon('New York, US');
+  setWeather(latLon[0], latLon[1], 'card-newyork');
+}
 
+//funzione per la ricerca di 'latitudine, longitudine' dato il nome di una città
+async function getLatLon(city) {
+  const geo_url = 'http://api.openweathermap.org/geo/1.0/direct?';
+  const params = {
+    q: city,
+    limit: 3,
+    appid: 'fb1d036e9880437a98ec66f6e4daab01'
+  };
+  const query = new URLSearchParams(params).toString().replace("%2C", ",");
+  const final_url = geo_url + query;
 
+  let lat = 0;
+  let lon = 0;
+
+  await fetch(final_url)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+      lat = result[0].lat;
+      lon = result[0].lon;
+    })
+    .catch(err => console.log("err: ", err));
+
+  return [lat, lon];
+}
+
+// funzione per la ricerca e l'inserimento del meteo nelle card
+function setWeather(lat, lon, id_card) {
+  const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
+  const params = {
+    lat: lat,
+    lon: lon,
+    exclude: 'minutely,hourly,daily',
+    units: 'metric',
+    lang: 'it',
+    appid: 'fb1d036e9880437a98ec66f6e4daab01'
+  }
+  const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
+  const call = onecall_url + query_weather;
+
+  fetch(call)
+    .then(response => response.json())
+    .then(result => {
+      let citycard = document.getElementById(id_card).children;
+
+      citycard[0].innerHTML = timestampToDate(result.current.dt);
+      citycard[1].src += result.current.weather[0].icon + "@2x.png";
+      citycard[2].innerHTML = result.current.temp + "° " + result.current.weather[0].description;
+      if (result.alerts) {
+        citycard[3].style.display = 'block';
+        citycard[3].innerHTML = result.alerts.event;
+        citycard[3].classList.add("bg-danger");
+      }
+      const lis = citycard[4].getElementsByTagName("li");
+      lis[0].innerHTML += result.current.humidity + "%";
+      lis[1].innerHTML += result.current.pressure + " hPa";
+      lis[2].innerHTML += result.current.wind_speed + " m/s";
+    })
+    .catch(err => console.log("err: ", err));
+}
 
 // weekly (7 days) weather
 
