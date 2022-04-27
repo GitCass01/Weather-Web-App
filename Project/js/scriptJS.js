@@ -153,7 +153,7 @@ function setWeather(lat, lon, id_card) {
       const lis = citycard[4].getElementsByTagName("li");
       lis[0].innerHTML = "Umidità: " + result.current.humidity + "%";
       lis[1].innerHTML = "Pressione: " + result.current.pressure + " hPa";
-      lis[2].innerHTML = "Vento" + result.current.wind_speed + " m/s";
+      lis[2].innerHTML = "Vento: " + result.current.wind_speed + " m/s";
     })
     .catch(err => console.log("err: ", err));
 }
