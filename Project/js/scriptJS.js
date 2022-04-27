@@ -105,7 +105,6 @@ async function getLatLon(city) {
   await fetch(final_url)
     .then(response => response.json())
     .then(result => {
-      console.log(result);
       lat = result[0].lat;
       lon = result[0].lon;
     })
@@ -135,7 +134,7 @@ function setWeather(lat, lon, id_card) {
 
       citycard[0].innerHTML = timestampToDate(result.current.dt);
       citycard[1].src += result.current.weather[0].icon + "@2x.png";  // icon url : http://openweathermap.org/img/wn/xxx@2x.png
-      citycard[2].innerHTML = result.current.temp + "° " + result.current.weather[0].description;
+      citycard[2].innerHTML = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
       if (result.alerts) {
         citycard[3].style.display = 'block';
         citycard[3].innerHTML = result.alerts.event;
