@@ -74,18 +74,19 @@
 
             <!-- card città inserita dall'utente -->
             <div id="hidden-card" class="p-3 text-center">
-                <div id="hidden-card-intern" class="card rounded-3 mx-auto">
+                <div id="hidden-card-intern" class="card mx-auto">
                     <div class="card-header py-3">
                         <h4 id="city" class="my-0 f2-normal">Città Inserita</h4>
                     </div>
-                    <div class="card-body">
+                    <div id="hidden-card-body" class="card-body">
                         <p class="card-text">data</p>
-                        <img src="favicon.ico" class="card-img-top">
+                        <img src="http://openweathermap.org/img/wn/" class="card-img-top">
                         <h5 class="card-title">meteo</h5>
+                        <div id="alert" class="badge rounded-pill text-dark"></div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">temperatura (massima e minima)</li>
-                            <li class="list-group-item">umidità</li>
-                            <li class="list-group-item">vento</li>
+                            <li class="list-group-item">Umidità: </li>
+                            <li class="list-group-item">Pressione: </li>
+                            <li class="list-group-item">Vento: </li>
                         </ul>
                         <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                     </div>
@@ -95,72 +96,80 @@
             <!-- card città principali -->
             <div class="p-3 row row-cols-1 row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 mb-2 mt-4 text-center">
                 <div class="col pt-3">
-                    <div class="card-sizing card rounded-3 mx-auto">
+                    <div class="card-sizing card mx-auto">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Milano</h4>
                         </div>
-                        <div class="card-body">
+                        <div id="card-milano" class="card-body">
                             <p class="card-text">data</p>
                             <img src="favicon.ico" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
+                            <div id="alert-milano" class="badge rounded-pill text-dark"></div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">temperatura (massima e minima)</li>
-                                <li class="list-group-item">umidità</li>
-                                <li class="list-group-item">vento</li>
+                                <li class="list-group-item">Umidità: </li>
+                                <li class="list-group-item">Pressione: </li>
+                                <li class="list-group-item">Vento: </li>
                             </ul>
                             <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                         </div>
                     </div>
                 </div>
                 <div class="col pt-3">
-                    <div class="card-sizing card rounded-3 mx-auto">
+                    <div class="card-sizing card mx-auto">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Londra</h4>
                         </div>
-                        <div class="card-body">
+                        <div id="card-londra" class="card-body">
                             <p class="card-text">data</p>
                             <img src="favicon.ico" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
+                            <div id="alert-londra" class="badge rounded-pill text-dark"></div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">temperatura (massima e minima)</li>
-                                <li class="list-group-item">umidità</li>
-                                <li class="list-group-item">vento</li>
+                                <li class="list-group-item">Umidità: </li>
+                                <li class="list-group-item">Pressione: </li>
+                                <li class="list-group-item">Vento: </li>
                             </ul>
                             <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                         </div>
                     </div>
                 </div>
                 <div class="col pt-3">
-                    <div class="card-sizing card rounded-3 mx-auto">
+                    <div class="card-sizing card mx-auto">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">Tokyo</h4>
                         </div>
-                        <div class="card-body">
+                        <div id="card-tokyo" class="card-body">
                             <p class="card-text">data</p>
                             <img src="favicon.ico" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
+                            <div id="alert-tokyo" class="badge rounded-pill text-dark"></div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">temperatura (massima e minima)</li>
-                                <li class="list-group-item">umidità</li>
-                                <li class="list-group-item">vento</li>
+                                <li class="list-group-item">Umidità: </li>
+                                <li class="list-group-item">Pressione: </li>
+                                <li class="list-group-item">Vento: </li>
                             </ul>
                             <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                         </div>
                     </div>
                 </div>
                 <div class="col pt-3">
-                    <div class="card-sizing card rounded-3 mx-auto">
+                    <div class="card-sizing card mx-auto">
                         <div class="card-header py-3">
                             <h4 class="my-0 f2-normal">New York</h4>
                         </div>
-                        <div class="card-body">
+                        <div id="card-newyork" class="card-body">
                             <p class="card-text">data</p>
                             <img src="favicon.ico" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
+                            <div id="alert-newyork" class="badge rounded-pill text-dark"></div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">temperatura (massima e minima)</li>
-                                <li class="list-group-item">umidità</li>
-                                <li class="list-group-item">vento</li>
+                                <li class="list-group-item">Umidità: </li>
+                                <li class="list-group-item">Pressione: </li>
+                                <li class="list-group-item">Vento: </li>
                             </ul>
                             <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                         </div>
@@ -171,7 +180,7 @@
             <hr class="divider">
 
             <!-- form per suggerimento aggiunta città -->
-            <div class="contact-me mt-4 card rounded-3 mx-auto">
+            <div class="contact-me mt-4 card mx-auto">
                 <div class="card-header text-center">
                     <h3>Contattami</h3>
                     <p>Puoi anche suggerirmi delle città da aggiungere in homepage.</p>
