@@ -41,12 +41,17 @@
 <body onload="currentWeatherHomePage()">
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="favicon.ico" alt="logo" width="30" height="30" class="d-inline-block align-text-top">
                     Meteo Live
                 </a>
+                <div class="collapse navbar-collapse">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="weather.html">Previsioni Settimanali</a>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -58,7 +63,8 @@
                 <h1>Meteo Live nel Mondo</h1>
                 <p>Usa la barra di ricerca per cercare una città specifica oppure consulta le principali città nelle
                     card sottostanti.</p>
-                <p>Cliccando su una città potrai vedere le previsioni settimanali e delle informazioni aggiuntive.<a href="#*">*</a></p>
+                <p>Cliccando su una città potrai vedere le previsioni settimanali e delle informazioni aggiuntive.<a
+                        href="#*">*</a></p>
             </div>
 
             <div class="input-group p-3 d-flex">
@@ -68,7 +74,8 @@
                     <label for="floatingInput">es. Milan, IT</label>
                 </div>
                 <button type="button" class="btn btn-outline-primary flex-shrink-0" onclick="showMe()">search</button>
-                <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="getLocation()"><img src="images/location.png" alt="posizione"></button>
+                <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="getLocation()"><img
+                        src="images/location.png" alt="posizione"></button>
             </div>
 
             <!-- card città inserita dall'utente -->
