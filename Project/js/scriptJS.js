@@ -15,9 +15,17 @@ function toggleDarkMode() {
   if (document.getElementById('toggle-mode').checked == false) {
     document.getElementById('css-light').disabled = false;
     document.getElementById('css-dark').disabled = true;
+    $(document).ready(function () {
+      $(".badge").removeClass("dark-alert");
+      $(".badge").addClass("custom-alert");
+    })
   } else {
     document.getElementById('css-light').disabled = true;
     document.getElementById('css-dark').disabled = false;
+    $(document).ready(function () {
+      $(".badge").removeClass("custom-alert");
+      $(".badge").addClass("dark-alert");
+    })
   }
 }
 
@@ -160,7 +168,7 @@ function setWeather(lat, lon, id_card) {
         citycard[3].style.display = 'block';
         console.log(result.alerts);
         citycard[3].innerHTML = result.alerts[0].event;
-        citycard[3].classList.add("bg-warning");
+        citycard[3].classList.add("custom-alert");
       }
       const lis = citycard[4].getElementsByTagName("li");
       lis[0].innerHTML = "Umidità: " + result.current.humidity + "%";

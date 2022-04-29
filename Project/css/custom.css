@@ -17,6 +17,11 @@
 
 /* per darkmode */
 .custom-alert {
+    background-color: rgb(255, 193, 7, 1);
+    color: black; 
+}
+
+.dark-alert {
     background-color: rgb(255, 193, 7, 0.6);
     color: black; 
 }
