@@ -78,8 +78,6 @@ function timestampToDate(timestamp) {
 }
 
 // funzione per mostrare la card specifica per la città innserita nella search bar + current weather
-// direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=city&limit=3&appid=fb1d036e9880437a98ec66f6e4daab01
-// one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&appid=fb1d036e9880437a98ec66f6e4daab01
 async function showMe() {
   let card = document.getElementById('hidden-card');
   let city = document.getElementById('floatingInput');
@@ -113,7 +111,7 @@ async function currentWeatherHomePage() {
 
 //funzione per la ricerca di 'latitudine, longitudine' dato il nome di una città
 async function getLatLon(city) {
-  const geo_url = 'http://api.openweathermap.org/geo/1.0/direct?';
+  const geo_url = 'https://api.openweathermap.org/geo/1.0/direct?';
   const params = {
     q: city,
     limit: 3,
@@ -161,7 +159,7 @@ function setWeather(lat, lon, id_card) {
       let citycard = document.getElementById(id_card).children;
 
       citycard[0].innerHTML = timestampToDate(result.current.dt);
-      citycard[1].src = "http://openweathermap.org/img/wn/" + result.current.weather[0].icon + "@2x.png";
+      citycard[1].src = "https://openweathermap.org/img/wn/" + result.current.weather[0].icon + "@2x.png";
       citycard[1].alt = result.current.weather[0].description;
       citycard[2].innerHTML = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
       if (result.alerts) {
