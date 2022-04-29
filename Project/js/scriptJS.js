@@ -10,6 +10,17 @@ $(document).ready(function () {
   );
 });
 
+//toggle dark mode
+function toggleDarkMode() {
+  if (document.getElementById('toggle-mode').checked == false) {
+    document.getElementById('css-light').disabled = false;
+    document.getElementById('css-dark').disabled = true;
+  } else {
+    document.getElementById('css-light').disabled = true;
+    document.getElementById('css-dark').disabled = false;
+  }
+}
+
 // geolocalizzazione (+ reverse geocoding)
 function getLocation() {
   if (navigator.geolocation) {
@@ -147,8 +158,9 @@ function setWeather(lat, lon, id_card) {
       citycard[2].innerHTML = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
       if (result.alerts) {
         citycard[3].style.display = 'block';
-        citycard[3].innerHTML = result.alerts.event;
-        citycard[3].classList.add("bg-danger");
+        console.log(result.alerts);
+        citycard[3].innerHTML = result.alerts[0].event;
+        citycard[3].classList.add("bg-warning");
       }
       const lis = citycard[4].getElementsByTagName("li");
       lis[0].innerHTML = "Umidità: " + result.current.humidity + "%";

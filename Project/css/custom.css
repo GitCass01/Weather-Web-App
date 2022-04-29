@@ -2,10 +2,6 @@
     margin: 4rem 0;
 }
 
-footer {
-    background-color: #f8f9fa;
-}
-
 #hidden-card {
     display: none;
 }
@@ -17,6 +13,12 @@ footer {
 .card-body>img {
     width: 100px;
     height: 100px;
+}
+
+/* per darkmode */
+.custom-alert {
+    background-color: rgb(255, 193, 7, 0.6);
+    color: black; 
 }
 
 /* remove the shadow onclick */
