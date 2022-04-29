@@ -89,7 +89,7 @@ async function showMe() {
       alert("Città non trovata!");
     } else {
       card.style.display = 'block';
-      document.getElementById('city').innerHTML = city.value;
+      document.getElementById('city').innerText = city.value;
       setWeather(latLon[0], latLon[1], 'hidden-card-body');
     }
   }
@@ -158,20 +158,20 @@ function setWeather(lat, lon, id_card) {
     .then(result => {
       let citycard = document.getElementById(id_card).children;
 
-      citycard[0].innerHTML = timestampToDate(result.current.dt);
+      citycard[0].innerText = timestampToDate(result.current.dt);
       citycard[1].src = "https://openweathermap.org/img/wn/" + result.current.weather[0].icon + "@2x.png";
       citycard[1].alt = result.current.weather[0].description;
-      citycard[2].innerHTML = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
+      citycard[2].innerText = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
       if (result.alerts) {
         citycard[3].style.display = 'block';
         console.log(result.alerts);
-        citycard[3].innerHTML = result.alerts[0].event;
+        citycard[3].innerText = result.alerts[0].event;
         citycard[3].classList.add("custom-alert");
       }
       const lis = citycard[4].getElementsByTagName("li");
-      lis[0].innerHTML = "Umidità: " + result.current.humidity + "%";
-      lis[1].innerHTML = "Pressione: " + result.current.pressure + " hPa";
-      lis[2].innerHTML = "Vento: " + result.current.wind_speed + " m/s";
+      lis[0].innerText = "Umidità: " + result.current.humidity + "%";
+      lis[1].innerText = "Pressione: " + result.current.pressure + " hPa";
+      lis[2].innerText = "Vento: " + result.current.wind_speed + " m/s";
     })
     .catch(err => console.log("err: ", err));
 }
