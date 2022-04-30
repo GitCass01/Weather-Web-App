@@ -70,11 +70,11 @@ function errorFunction() {
 }
 
 // conversione da timestamp Unix, UTC in "gg/mm/aaaa"
-function timestampToDate(timestamp) {
+function timestampToDate(timestamp, offset) {
   // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-  var date = new Date(timestamp * 1000);
+  var date = new Date((timestamp+offset-7200) * 1000);  //7200=2h, ora locale Italia: UTC+2
 
-  return date.toLocaleString('it-IT');
+  return date.toLocaleString();
 }
 
 // funzione per mostrare la card specifica per la città innserita nella search bar + current weather
@@ -156,15 +156,16 @@ function setWeather(lat, lon, id_card) {
   fetch(call)
     .then(response => response.json())
     .then(result => {
+      console.log(result);
       let citycard = document.getElementById(id_card).children;
 
-      citycard[0].innerText = timestampToDate(result.current.dt);
+      citycard[0].innerText = timestampToDate(result.current.dt, result.timezone_offset);
       citycard[1].src = "https://openweathermap.org/img/wn/" + result.current.weather[0].icon + "@2x.png";
       citycard[1].alt = result.current.weather[0].description;
       citycard[2].innerText = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
       if (result.alerts) {
         citycard[3].style.display = 'block';
-        console.log(result.alerts);
+        //console.log(result.alerts);
         citycard[3].innerText = result.alerts[0].event;
         citycard[3].classList.add("custom-alert");
       }
