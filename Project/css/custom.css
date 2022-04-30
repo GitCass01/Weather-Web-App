@@ -47,6 +47,20 @@
     margin: 4rem 0;
 }
 
+/*meteo orario di oggi "scrollabile"*/
+#today-weather {
+    height: 100%;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+#today-weather > .col-md-3 {
+    display: inline-block;
+}
+#today-card {
+    height: 250px;
+}
+
 @media only screen and (max-width: 767px) {
     #hidden-card-intern {
         width: 18rem;
