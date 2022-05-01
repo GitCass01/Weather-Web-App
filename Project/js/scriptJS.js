@@ -50,14 +50,20 @@ function showPosition(position) {
   };
 
   const query = new URLSearchParams(params).toString();
-  const final_url = BASE_URL + query;
+  const final_url = BASE_URL + query + "&accept-language=it"
 
   fetch(final_url)
     .then((response) => response.json())
     .then((result) => {
       console.log(result);
 
-      const city_name = result['address']['town'];
+      let city_name;
+      if (result['address']['town']) {
+        city_name = result['address']['town'];
+      } else {
+        city_name = result['address']['city'];
+      }
+      
       const country = result['address']['country_code'].toUpperCase();
 
       document.getElementById('floatingInput').value = city_name + ", " + country;
@@ -71,8 +77,9 @@ function errorFunction() {
 
 // conversione da timestamp Unix, UTC in "gg/mm/aaaa"
 function timestampToDate(timestamp, offset) {
+  const tz = new Date('August 19, 1975 23:15:30').getTimezoneOffset() * 60;
   // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-  var date = new Date((timestamp+offset-7200) * 1000);  //7200=2h, ora locale Italia: UTC+2
+  var date = new Date((timestamp + offset + tz) * 1000);
 
   return date.toLocaleString();
 }
@@ -156,7 +163,7 @@ function setWeather(lat, lon, id_card) {
   fetch(call)
     .then(response => response.json())
     .then(result => {
-      console.log(result);
+      //console.log(result);
       let citycard = document.getElementById(id_card).children;
 
       citycard[0].innerText = timestampToDate(result.current.dt, result.timezone_offset);
