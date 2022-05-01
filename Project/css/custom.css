@@ -68,6 +68,13 @@ body {
     height: 250px;
 }
 
+.container-chart {
+    height: 80vh;
+    width: 80vw;
+    position: relative;
+    margin: auto;
+}
+
 @media only screen and (max-width: 767px) {
     #hidden-card-intern {
         width: 18rem;
