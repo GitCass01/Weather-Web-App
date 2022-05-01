@@ -1,36 +1,50 @@
 const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
+        labels: ['10/04/2022', '11/04/2022', '12/04/2022', '13/04/2022', '14/04/2022', '15/04/2022'],
+        datasets: [
+            {
+                label: 'temperatura massima',
+                data: [26, 24, 27, 22, 20, 21],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                tension: 0.1,
+            },
+            {
+                label: 'temperatura minima',
+                data: [22, 15, 16, 18, 16, 14],
+                borderColor: 'rgba(0, 0, 255, 0.6)',
+                borderWidth: 2,
+                tension: 0.1,
+            }
+        ]
     },
     options: {
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Gradi Celsius'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Giorni'
+                }
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Grafico delle Temperature Massime e Minime'
             }
         },
         maintainAspectRatio: false,
+        interaction: {
+            intersect: false,
+        },
     }
 });
