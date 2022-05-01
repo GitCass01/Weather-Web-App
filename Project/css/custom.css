@@ -1,3 +1,7 @@
+body {
+    font-family: 'Roboto', serif;
+}
+
 .featurette-divider {
     margin: 4rem 0;
 }
@@ -18,12 +22,12 @@
 /* per darkmode */
 .custom-alert {
     background-color: rgb(255, 193, 7, 1);
-    color: black; 
+    color: black;
 }
 
 .dark-alert {
     background-color: rgb(255, 193, 7, 0.6);
-    color: black; 
+    color: black;
 }
 
 /* remove the shadow onclick */
@@ -32,7 +36,8 @@
 }
 
 .form-floating {
-    width: 100px; /*altrimenti la width base non era responsiva per i dispositivi "mobile small"*/
+    width: 100px;
+    /*altrimenti la width base non era responsiva per i dispositivi "mobile small"*/
 }
 
 .card-sizing {
@@ -54,9 +59,11 @@
     overflow-x: auto;
     white-space: nowrap;
 }
-#today-weather > .col-md-3 {
+
+#today-weather>.col-md-3 {
     display: inline-block;
 }
+
 #today-card {
     height: 250px;
 }
@@ -71,6 +78,7 @@
     .card-sizing {
         width: 16rem;
     }
+
     #hidden-card-intern {
         width: 16rem;
     }
