@@ -55,7 +55,7 @@ function showPosition(position) {
   fetch(final_url)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+      //console.log(result);
 
       let city_name;
       if (result['address']['town']) {
@@ -63,7 +63,7 @@ function showPosition(position) {
       } else {
         city_name = result['address']['city'];
       }
-      
+
       const country = result['address']['country_code'].toUpperCase();
 
       document.getElementById('floatingInput').value = city_name + ", " + country;
@@ -121,7 +121,7 @@ async function getLatLon(city) {
   const geo_url = 'https://api.openweathermap.org/geo/1.0/direct?';
   const params = {
     q: city,
-    limit: 3,
+    limit: 5,
     appid: 'fb1d036e9880437a98ec66f6e4daab01'
   };
   const query = new URLSearchParams(params).toString().replace("%2C", ",");
@@ -134,6 +134,7 @@ async function getLatLon(city) {
   await fetch(final_url)
     .then(response => response.json())
     .then(result => {
+      //console.log(result);
       if (result[0]) {
         lat = result[0].lat;
         lon = result[0].lon;
