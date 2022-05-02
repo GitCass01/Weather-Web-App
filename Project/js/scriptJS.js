@@ -185,6 +185,30 @@ function setWeather(lat, lon, id_card) {
     .catch(err => console.log("err: ", err));
 }
 
-// weekly (7 days) weather
+// weekly (7 days) weather for 'weather.html' page
+function weeklyWeather() {
+  // lat, lon got from client
+  let lat = 45.4221000;
+  let lon = 9.108610;
+
+  const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
+  const params = {
+    lat: lat,
+    lon: lon,
+    exclude: 'minutely',
+    units: 'metric',
+    lang: 'it',
+    appid: 'fb1d036e9880437a98ec66f6e4daab01'
+  }
+  const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
+  const call = onecall_url + query_weather;
+
+  fetch(call)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => console.log("err: ", err));
+}
 
 // historical weather (5 days)

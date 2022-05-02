@@ -44,7 +44,7 @@
     <title>Progetto Meteo Live</title>
 </head>
 
-<body>
+<body onload="weeklyWeather()">
     <header>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -71,7 +71,7 @@
         <div class="container py-3">
             <!-- Main + search bar -->
             <div class="p-3 pb-md-4 mx-auto text-center">
-                <h1>Meteo Settimanale di </h1>
+                <h1>Meteo Settimanale</h1>
                 <p>Usa la barra di ricerca per cercare un'altra città e conoscere le sue previsioni settimanali.<a
                         href="#*">*</a></p>
             </div>
@@ -93,67 +93,58 @@
                     <div class="card-header py-3">
                         <h4 class="my-0 f2-normal">Meteo di Oggi (ogni ora)</h4>
                     </div>
-                    <div id="today-weather" class="row-col py-3 ms-3 me-1 mb-1">
+                    <div id="today-weather" class="row-col pt-4 ms-3 me-1 mb-1">
                         <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
                             <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
-                            <p class="mb-0">umidità - pressione</p>
-                            <p class="mb-0">vento - visibilità</p>
-                        </div>
-                        <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
-                            <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
+                            <p class="mb-0">temp - temp percepita</p>
                             <p class="mb-0">umidità - pressione</p>
                             <p>vento - visibilità</p>
                         </div>
                         <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
                             <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
+                            <p class="mb-0">temp - temp percepita</p>
                             <p class="mb-0">umidità - pressione</p>
                             <p>vento - visibilità</p>
                         </div>
                         <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
                             <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
+                            <p class="mb-0">temp - temp percepita</p>
                             <p class="mb-0">umidità - pressione</p>
                             <p>vento - visibilità</p>
                         </div>
                         <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
                             <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
+                            <p class="mb-0">temp - temp percepita</p>
                             <p class="mb-0">umidità - pressione</p>
                             <p>vento - visibilità</p>
                         </div>
                         <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
                             <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
+                            <p class="mb-0">temp - temp percepita</p>
                             <p class="mb-0">umidità - pressione</p>
                             <p>vento - visibilità</p>
                         </div>
                         <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
                             <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
+                            <p class="mb-0">temp - temp percepita</p>
                             <p class="mb-0">umidità - pressione</p>
                             <p>vento - visibilità</p>
                         </div>
                         <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
                             <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
+                            <p class="mb-0">temp - temp percepita</p>
+                            <p class="mb-0">umidità - pressione</p>
+                            <p>vento - visibilità</p>
+                        </div>
+                        <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
+                            <h5>9:00 - desc meteo</h5>
+                            <p class="mb-0">temp - temp percepita</p>
                             <p class="mb-0">umidità - pressione</p>
                             <p>vento - visibilità</p>
                         </div>
                         <div class="col-md-3">
                             <h5>9:00 - desc meteo</h5>
-                            <p class="mb-0">temp max - temp min - temp percepita</p>
-                            <div id="" class="badge rounded-pill bg-warning text-dark">allerta meteo</div>
+                            <p class="mb-0">temp - temp percepita</p>
                             <p class="mb-0">umidità - pressione</p>
                             <p>vento - visibilità</p>
                         </div>
