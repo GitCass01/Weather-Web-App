@@ -206,7 +206,42 @@ function weeklyWeather() {
   fetch(call)
     .then(response => response.json())
     .then(result => {
-      console.log(result);
+      //console.log(result);
+
+      const daily_weather = result.daily;
+      const hourly = result.hourly;
+      console.log(daily_weather);
+
+      for (let i = 1; i < daily_weather.length; i++) {
+        let day_card = document.getElementById("giorno"+i).children;
+        day_card = day_card[0].getElementsByTagName("DIV");
+        //giornata
+        let info = day_card[0].getElementsByTagName("p");
+        info[0].innerText = daily_weather[i].weather[0].description;
+        info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C, Min: " + Math.round(daily_weather[i].temp.min) + "°C";
+        info[2].innerText = "Precipitazioni: " + daily_weather[i].pop*100 + "%, Vento: " + daily_weather[i].wind_speed + "m/s";
+        info[3].innerText = daily_weather[i].pressure + "hPa, Umidità: " + daily_weather[i].humidity + "%, UV: " + daily_weather[i].uvi;
+        let image = day_card[0].getElementsByTagName("img");
+        console.log(image);
+        image.src = "https://openweathermap.org/img/wn/" + daily_weather[i].weather[0].icon + "@2x.png";
+        image.alt = daily_weather[i].weather[0].description;
+        //mattina
+        info = day_card[1].getElementsByTagName("p");
+        info[0].innerText = Math.round(daily_weather[i].temp.morn) + "°C";
+        info[1].innerText = Math.round(daily_weather[i].feels_like.morn) + "°C";
+        //pomeriggio
+        info = day_card[2].getElementsByTagName("p");
+        info[0].innerText = Math.round(daily_weather[i].temp.day) + "°C";
+        info[1].innerText = Math.round(daily_weather[i].feels_like.day) + "°C";
+        //sera
+        info = day_card[3].getElementsByTagName("p");
+        info[0].innerText = Math.round(daily_weather[i].temp.eve) + "°C";
+        info[1].innerText = Math.round(daily_weather[i].feels_like.eve) + "°C";
+        //notte
+        info = day_card[4].getElementsByTagName("p");
+        info[0].innerText = Math.round(daily_weather[i].temp.night) + "°C";
+        info[1].innerText = Math.round(daily_weather[i].feels_like.night) + "°C";
+      }
     })
     .catch(err => console.log("err: ", err));
 }
