@@ -81,7 +81,7 @@ function timestampToDate(timestamp, offset) {
   // multiplied by 1000 so that the argument is in milliseconds, not seconds.
   var date = new Date((timestamp + offset + tz) * 1000);
 
-  return date.toLocaleString();
+  return date;
 }
 
 // funzione per mostrare la card specifica per la città innserita nella search bar + current weather
@@ -167,7 +167,7 @@ function setWeather(lat, lon, id_card) {
       //console.log(result);
       let citycard = document.getElementById(id_card).children;
 
-      citycard[0].innerText = timestampToDate(result.current.dt, result.timezone_offset);
+      citycard[0].innerText = timestampToDate(result.current.dt, result.timezone_offset).toLocaleString();
       citycard[1].src = "https://openweathermap.org/img/wn/" + result.current.weather[0].icon + "@2x.png";
       citycard[1].alt = result.current.weather[0].description;
       citycard[2].innerText = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
@@ -195,7 +195,7 @@ function weeklyWeather() {
   const params = {
     lat: lat,
     lon: lon,
-    exclude: 'minutely',
+    exclude: 'current,minutely,hourly,alerts',
     units: 'metric',
     lang: 'it',
     appid: 'fb1d036e9880437a98ec66f6e4daab01'
@@ -210,21 +210,23 @@ function weeklyWeather() {
 
       const daily_weather = result.daily;
       const hourly = result.hourly;
-      console.log(daily_weather);
+      //console.log(daily_weather);
 
       for (let i = 1; i < daily_weather.length; i++) {
+        //data
+        document.getElementById("g"+i).innerText = timestampToDate(daily_weather[i].dt, result.timezone_offset).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+
         let day_card = document.getElementById("giorno"+i).children;
         day_card = day_card[0].getElementsByTagName("DIV");
         //giornata
         let info = day_card[0].getElementsByTagName("p");
         info[0].innerText = daily_weather[i].weather[0].description;
-        info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C, Min: " + Math.round(daily_weather[i].temp.min) + "°C";
-        info[2].innerText = "Precipitazioni: " + daily_weather[i].pop*100 + "%, Vento: " + daily_weather[i].wind_speed + "m/s";
-        info[3].innerText = daily_weather[i].pressure + "hPa, Umidità: " + daily_weather[i].humidity + "%, UV: " + daily_weather[i].uvi;
+        info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C \t Min: " + Math.round(daily_weather[i].temp.min) + "°C";
+        info[2].innerText = "Precipitazioni: " + daily_weather[i].pop*100 + "% \t Vento: " + daily_weather[i].wind_speed + "m/s";
+        info[3].innerText = daily_weather[i].pressure + "hPa \t Umidità: " + daily_weather[i].humidity + "% \t UV: " + daily_weather[i].uvi;
         let image = day_card[0].getElementsByTagName("img");
-        console.log(image);
-        image.src = "https://openweathermap.org/img/wn/" + daily_weather[i].weather[0].icon + "@2x.png";
-        image.alt = daily_weather[i].weather[0].description;
+        image[0].src = "https://openweathermap.org/img/wn/" + daily_weather[i].weather[0].icon + "@2x.png";
+        image[0].alt = daily_weather[i].weather[0].description;
         //mattina
         info = day_card[1].getElementsByTagName("p");
         info[0].innerText = Math.round(daily_weather[i].temp.morn) + "°C";
