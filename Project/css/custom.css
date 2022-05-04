@@ -88,6 +88,10 @@ h6 {
     margin: auto;
 }
 
+#map {
+    height: 256px;
+}
+
 @media only screen and (max-width: 767px) {
     #hidden-card-intern {
         width: 18rem;
