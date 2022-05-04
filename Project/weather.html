@@ -42,11 +42,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-    crossorigin=""/>
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-    crossorigin=""></script>
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""></script>
 
     <title>Progetto Meteo Live</title>
 </head>
@@ -92,12 +92,36 @@
                 <button type="button" class="btn btn-outline-primary flex-shrink-0"
                     onclick="getWeeklyWeather()">search</button>
                 <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="getLocation()"><img
-                        src="images/location.png"></button>
+                        src="images/location.png" alt="posizione"></button>
             </div>
 
             <div class="container mt-4">
-                <div id="today-card" class="card text-center">
-                    <div class="card-header py-3">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h4 class="my-0 f2-normal">Meteo di Oggi (ogni ora)</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div id="current-weather" class="col-6">
+                                <p class="card-text">data</p>
+                                <img src="images/missing_image.png" alt="missing image" class="card-img-top">
+                                <h6 class="card-title">meteo</h6>
+                                <div id="alert" class="badge rounded-pill text-dark"></div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Umidità: </li>
+                                    <li class="list-group-item">Pressione: </li>
+                                    <li class="list-group-item">Vento: </li>
+                                </ul>
+                            </div>
+                            <div class="col-6 pe-4">
+                                <div id="map" class="my-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="today-card" class="card text-center mt-3">
+                    <div class="card-header">
                         <h4 class="my-0 f2-normal">Meteo di Oggi (ogni ora)</h4>
                     </div>
                     <div id="today-weather" class="row-col pt-4 ms-3 me-1 mb-1">
@@ -170,9 +194,10 @@
                             </div>
                             <div class="collapse card-body pt-0" id="giorno1">
                                 <div class="row pt-2">
-                                    <div class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
+                                    <div
+                                        class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
                                         <h6>Info di Giornata</h6>
-                                        <img src="" alt="" class="card-img-top weekly-icon">
+                                        <img src="images/missing_image.png" alt="missing image" class="card-img-top weekly-icon">
                                         <p class="mb-0">descrizione</p>
                                         <p class="mb-0">temp max - min</p>
                                         <p class="mb-0">precipitazioni - vento</p>
@@ -211,9 +236,10 @@
                             </div>
                             <div class="collapse card-body pt-0" id="giorno2">
                                 <div class="row pt-2">
-                                    <div class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
+                                    <div
+                                        class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
                                         <h6>Info di Giornata</h6>
-                                        <img src="" alt="" class="card-img-top weekly-icon">
+                                        <img src="images/missing_image.png" alt="missing image" class="card-img-top weekly-icon">
                                         <p class="mb-0">descrizione</p>
                                         <p class="mb-0">temp max - min</p>
                                         <p class="mb-0">precipitazioni - vento</p>
@@ -252,9 +278,10 @@
                             </div>
                             <div class="collapse card-body pt-0" id="giorno3">
                                 <div class="row pt-2">
-                                    <div class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
+                                    <div
+                                        class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
                                         <h6>Info di Giornata</h6>
-                                        <img src="" alt="" class="card-img-top weekly-icon">
+                                        <img src="images/missing_image.png" alt="missing image" class="card-img-top weekly-icon">
                                         <p class="mb-0">descrizione</p>
                                         <p class="mb-0">temp max - min</p>
                                         <p class="mb-0">precipitazioni - vento</p>
@@ -293,9 +320,10 @@
                             </div>
                             <div class="collapse card-body pt-0" id="giorno4">
                                 <div class="row pt-2">
-                                    <div class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
+                                    <div
+                                        class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
                                         <h6>Info di Giornata</h6>
-                                        <img src="" alt="" class="card-img-top weekly-icon">
+                                        <img src="images/missing_image.png" alt="missing image" class="card-img-top weekly-icon">
                                         <p class="mb-0">descrizione</p>
                                         <p class="mb-0">temp max - min</p>
                                         <p class="mb-0">precipitazioni - vento</p>
@@ -334,9 +362,10 @@
                             </div>
                             <div class="collapse card-body pt-0" id="giorno5">
                                 <div class="row pt-2">
-                                    <div class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
+                                    <div
+                                        class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
                                         <h6>Info di Giornata</h6>
-                                        <img src="" alt="" class="card-img-top weekly-icon">
+                                        <img src="images/missing_image.png" alt="missing image" class="card-img-top weekly-icon">
                                         <p class="mb-0">descrizione</p>
                                         <p class="mb-0">temp max - min</p>
                                         <p class="mb-0">precipitazioni - vento</p>
@@ -375,9 +404,10 @@
                             </div>
                             <div class="collapse card-body pt-0" id="giorno6">
                                 <div class="row pt-2">
-                                    <div class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
+                                    <div
+                                        class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
                                         <h6>Info di Giornata</h6>
-                                        <img src="" alt="" class="card-img-top weekly-icon">
+                                        <img src="images/missing_image.png" alt="missing image" class="card-img-top weekly-icon">
                                         <p class="mb-0">descrizione</p>
                                         <p class="mb-0">temp max - min</p>
                                         <p class="mb-0">precipitazioni - vento</p>
@@ -416,9 +446,10 @@
                             </div>
                             <div class="collapse card-body pt-0" id="giorno7">
                                 <div class="row pt-2">
-                                    <div class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
+                                    <div
+                                        class="col-12 mb-3 pb-2 ps-0 pe-0 border border-start-0 border-top-0 border-end-0 border-2">
                                         <h6>Info di Giornata</h6>
-                                        <img src="" alt="" class="card-img-top weekly-icon">
+                                        <img src="images/missing_image.png" alt="missing image" class="card-img-top weekly-icon">
                                         <p class="mb-0">descrizione</p>
                                         <p class="mb-0">temp max - min</p>
                                         <p class="mb-0">precipitazioni - vento</p>
@@ -457,8 +488,6 @@
                 <canvas id="myChart"></canvas>
             </div>
 
-            <div id="map" class="my-3"></div>
-
             <div id="*" class="pt-3">
                 <p>* I dati sono raccolti usando le API di <a href="https://openweathermap.org/">openweathermap.org</a>
                 </p>
@@ -468,8 +497,8 @@
 
     <!-- FOOTER -->
     <footer class="footer p-3 mt-auto border-top bg-light">
-        <p class="float-end"><a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Back to
-                top</a></p>
+        <p class="float-end"><a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Back to top</a>
+        </p>
         <p>&copy; 2022-2022 Carniselli Davide - Unimi Informatica </p>
     </footer>
 

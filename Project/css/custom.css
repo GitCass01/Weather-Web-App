@@ -19,7 +19,8 @@ body {
     height: 100px;
 }
 
-.weekly-icon {
+.weekly-icon,
+#current-weather>img {
     width: 100px;
     height: 100px;
 }
@@ -90,6 +91,10 @@ h6 {
 
 #map {
     height: 256px;
+}
+
+.leaflet-container {
+    border-radius: 10px;
 }
 
 @media only screen and (max-width: 767px) {

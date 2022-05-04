@@ -195,7 +195,7 @@ function weeklyWeather() {
   const params = {
     lat: lat,
     lon: lon,
-    exclude: 'current,minutely,hourly,alerts',
+    exclude: 'minutely,hourly,alerts',
     units: 'metric',
     lang: 'it',
     appid: 'fb1d036e9880437a98ec66f6e4daab01'
@@ -207,11 +207,24 @@ function weeklyWeather() {
     .then(response => response.json())
     .then(result => {
       //console.log(result);
-
+      const current_weather = result.current;
       const daily_weather = result.daily;
       const hourly = result.hourly;
-      //console.log(daily_weather);
+      console.log(current_weather);
 
+      //current weather
+      const current_card = document.getElementById('current-weather').children;
+      current_card[0].innerText = timestampToDate(current_weather.dt, result.timezone_offset).toLocaleString();
+      current_card[1].src = "https://openweathermap.org/img/wn/" + current_weather.weather[0].icon + "@2x.png";
+      current_card[1].alt = current_weather.weather[0].description;
+      current_card[2].innerText = current_weather.weather[0].description;
+      // current_card[3] ALERTS
+      const lis = current_card[4].getElementsByTagName("li");
+      lis[0].innerText = "Umidità: " + current_weather.humidity + "%";
+      lis[1].innerText = "Pressione: " + current_weather.pressure + " hPa";
+      lis[2].innerText = "Vento: " + current_weather.wind_speed + " m/s";
+
+      // daily weather
       for (let i = 1; i < daily_weather.length; i++) {
         //data
         document.getElementById("g"+i).innerText = timestampToDate(daily_weather[i].dt, result.timezone_offset).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });

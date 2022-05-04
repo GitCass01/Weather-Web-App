@@ -1,11 +1,12 @@
 function initializeMap(lat, lon) {
-    const map = L.map('map').setView([45.4221000, 9.108610], 8);
+    const map = L.map('map').setView([45.4221000, 9.108610], 9);
     var marker = L.marker([45.4221000, 9.108610]).addTo(map);
 
     const attribution = 'Map Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, Weather Data &copy; <a href="https://www.openweathermap.org">OpenWeatherMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
 
+    //https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png --> use it for dark mode
     const osmUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-    const osmTiles = L.tileLayer(osmUrl, { attribution});
+    const osmTiles = L.tileLayer(osmUrl, { transparency: true, opacity: '1', attribution});
 
     const owmUrl = 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=fb1d036e9880437a98ec66f6e4daab01';
     const owmTiles = L.tileLayer(owmUrl, { attribution });
