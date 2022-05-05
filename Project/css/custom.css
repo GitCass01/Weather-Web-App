@@ -74,6 +74,11 @@ p {
     display: inline-block;
 }
 
+#today-weather>.col-md-3>img {
+    height: 32px;
+    width: 32px;
+}
+
 #today-card {
     height: 250px;
 }
