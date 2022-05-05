@@ -25,10 +25,6 @@ body {
     height: 100px;
 }
 
-p {
-    white-space: pre;
-}
-
 /* per darkmode */
 .custom-alert {
     background-color: rgb(255, 193, 7, 1);
@@ -77,6 +73,10 @@ p {
 #today-weather>.col-md-3>img {
     height: 32px;
     width: 32px;
+}
+
+#today-weather>.col-md-3>p, .giornata-white-space>p {
+    white-space: pre;
 }
 
 #today-card {
