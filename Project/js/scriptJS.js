@@ -209,7 +209,7 @@ function weeklyWeather() {
   const params = {
     lat: lat,
     lon: lon,
-    exclude: 'minutely,alerts',
+    exclude: 'minutely',
     units: 'metric',
     lang: 'it',
     appid: 'fb1d036e9880437a98ec66f6e4daab01'
@@ -224,7 +224,7 @@ function weeklyWeather() {
       const current_weather = result.current;
       const daily_weather = result.daily;
       const hourly = result.hourly;
-      console.log(hourly);
+      console.log(result);
 
       //current weather
       const current_card = document.getElementById('current-weather').children;
@@ -232,7 +232,11 @@ function weeklyWeather() {
       current_card[1].src = "https://openweathermap.org/img/wn/" + current_weather.weather[0].icon + "@2x.png";
       current_card[1].alt = current_weather.weather[0].description;
       current_card[2].innerText = current_weather.weather[0].description;
-      // current_card[3] ALERTS
+      if (result.alerts) {
+        current_card[3].style.display = 'block';
+        current_card[3].innerText = result.alerts[0].event;
+        current_card[3].classList.add("custom-alert");
+      }
       const lis = current_card[4].getElementsByTagName("li");
       lis[0].innerText = "Umidità: " + current_weather.humidity + "%";
       lis[1].innerText = "Pressione: " + current_weather.pressure + " hPa";
@@ -272,11 +276,11 @@ function weeklyWeather() {
         info2.className = 'mb-0';
 
         info_title.innerText = data.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
-        image_hourly.src = 'images/missing_image.png';
-        image_hourly.alt = 'missing image';
-        info1.innerText = 'temp - temp percepita';
-        info2.innerText = 'pop - vento - UV';
-        info3.innerText = 'umidità - pressione - visibilità';
+        image_hourly.src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
+        image_hourly.alt = hourly[i].weather[0].description;
+        info1.innerText = hourly[i].temp + '°C - ' + hourly[i].feels_like + '°C';
+        info2.innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s   UV: ' + (hourly[i].uvi*100);
+        info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
 
         hourly_card.appendChild(info_container);
         info_container.append(info_title, image_hourly, info1, info2, info3);

@@ -71,8 +71,8 @@ body {
 }
 
 #today-weather>.col-md-3>img {
-    height: 32px;
-    width: 32px;
+    height: 48px;
+    width: 48px;
 }
 
 #today-weather>.col-md-3>p, .giornata-white-space>p {
