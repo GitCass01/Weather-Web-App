@@ -19,9 +19,23 @@ function toggleDarkMode() {
       $(".badge").removeClass("dark-alert");
       $(".badge").addClass("custom-alert");
     })
+    sessionStorage.setItem('toggle-mode', '');
   } else {
     document.getElementById('css-light').disabled = true;
     document.getElementById('css-dark').disabled = false;
+    $(document).ready(function () {
+      $(".badge").removeClass("custom-alert");
+      $(".badge").addClass("dark-alert");
+    })
+    sessionStorage.setItem('toggle-mode', 'checked');
+  }
+}
+
+function checkDarkMode() {
+  if (sessionStorage.getItem('toggle-mode').localeCompare('checked') == 0) {
+    document.getElementById('css-light').disabled = true;
+    document.getElementById('css-dark').disabled = false;
+    document.getElementById('toggle-mode').setAttribute('checked', 'true');
     $(document).ready(function () {
       $(".badge").removeClass("custom-alert");
       $(".badge").addClass("dark-alert");
