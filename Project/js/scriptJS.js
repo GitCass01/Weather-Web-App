@@ -250,7 +250,6 @@ function weeklyWeather() {
 
         if (data.getHours() == 23 || i == 23) {
           info_container.className = 'col-md-3';
-          break;
         } else {
           info_container.className = 'col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2';
         }
@@ -258,7 +257,7 @@ function weeklyWeather() {
         info1.className = 'mb-0';
         info2.className = 'mb-0';
 
-        info_title.innerText = data.toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'}) + ' - ' + hourly[i].weather[0].description;
+        info_title.innerText = data.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
         image_hourly.src = 'images/missing_image.png';
         image_hourly.alt = 'missing image';
         info1.innerText = 'temp - temp percepita';
@@ -267,6 +266,10 @@ function weeklyWeather() {
 
         hourly_card.appendChild(info_container);
         info_container.append(info_title, image_hourly, info1, info2, info3);
+
+        if (data.getHours() == 23 || i == 23) {
+          break;
+        }
       }
 
       // daily weather
