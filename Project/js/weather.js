@@ -100,8 +100,11 @@ function setWeather(lat, lon, id_card) {
 }
 
 // weekly (7 days) weather for 'weather.html' page
-function weeklyWeather() {
-    // lat, lon got from client
+async function weeklyWeather() {
+    // lat, lon source:
+    // 1. card clickata nella 'index.html'
+    // 2. altrimenti uso la posizione attuale
+    // 3. search box -> aggiorno
     let lat = 45.4221000;
     let lon = 9.108610;
 
@@ -117,114 +120,123 @@ function weeklyWeather() {
     const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
     const call = onecall_url + query_weather;
 
-    fetch(call)
+    await fetch(call)
         .then(response => response.json())
         .then(result => {
             //console.log(result);
             const current_weather = result.current;
             const daily_weather = result.daily;
             const hourly = result.hourly;
-            console.log(result);
+            //console.log(daily_weather);
 
-            //current weather
-            const current_card = document.getElementById('current-weather').children;
-            current_card[0].innerText = timestampToDate(current_weather.dt, result.timezone_offset).toLocaleString();
-            current_card[1].src = "https://openweathermap.org/img/wn/" + current_weather.weather[0].icon + "@2x.png";
-            current_card[1].alt = current_weather.weather[0].description;
-            current_card[2].innerText = current_weather.weather[0].description;
-            if (result.alerts) {
-                current_card[3].style.display = 'block';
-                current_card[3].innerText = result.alerts[0].event;
-                current_card[3].classList.add("custom-alert");
-            }
-            const lis = current_card[4].getElementsByTagName("li");
-            lis[0].innerText = "Umidità: " + current_weather.humidity + "%";
-            lis[1].innerText = "Pressione: " + current_weather.pressure + " hPa";
-            lis[2].innerText = "Vento: " + current_weather.wind_speed + " m/s";
-
-            //hourly weather: fino alle 23:00
-            /**
-             *  <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
-                  <h5>9:00 - desc meteo</h5>
-                  <img src="images/missing_image.png" alt="missing image" class="card-img-top">
-                  <p class="mb-0">temp - temp percepita</p>
-                  <p class="mb-0">umidità - pressione</p>
-                  <p>vento - visibilità</p>
-                </div>
-             */
-            const hourly_card = document.getElementById('today-weather');
-
-            for (let i = 0; i < 24; i++) {
-                // prendo le informazioni dal risultato della chiamata
-                const data = timestampToDate(hourly[i].dt, result.timezone_offset);
-
-                // genero l'html
-                const info_container = document.createElement('div');
-                const image_hourly = document.createElement('img');
-                const info_title = document.createElement('h5');
-                const info1 = document.createElement('p');
-                const info2 = document.createElement('p');
-                const info3 = document.createElement('p');
-
-                if (data.getHours() == 23 || i == 23) {
-                    info_container.className = 'col-md-3';
-                } else {
-                    info_container.className = 'col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2';
-                }
-                image_hourly.className = 'card-img-top';
-                info1.className = 'mb-0';
-                info2.className = 'mb-0';
-
-                info_title.innerText = data.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
-                image_hourly.src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
-                image_hourly.alt = hourly[i].weather[0].description;
-                info1.innerText = hourly[i].temp + '°C - ' + hourly[i].feels_like + '°C';
-                info2.innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s   UV: ' + (hourly[i].uvi * 100).toFixed(0);
-                info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
-
-                hourly_card.appendChild(info_container);
-                info_container.append(info_title, image_hourly, info1, info2, info3);
-
-                if (data.getHours() == 23 || i == 23) {
-                    break;
-                }
-            }
-
-            // daily weather
-            for (let i = 1; i < daily_weather.length; i++) {
-                //data
-                document.getElementById("g" + i).innerText = timestampToDate(daily_weather[i].dt, result.timezone_offset).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
-
-                let day_card = document.getElementById("giorno" + i).children;
-                day_card = day_card[0].getElementsByTagName("DIV");
-                //giornata
-                let info = day_card[0].getElementsByTagName("p");
-                info[0].innerText = daily_weather[i].weather[0].description;
-                info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C \t Min: " + Math.round(daily_weather[i].temp.min) + "°C";
-                info[2].innerText = "Precipitazioni: " + daily_weather[i].pop * 100 + "% \t Vento: " + daily_weather[i].wind_speed + "m/s";
-                info[3].innerText = daily_weather[i].pressure + "hPa \t Umidità: " + daily_weather[i].humidity + "% \t UV: " + daily_weather[i].uvi;
-                let image = day_card[0].getElementsByTagName("img");
-                image[0].src = "https://openweathermap.org/img/wn/" + daily_weather[i].weather[0].icon + "@2x.png";
-                image[0].alt = daily_weather[i].weather[0].description;
-                //mattina
-                info = day_card[1].getElementsByTagName("p");
-                info[0].innerText = Math.round(daily_weather[i].temp.morn) + "°C";
-                info[1].innerText = Math.round(daily_weather[i].feels_like.morn) + "°C";
-                //pomeriggio
-                info = day_card[2].getElementsByTagName("p");
-                info[0].innerText = Math.round(daily_weather[i].temp.day) + "°C";
-                info[1].innerText = Math.round(daily_weather[i].feels_like.day) + "°C";
-                //sera
-                info = day_card[3].getElementsByTagName("p");
-                info[0].innerText = Math.round(daily_weather[i].temp.eve) + "°C";
-                info[1].innerText = Math.round(daily_weather[i].feels_like.eve) + "°C";
-                //notte
-                info = day_card[4].getElementsByTagName("p");
-                info[0].innerText = Math.round(daily_weather[i].temp.night) + "°C";
-                info[1].innerText = Math.round(daily_weather[i].feels_like.night) + "°C";
-            }
+            currentWeather(result, current_weather);
+            hourlyWeather(result, hourly);
+            dailyWeather(result, daily_weather);
+            generateChart(lat, lon);
         })
         .catch(err => console.log("err: ", err));
 }
 
-  // historical weather (5 days)
+function currentWeather(result, current_weather) {
+    //current weather
+    const current_card = document.getElementById('current-weather').children;
+    current_card[0].innerText = timestampToDate(current_weather.dt, result.timezone_offset).toLocaleString();
+    current_card[1].src = "https://openweathermap.org/img/wn/" + current_weather.weather[0].icon + "@2x.png";
+    current_card[1].alt = current_weather.weather[0].description;
+    current_card[2].innerText = current_weather.weather[0].description;
+    if (result.alerts) {
+        current_card[3].style.display = 'block';
+        current_card[3].innerText = result.alerts[0].event;
+        current_card[3].classList.add("custom-alert");
+    }
+    const lis = current_card[4].getElementsByTagName("li");
+    lis[0].innerText = "Umidità: " + current_weather.humidity + "%";
+    lis[1].innerText = "Pressione: " + current_weather.pressure + " hPa";
+    lis[2].innerText = "Vento: " + current_weather.wind_speed + " m/s";
+}
+
+function hourlyWeather(result, hourly) {
+    //hourly weather: fino alle 23:00
+    /**
+     *  <div class="col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2">
+          <h5>9:00 - desc meteo</h5>
+          <img src="images/missing_image.png" alt="missing image" class="card-img-top">
+          <p class="mb-0">temp - temp percepita</p>
+          <p class="mb-0">umidità - pressione</p>
+          <p>vento - visibilità</p>
+        </div>
+     */
+    const hourly_card = document.getElementById('today-weather');
+
+    for (let i = 0; i < 24; i++) {
+        // prendo le informazioni dal risultato della chiamata
+        const data = timestampToDate(hourly[i].dt, result.timezone_offset);
+
+        // genero l'html
+        const info_container = document.createElement('div');
+        const image_hourly = document.createElement('img');
+        const info_title = document.createElement('h5');
+        const info1 = document.createElement('p');
+        const info2 = document.createElement('p');
+        const info3 = document.createElement('p');
+
+        if (data.getHours() == 23 || i == 23) {
+            info_container.className = 'col-md-3';
+        } else {
+            info_container.className = 'col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2';
+        }
+        image_hourly.className = 'card-img-top';
+        info1.className = 'mb-0';
+        info2.className = 'mb-0';
+
+        info_title.innerText = data.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
+        image_hourly.src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
+        image_hourly.alt = hourly[i].weather[0].description;
+        info1.innerText = hourly[i].temp + '°C - ' + hourly[i].feels_like + '°C';
+        info2.innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s   UV: ' + (hourly[i].uvi * 100).toFixed(0);
+        info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
+
+        hourly_card.appendChild(info_container);
+        info_container.append(info_title, image_hourly, info1, info2, info3);
+
+        if (data.getHours() == 23 || i == 23) {
+            break;
+        }
+    }
+}
+
+function dailyWeather(result, daily_weather) {
+    // daily weather
+    for (let i = 1; i < daily_weather.length; i++) {
+        //data
+        document.getElementById("g" + i).innerText = timestampToDate(daily_weather[i].dt, result.timezone_offset).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+
+        let day_card = document.getElementById("giorno" + i).children;
+        day_card = day_card[0].getElementsByTagName("DIV");
+        //giornata
+        let info = day_card[0].getElementsByTagName("p");
+        info[0].innerText = daily_weather[i].weather[0].description;
+        info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C \t Min: " + Math.round(daily_weather[i].temp.min) + "°C";
+        info[2].innerText = "Precipitazioni: " + daily_weather[i].pop * 100 + "% \t Vento: " + daily_weather[i].wind_speed + "m/s";
+        info[3].innerText = daily_weather[i].pressure + "hPa \t Umidità: " + daily_weather[i].humidity + "% \t UV: " + daily_weather[i].uvi;
+        let image = day_card[0].getElementsByTagName("img");
+        image[0].src = "https://openweathermap.org/img/wn/" + daily_weather[i].weather[0].icon + "@2x.png";
+        image[0].alt = daily_weather[i].weather[0].description;
+        //mattina
+        info = day_card[1].getElementsByTagName("p");
+        info[0].innerText = Math.round(daily_weather[i].temp.morn) + "°C";
+        info[1].innerText = Math.round(daily_weather[i].feels_like.morn) + "°C";
+        //pomeriggio
+        info = day_card[2].getElementsByTagName("p");
+        info[0].innerText = Math.round(daily_weather[i].temp.day) + "°C";
+        info[1].innerText = Math.round(daily_weather[i].feels_like.day) + "°C";
+        //sera
+        info = day_card[3].getElementsByTagName("p");
+        info[0].innerText = Math.round(daily_weather[i].temp.eve) + "°C";
+        info[1].innerText = Math.round(daily_weather[i].feels_like.eve) + "°C";
+        //notte
+        info = day_card[4].getElementsByTagName("p");
+        info[0].innerText = Math.round(daily_weather[i].temp.night) + "°C";
+        info[1].innerText = Math.round(daily_weather[i].feels_like.night) + "°C";
+    }
+}

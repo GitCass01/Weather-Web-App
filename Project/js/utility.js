@@ -107,7 +107,7 @@ function errorFunction() {
     alert("Geocoder failed");
 }
 
-// conversione da timestamp Unix, UTC in "gg/mm/aaaa"
+// conversione da timestamp Unix, UTC in data
 function timestampToDate(timestamp, offset) {
     const tz = new Date('August 19, 1975 23:15:30').getTimezoneOffset() * 60;
     // multiplied by 1000 so that the argument is in milliseconds, not seconds.
