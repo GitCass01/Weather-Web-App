@@ -1,3 +1,58 @@
+function suggestion() {
+    let arr = ['prova1', 'prova2', 'prova3'];
+
+    const city = document.getElementById('floatingInput').value;
+
+    const geo_url = 'https://api.openweathermap.org/geo/1.0/direct?';
+    const params = {
+        q: city,
+        limit: 5,
+        appid: 'fb1d036e9880437a98ec66f6e4daab01'
+    };
+    const query = new URLSearchParams(params).toString().replace("%2C", ",");
+    const final_url = geo_url + query;
+
+    const ul = document.getElementsByClassName('suggestion-elements');
+    ul[0].style.display = 'block';
+
+    await fetch(final_url)
+        .then(response => response.json())
+        .then(result => {
+            //console.log(result);
+            let arr = [];
+            if (result[0]) {
+                for (let i = 0; i < result.length; i++) {
+                    const li = document.createElement('li');
+                    li.id = i;
+                    li.innerText = result[i].local_names.it + ", " + result[i].country;
+                    li.setAttribute('onclick', 'select(this)');
+                    ul[0].append(li);
+                    const obj = {'lat': result[i].lat, 'lom': result[i].lon};
+                    arr.push(obj);
+                }
+                sessionStorage.setItem('suggestions', JSON.stringify(arr));
+            } else {
+                alert('Città non trovata!')
+            }
+        })
+        .catch(err => console.log("err: ", err));
+}
+
+function select(e) {
+    document.getElementById('floatingInput').value = e.innerText;
+    const obj = JSON.parse(sessionStorage.getItem('suggestion'));
+    const lat = obj[e.id].lat;
+    const lon = obj[e.id].lon;
+    const name = document.getElementById(floatingInput).value;
+    console.log(lat + " " + lon);
+
+    const ul = document.getElementsByClassName('suggestion-elements');
+    ul[0].style.display = 'none';
+    sessionStorage.removeItem('suggestions');
+
+    //showMe()
+}
+
 // funzione per mostrare la card specifica per la città innserita nella search bar + current weather
 async function showMe() {
     let card = document.getElementById('hidden-card');
@@ -43,7 +98,7 @@ async function getLatLon(city) {
 
     let lat = 0;
     let lon = 0;
-    let err = 0
+    let err = 0;
 
     await fetch(final_url)
         .then(response => response.json())

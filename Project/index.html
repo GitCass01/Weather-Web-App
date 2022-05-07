@@ -22,6 +22,7 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap-dark-5@1.1.3/dist/css/bootstrap-night.min.css" disabled>
     <!-- custom css -->
     <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/suggestion.css">
 
     <script type="application/ld+json">
         {
@@ -84,15 +85,22 @@
                         href="#*">*</a></p>
             </div>
 
-            <div class="input-group p-3 d-flex">
-                <div class="form-floating flex-grow-1">
-                    <input type="search" class="form-control rounded" id="floatingInput" placeholder="es. Milan, IT"
-                        aria-label="Search" />
-                    <label for="floatingInput">es. Milan, IT</label>
+            <div>
+                <div class="input-group px-3 pt-3 pb-0 d-flex">
+                    <div class="form-floating flex-grow-1">
+                        <input type="search" class="form-control rounded" id="floatingInput" placeholder="es. Milan, IT"
+                            aria-label="Search" />
+                        <label for="floatingInput">es. Milan, IT</label>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary flex-shrink-0"
+                        onclick="suggestion()">search</button>
+                    <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="getLocation()"><img
+                            src="images/location.png" alt="posizione"></button>
                 </div>
-                <button type="button" class="btn btn-outline-primary flex-shrink-0" onclick="showMe()">search</button>
-                <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="getLocation()"><img
-                        src="images/location.png" alt="posizione"></button>
+                <div class="suggestion-box mx-3 mb-3 mt-0">
+                    <ul class="suggestion-elements list-group">
+                    </ul>
+                </div>
             </div>
 
             <!-- card città inserita dall'utente -->
