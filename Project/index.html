@@ -60,8 +60,8 @@
                 <div class="collapse navbar-collapse" id="dropdown-navbar">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page"
-                                href="weather.html">Previsioni Settimanali</a></li>
-                        </il>
+                                href="weather.html">Previsioni Settimanali</a>
+                        </li>
                     </ul>
                     <div class="form-check form-switch d-flex">
                         <input class="form-check-input" type="checkbox" role="switch" id="toggle-mode"
@@ -78,7 +78,8 @@
             <!-- Main + search bar -->
             <div class="p-3 pb-md-4 mx-auto text-center">
                 <h1>Meteo Live nel Mondo</h1>
-                <p>Usa la barra di ricerca per cercare una città specifica oppure consulta le principali città nelle card sottostanti.</p>
+                <p>Usa la barra di ricerca per cercare una città specifica oppure consulta le principali città nelle
+                    card sottostanti.</p>
                 <p>Cliccando su una città potrai vedere le previsioni settimanali e delle informazioni aggiuntive. <a
                         href="#*">*</a></p>
             </div>
@@ -110,7 +111,8 @@
                             <li class="list-group-item">Pressione: </li>
                             <li class="list-group-item">Vento: </li>
                         </ul>
-                        <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
+                        <a href="weather.html" onclick="saveCity('city')"
+                            class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                     </div>
                 </div>
             </div>
@@ -120,7 +122,7 @@
                 <div class="col pt-3">
                     <div class="card-sizing card mx-auto">
                         <div class="card-header py-3">
-                            <h4 class="my-0 f2-normal">Milano</h4>
+                            <h4 id="head-milano" class="my-0 f2-normal">Milano, IT</h4>
                         </div>
                         <div id="card-milano" class="card-body">
                             <p class="card-text">data</p>
@@ -132,14 +134,15 @@
                                 <li class="list-group-item">Pressione: </li>
                                 <li class="list-group-item">Vento: </li>
                             </ul>
-                            <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
+                            <a href="weather.html" onclick="saveCity('head-milano')"
+                                class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                         </div>
                     </div>
                 </div>
                 <div class="col pt-3">
                     <div class="card-sizing card mx-auto">
                         <div class="card-header py-3">
-                            <h4 class="my-0 f2-normal">Londra</h4>
+                            <h4 id="head-londra" class="my-0 f2-normal">Londra, GB</h4>
                         </div>
                         <div id="card-londra" class="card-body">
                             <p class="card-text">data</p>
@@ -151,14 +154,15 @@
                                 <li class="list-group-item">Pressione: </li>
                                 <li class="list-group-item">Vento: </li>
                             </ul>
-                            <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
+                            <a href="weather.html" onclick="saveCity('head-londra')"
+                                class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                         </div>
                     </div>
                 </div>
                 <div class="col pt-3">
                     <div class="card-sizing card mx-auto">
                         <div class="card-header py-3">
-                            <h4 class="my-0 f2-normal">Tokyo</h4>
+                            <h4 id="head-tokyo" class="my-0 f2-normal">Tokyo, JP</h4>
                         </div>
                         <div id="card-tokyo" class="card-body">
                             <p class="card-text">data</p>
@@ -170,14 +174,15 @@
                                 <li class="list-group-item">Pressione: </li>
                                 <li class="list-group-item">Vento: </li>
                             </ul>
-                            <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
+                            <a href="weather.html" onclick="saveCity('head-tokyo')"
+                                class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                         </div>
                     </div>
                 </div>
                 <div class="col pt-3">
                     <div class="card-sizing card mx-auto">
                         <div class="card-header py-3">
-                            <h4 class="my-0 f2-normal">New York</h4>
+                            <h4 id="head-ny" class="my-0 f2-normal">New York, US</h4>
                         </div>
                         <div id="card-newyork" class="card-body">
                             <p class="card-text">data</p>
@@ -189,7 +194,8 @@
                                 <li class="list-group-item">Pressione: </li>
                                 <li class="list-group-item">Vento: </li>
                             </ul>
-                            <a href="weather.html" class="btn btn-primary stretched-link">Previsioni Settimanali</a>
+                            <a href="weather.html" onclick="saveCity('head-ny')"
+                                class="btn btn-primary stretched-link">Previsioni Settimanali</a>
                         </div>
                     </div>
                 </div>

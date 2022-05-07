@@ -79,6 +79,7 @@ async function generateChart(lat, lon) {
     const info = await findTempData(lat, lon);
     //console.log(info);
 
+    document.getElementById('chartContainer').innerHTML = "<canvas id='myChart'></canvas>";
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',

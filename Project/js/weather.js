@@ -99,14 +99,36 @@ function setWeather(lat, lon, id_card) {
         .catch(err => console.log("err: ", err));
 }
 
+async function saveCity(name) {
+    sessionStorage.setItem("cityWeekly", document.getElementById(name).innerText);
+}
+
 // weekly (7 days) weather for 'weather.html' page
 async function weeklyWeather() {
     // lat, lon source:
     // 1. card clickata nella 'index.html'
     // 2. altrimenti uso la posizione attuale
     // 3. search box -> aggiorno
-    let lat = 45.4221000;
-    let lon = 9.108610;
+    let lat = 45.463619;
+    let lon = 9.188120;
+    let name = "Milano, IT";
+
+    if (document.getElementById('floatingInput').value.trim()) {
+        name = document.getElementById('floatingInput').value;
+        sessionStorage.setItem("cityWeekly", name);
+        const pos = await getLatLon(name);
+        lat = pos[0];
+        lon = pos[1];
+    } else if (sessionStorage.getItem('cityWeekly')) {
+        name = sessionStorage.getItem('cityWeekly');
+        const pos = await getLatLon(name);
+        lat = pos[0];
+        lon = pos[1];
+    }
+
+    document.getElementById('cityNameWeekly').innerText = "Previsioni settimanali di " + name;
+
+    initializeMap(lat, lon);
 
     const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
     const params = {
@@ -192,7 +214,7 @@ function hourlyWeather(result, hourly) {
         info_title.innerText = data.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
         image_hourly.src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
         image_hourly.alt = hourly[i].weather[0].description;
-        info1.innerText = hourly[i].temp + '°C - ' + hourly[i].feels_like + '°C';
+        info1.innerText = Math.round(hourly[i].temp) + '°C - ' + Math.round(hourly[i].feels_like) + '°C';
         info2.innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s   UV: ' + (hourly[i].uvi * 100).toFixed(0);
         info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
 
