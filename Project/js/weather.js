@@ -78,8 +78,8 @@ async function showMe(lat, lon, name) {
 }
 
 // CURRENT WEATHER (card in homepage: Milano, Londra, Tokyo, New York)
-// direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=Milano&limit=3&appid=fb1d036e9880437a98ec66f6e4daab01
-// one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&appid=fb1d036e9880437a98ec66f6e4daab01
+// direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=Milano&limit=3&appid={API_KEY}
+// one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&appid={API_KEY}
 async function currentWeatherHomePage() {
     let latLon = await getLatLon('Milano, IT');
     setWeather(latLon[0], latLon[1], 'card-milano');
