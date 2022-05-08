@@ -1,3 +1,12 @@
+// necessario per evitare le ambiguità causati dai nomi
+const cityHomePage = {
+    'Milano, IT': { lat: 45.463619, lon: 9.188120 },
+    'Londra, GB': { lat: 51.507351, lon: -0.127758 },
+    'Tokyo, JP': { lat: 35.689487, lon: 139.691711 },
+    'New York': { lat: 40.712776, lon: -74.005974 }
+};
+
+
 async function suggestion() {
     const city = document.getElementById('floatingInput').value;
 
@@ -32,9 +41,12 @@ async function suggestion() {
                     } else {
                         li.innerText = result[i].name + ", " + result[i].country;
                     }
+                    if (result[i].state) {
+                        li.innerText += " : " + result[i].state;
+                    }
                     li.setAttribute('onclick', 'select(this)');
                     ul[0].append(li);
-                    const obj = { 'lat': result[i].lat, 'lon': result[i].lon };
+                    const obj = { 'name': li.innerText.split(" : ")[0], lat: result[i].lat, 'lon': result[i].lon };
                     arr.push(obj);
                 }
                 sessionStorage.setItem('suggestions', JSON.stringify(arr));
@@ -50,7 +62,7 @@ function select(e) {
     const obj = JSON.parse(sessionStorage.getItem('suggestions'));
     const lat = obj[e.id].lat;
     const lon = obj[e.id].lon;
-    const name = document.getElementById('floatingInput').value;
+    const name = document.getElementById('floatingInput').value.split(" : ")[0];
 
     const ul = document.getElementsByClassName('suggestion-elements');
     const ulChildren = document.getElementsByClassName('suggestion-elements')[0].children;
@@ -60,6 +72,7 @@ function select(e) {
     }
     ul[0].style.display = 'none';
     sessionStorage.removeItem('suggestions');
+    sessionStorage.setItem('cityWeekly', JSON.stringify(obj[e.id]));
 
     if (ulId === 'indexSuggestion') {
         showMe(lat, lon, name);
@@ -161,8 +174,9 @@ function setWeather(lat, lon, id_card) {
 }
 
 // salva le info della città cliccata (card) per mostrare le previsioni settimanali
-async function saveCity(name) {
-    sessionStorage.setItem("cityWeekly", document.getElementById(name).innerText);
+function saveCity(name) {
+    const obj = {'name': name, 'lat': cityHomePage[name].lat, 'lon': cityHomePage[name].lon};
+    sessionStorage.setItem("cityWeekly", JSON.stringify(obj));
 }
 
 // weekly (7 days) weather for 'weather.html' page
@@ -175,17 +189,11 @@ async function weeklyWeather() {
     let lon = 9.188120;
     let name = "Milano, IT";
 
-    if (document.getElementById('floatingInput').value.trim()) {
-        name = document.getElementById('floatingInput').value;
-        sessionStorage.setItem("cityWeekly", name);
-        const pos = await getLatLon(name);
-        lat = pos[0];
-        lon = pos[1];
-    } else if (sessionStorage.getItem('cityWeekly')) {
-        name = sessionStorage.getItem('cityWeekly');
-        const pos = await getLatLon(name);
-        lat = pos[0];
-        lon = pos[1];
+    if (sessionStorage.getItem('cityWeekly')) {
+        const city = JSON.parse(sessionStorage.getItem('cityWeekly'));
+        name = city.name;
+        lat = city.lat;
+        lon = city.lon;
     }
 
     document.getElementById('cityNameWeekly').innerText = "Previsioni settimanali di " + name;
