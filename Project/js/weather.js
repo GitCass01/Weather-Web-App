@@ -3,10 +3,11 @@ const cityHomePage = {
     'Milano, IT': { lat: 45.463619, lon: 9.188120 },
     'Londra, GB': { lat: 51.507351, lon: -0.127758 },
     'Tokyo, JP': { lat: 35.689487, lon: 139.691711 },
-    'New York': { lat: 40.712776, lon: -74.005974 }
+    'New York, US': { lat: 40.712776, lon: -74.005974 }
 };
 
-
+// dà la possibilità all'utente di scegliere la città da un 'suggestion box' rispetto allo 'state' e alla latitudine e longitudine
+// in quanto la ricerca per nome introduce ambiguità
 async function suggestion() {
     const city = document.getElementById('floatingInput').value;
 
@@ -93,46 +94,11 @@ async function showMe(lat, lon, name) {
 // CURRENT WEATHER (card in homepage: Milano, Londra, Tokyo, New York)
 // direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=Milano&limit=3&appid={API_KEY}
 // one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&appid={API_KEY}
-async function currentWeatherHomePage() {
-    let latLon = await getLatLon('Milano, IT');
-    setWeather(latLon[0], latLon[1], 'card-milano');
-    latLon = await getLatLon('Londra, GB');
-    setWeather(latLon[0], latLon[1], 'card-londra');
-    latLon = await getLatLon('Tokyo, JP');
-    setWeather(latLon[0], latLon[1], 'card-tokyo');
-    latLon = await getLatLon('New York, US');
-    setWeather(latLon[0], latLon[1], 'card-newyork');
-}
-
-//funzione per la ricerca di 'latitudine, longitudine' dato il nome di una città
-async function getLatLon(city) {
-    const geo_url = 'https://api.openweathermap.org/geo/1.0/direct?';
-    const params = {
-        q: city,
-        limit: 1,
-        appid: 'fb1d036e9880437a98ec66f6e4daab01'
-    };
-    const query = new URLSearchParams(params).toString().replace("%2C", ",");
-    const final_url = geo_url + query;
-
-    let lat = 0;
-    let lon = 0;
-    let err = 0;
-
-    await fetch(final_url)
-        .then(response => response.json())
-        .then(result => {
-            //console.log(result);
-            if (result[0]) {
-                lat = result[0].lat;
-                lon = result[0].lon;
-            } else {
-                err = 1;
-            }
-        })
-        .catch(err => console.log("err: ", err));
-
-    return [lat, lon, err];
+function currentWeatherHomePage() {
+    setWeather(cityHomePage['Milano, IT'].lat, cityHomePage['Milano, IT'].lon, 'card-milano');
+    setWeather(cityHomePage['Londra, GB'].lat, cityHomePage['Londra, GB'].lon, 'card-londra');
+    setWeather(cityHomePage['Tokyo, JP'].lat, cityHomePage['Milano, IT'].lon, 'card-tokyo');
+    setWeather(cityHomePage['New York, US'].lat, cityHomePage['Milano, IT'].lon, 'card-newyork');
 }
 
 // funzione per la ricerca e l'inserimento del meteo nelle card
