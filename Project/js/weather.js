@@ -96,7 +96,7 @@ async function getLatLon(city) {
     const geo_url = 'https://api.openweathermap.org/geo/1.0/direct?';
     const params = {
         q: city,
-        limit: 5,
+        limit: 1,
         appid: 'fb1d036e9880437a98ec66f6e4daab01'
     };
     const query = new URLSearchParams(params).toString().replace("%2C", ",");
@@ -169,7 +169,7 @@ async function saveCity(name) {
 async function weeklyWeather() {
     // lat, lon source:
     // 1. card clickata nella 'index.html'
-    // 2. altrimenti uso la posizione attuale
+    // 2. altrimenti uso Milano come posizione 'placeholder'
     // 3. search box -> aggiorno
     let lat = 45.463619;
     let lon = 9.188120;
