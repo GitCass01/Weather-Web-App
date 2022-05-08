@@ -1,6 +1,4 @@
-function suggestion() {
-    let arr = ['prova1', 'prova2', 'prova3'];
-
+async function suggestion() {
     const city = document.getElementById('floatingInput').value;
 
     const geo_url = 'https://api.openweathermap.org/geo/1.0/direct?';
@@ -15,6 +13,11 @@ function suggestion() {
     const ul = document.getElementsByClassName('suggestion-elements');
     ul[0].style.display = 'block';
 
+    const ulChildren = document.getElementsByClassName('suggestion-elements')[0].children;
+    for (let i = 0; i < ulChildren.length; i++) {
+        ulChildren[i].remove();
+    }
+
     await fetch(final_url)
         .then(response => response.json())
         .then(result => {
@@ -24,10 +27,14 @@ function suggestion() {
                 for (let i = 0; i < result.length; i++) {
                     const li = document.createElement('li');
                     li.id = i;
-                    li.innerText = result[i].local_names.it + ", " + result[i].country;
+                    if (result[i].local_names) {
+                        li.innerText = result[i].local_names.it + ", " + result[i].country;
+                    } else {
+                        li.innerText = result[i].name + ", " + result[i].country;
+                    }
                     li.setAttribute('onclick', 'select(this)');
                     ul[0].append(li);
-                    const obj = {'lat': result[i].lat, 'lom': result[i].lon};
+                    const obj = { 'lat': result[i].lat, 'lon': result[i].lon };
                     arr.push(obj);
                 }
                 sessionStorage.setItem('suggestions', JSON.stringify(arr));
@@ -40,35 +47,34 @@ function suggestion() {
 
 function select(e) {
     document.getElementById('floatingInput').value = e.innerText;
-    const obj = JSON.parse(sessionStorage.getItem('suggestion'));
+    const obj = JSON.parse(sessionStorage.getItem('suggestions'));
     const lat = obj[e.id].lat;
     const lon = obj[e.id].lon;
-    const name = document.getElementById(floatingInput).value;
-    console.log(lat + " " + lon);
+    const name = document.getElementById('floatingInput').value;
 
     const ul = document.getElementsByClassName('suggestion-elements');
+    const ulChildren = document.getElementsByClassName('suggestion-elements')[0].children;
+    const ulId = e.parentNode.id;
+    for (let i = 0; i < ulChildren.length; i++) {
+        ulChildren[i].remove();
+    }
     ul[0].style.display = 'none';
     sessionStorage.removeItem('suggestions');
 
-    //showMe()
+    if (ulId === 'indexSuggestion') {
+        showMe(lat, lon, name);
+    } else if (ulId === 'weeklySuggestion') {
+        weeklyWeather();
+    }
 }
 
 // funzione per mostrare la card specifica per la città innserita nella search bar + current weather
-async function showMe() {
+async function showMe(lat, lon, name) {
     let card = document.getElementById('hidden-card');
-    let city = document.getElementById('floatingInput');
 
-    if (city.value.trim()) {
-        const latLon = await getLatLon(city.value);
-
-        if (latLon[2] == 1) {
-            alert("Città non trovata!");
-        } else {
-            card.style.display = 'block';
-            document.getElementById('city').innerText = city.value;
-            setWeather(latLon[0], latLon[1], 'hidden-card-body');
-        }
-    }
+    card.style.display = 'block';
+    document.getElementById('city').innerText = name;
+    setWeather(lat, lon, 'hidden-card-body');
 }
 
 // CURRENT WEATHER (card in homepage: Milano, Londra, Tokyo, New York)
@@ -154,6 +160,7 @@ function setWeather(lat, lon, id_card) {
         .catch(err => console.log("err: ", err));
 }
 
+// salva le info della città cliccata (card) per mostrare le previsioni settimanali
 async function saveCity(name) {
     sessionStorage.setItem("cityWeekly", document.getElementById(name).innerText);
 }
@@ -248,9 +255,8 @@ function hourlyWeather(result, hourly) {
 
     if (hourly_card.children.length == 0) {// se è la prima volta sulla pagina genero l'html
         for (let i = 0; i < 24; i++) {
-            // prendo le informazioni dal risultato della chiamata
             const data = timestampToDate(hourly[i].dt, result.timezone_offset);
-  
+
             const info_container = document.createElement('div');
             const image_hourly = document.createElement('img');
             const info_title = document.createElement('h5');
@@ -263,7 +269,7 @@ function hourlyWeather(result, hourly) {
             } else {
                 info_container.className = 'col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2';
             }
-            info_container.id = 'ora'+i;
+            info_container.id = 'ora' + i;
             image_hourly.className = 'card-img-top';
             info1.className = 'mb-0';
             info2.className = 'mb-0';
@@ -284,7 +290,9 @@ function hourlyWeather(result, hourly) {
         }
     } else { // se l'html è già stato generato, aggiorno le informazioni
         for (let i = 0; i < 24; i++) {
-            const ora = document.getElementById("ora"+i).children;
+            const data = timestampToDate(hourly[i].dt, result.timezone_offset);
+
+            const ora = document.getElementById("ora" + i).children;
             ora[0].innerText = data.toLocaleTimeString(undefined, { month: "numeric", day: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
             ora[1].src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
             ora[1].alt = hourly[i].weather[0].description;

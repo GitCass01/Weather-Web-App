@@ -6,9 +6,9 @@ async function findTempData(lat, lon) {
     const temp_min = [];
 
     const today = new Date();
-    for (let i = 4; i >= 0; i--) {
-        let pastDate = Math.round(new Date().setDate(today.getDay() - i) / 1000); // voglio la data in secondi
-
+    for (let i = 5; i >= 1; i--) {
+        let pastDate = Math.round(new Date().setDate(today.getDate() - i) / 1000); // voglio la data in secondi per openweathermap
+        
         const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall/timemachine?';
         const params = {
             lat: lat,

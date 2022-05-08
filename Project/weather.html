@@ -88,16 +88,20 @@
                         href="#*">*</a></p>
             </div>
 
-            <div class="input-group p-3 d-flex">
+            <div class="input-group px-3 pt-3 pb-0 d-flex">
                 <div class="form-floating flex-grow-1">
                     <input type="search" class="form-control rounded" id="floatingInput" placeholder="es. Milan, IT"
                         aria-label="Search" />
-                    <label for="floatingInput">es. Milan, IT</label>
+                    <label for="floatingInput">es. Milano, IT</label>
                 </div>
                 <button type="button" class="btn btn-outline-primary flex-shrink-0"
-                    onclick="weeklyWeather()">search</button>
+                    onclick="suggestion()">search</button>
                 <button type="button" class="btn btn-outline-secondary flex-shrink-0" onclick="getLocation()"><img
                         src="images/location.png" alt="posizione"></button>
+            </div>
+            <div class="suggestion-box mx-3 mb-3 mt-0">
+                <ul id="weeklySuggestion" class="suggestion-elements list-group">
+                </ul>
             </div>
 
             <div class="container mt-4">
