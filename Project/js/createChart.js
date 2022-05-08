@@ -29,7 +29,6 @@ async function findTempData(lat, lon) {
 
                 // l'api non fornisce la temp max e min relative ai giorni precedenti (historical)
                 // quindi itero sulle ore del giorno e ricavo le temp max e min
-                // QUESTO COMPORTA UNA DIMINUZIONE DI PRESTAZIONI -> il costo è di circa 1 secondo
                 let max = result.current.temp; 
                 let min = result.current.temp;
                 for (let i = 0; i < 24; i++) {
