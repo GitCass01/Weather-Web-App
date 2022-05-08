@@ -36,6 +36,12 @@ body {
     color: black;
 }
 
+.badge {
+    cursor: help;
+    position: relative;
+    z-index: 3;
+}
+
 /* remove the shadow onclick */
 .btn {
     box-shadow: none !important

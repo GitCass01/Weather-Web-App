@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="keywords" content="meteo, meteo live, weather, app meteo, web weather">
-    <meta name="description" content="Un'applicazione web per monitorare il meteo corrente di tutte le città nel mondo.">
+    <meta name="description"
+        content="Un'applicazione web per monitorare il meteo corrente di tutte le città nel mondo.">
     <meta name="color-scheme" content="light dark">
 
     <link rel="icon" href="favicon.ico">
@@ -74,6 +75,25 @@
     </header>
 
     <main>
+
+        <!-- Modal -->
+        <div class="modal fade" id="alertPopUp" tabindex="-1" aria-labelledby="alertPopUpLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="alertPopUpLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- qui genero la descrizione dell'alert cliccato -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container py-3">
             <!-- Main + search bar -->
             <div class="p-3 pb-md-4 mx-auto text-center">
@@ -133,7 +153,8 @@
                             <p class="card-text">data</p>
                             <img src="images/missing_image.png" alt="missing image" class="card-img-top">
                             <h5 class="card-title">meteo(es. nuvoloso)</h5>
-                            <div id="alert-milano" class="badge rounded-pill text-dark"></div>
+                            <div id="alert-milano" class="badge rounded-pill text-dark" data-bs-toggle="modal"
+                                data-bs-target="#alertPopUp"></div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Umidità: </li>
                                 <li class="list-group-item">Pressione: </li>
