@@ -115,3 +115,70 @@ function timestampToDate(timestamp, offset) {
 
     return date;
 }
+
+function createAlertModal(id_card, alerts) {
+    /*
+        <div id="alert" class="badge rounded-pill text-dark" data-bs-toggle="modal" data-bs-target="#alertPopUp"></div>
+
+        <div class="modal fade" id="alertPopUp" tabindex="-1" aria-labelledby="alertPopUpLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="alertPopUpLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- qui genero la descrizione dell'alert cliccato -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    */
+    // creo gli elementi che costituiscono il modal
+    const modal = document.createElement('div');
+    const modalDialog = document.createElement('div');
+    const modalContent = document.createElement('div');
+    const modalHeader = document.createElement('div');
+    const title = document.createElement('h5');
+    const button = document.createElement('button');
+    const modalBody = document.createElement('div');
+    const description = document.createElement('p');
+    const modalFooter = document.createElement('div');
+    const button1 = document.createElement('button');
+    // inserisco classi, id e attributi agli elementi
+    modal.className = 'modal fade';
+    modal.id = 'alertPopUp-' + id_card;
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('aria-labelledby', 'alertPopUpLabel-' + id_card);
+    modal.setAttribute('aria-hidden', 'true');
+    modalDialog.className = 'modal-dialog modal-dialog-centered modal-dialog-scrollable';
+    modalContent.className = 'modal-content';
+    modalHeader.className = 'modal-header';
+    title.className = 'modal-title';
+    title.id = 'alertPopUpLabel-' + id_card;
+    button.className = 'btn-close';
+    button.setAttribute('type', 'button');
+    button.setAttribute('data-bs-dismiss', 'modal');
+    button.setAttribute('aria-label', 'Close');
+    modalBody.className = 'modal-body';
+    modalFooter.className = 'modal-footer';
+    button1.className = 'btn btn-secondary';
+    button1.type = 'button';
+    button1.setAttribute('data-bs-dismiss', 'modal');
+    // inserisco le informazioni
+    title.innerText = alerts[0].event;
+    description.innerText = "Inviato da: " + alerts[0].sender_name + "\n\n" + alerts[0].description;
+    button1.innerText = 'Close';
+    // lo inserisco nella pagina
+    const main = document.getElementById('main');
+    main.appendChild(modal);
+    modal.appendChild(modalDialog);
+    modalDialog.appendChild(modalContent);
+    modalContent.append(modalHeader, modalBody, modalFooter);
+    modalHeader.append(title, button);
+    modalBody.append(description);
+    modalFooter.append(button1);
+}

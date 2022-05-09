@@ -97,8 +97,8 @@ async function showMe(lat, lon, name) {
 function currentWeatherHomePage() {
     setWeather(cityHomePage['Milano, IT'].lat, cityHomePage['Milano, IT'].lon, 'card-milano');
     setWeather(cityHomePage['Londra, GB'].lat, cityHomePage['Londra, GB'].lon, 'card-londra');
-    setWeather(cityHomePage['Tokyo, JP'].lat, cityHomePage['Milano, IT'].lon, 'card-tokyo');
-    setWeather(cityHomePage['New York, US'].lat, cityHomePage['Milano, IT'].lon, 'card-newyork');
+    setWeather(cityHomePage['Tokyo, JP'].lat, cityHomePage['Tokyo, JP'].lon, 'card-tokyo');
+    setWeather(cityHomePage['New York, US'].lat, cityHomePage['New York, US'].lon, 'card-newyork');
 }
 
 // funzione per la ricerca e l'inserimento del meteo nelle card
@@ -126,10 +126,16 @@ function setWeather(lat, lon, id_card) {
             citycard[1].alt = result.current.weather[0].description;
             citycard[2].innerText = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
             if (result.alerts) {
+                // se è presente un'alert allora mostro il 'badge' dell'alert
+                // creo un 'modal' (pop up) in cui, cliccando sul badge, mostrerò i dettagli dell'alert
+                // 'abilito' il badge relativo alle allerte meteo
                 citycard[3].style.display = 'block';
                 //console.log(result.alerts);
                 citycard[3].innerText = result.alerts[0].event;
+                citycard[3].setAttribute('data-bs-toggle', 'modal');
+                citycard[3].setAttribute('data-bs-target', '#alertPopUp-' + id_card);
                 citycard[3].classList.add("custom-alert");
+                createAlertModal(id_card, result.alerts);
             }
             const lis = citycard[4].getElementsByTagName("li");
             lis[0].innerText = "Umidità: " + result.current.humidity + "%";
@@ -141,7 +147,7 @@ function setWeather(lat, lon, id_card) {
 
 // salva le info della città cliccata (card) per mostrare le previsioni settimanali
 function saveCity(name) {
-    const obj = {'name': name, 'lat': cityHomePage[name].lat, 'lon': cityHomePage[name].lon};
+    const obj = { 'name': name, 'lat': cityHomePage[name].lat, 'lon': cityHomePage[name].lon };
     sessionStorage.setItem("cityWeekly", JSON.stringify(obj));
 }
 
@@ -185,7 +191,7 @@ async function weeklyWeather() {
             const current_weather = result.current;
             const daily_weather = result.daily;
             const hourly = result.hourly;
-            //console.log(hourly);
+            //console.log(current_weather);
 
             currentWeather(result, current_weather);
             hourlyWeather(result, hourly);
@@ -201,11 +207,14 @@ function currentWeather(result, current_weather) {
     current_card[0].innerText = timestampToDate(current_weather.dt, result.timezone_offset).toLocaleString();
     current_card[1].src = "https://openweathermap.org/img/wn/" + current_weather.weather[0].icon + "@2x.png";
     current_card[1].alt = current_weather.weather[0].description;
-    current_card[2].innerText = current_weather.weather[0].description;
+    current_card[2].innerText = Math.round(current_weather.temp) + "°C - " + current_weather.weather[0].description;
     if (result.alerts) {
         current_card[3].style.display = 'block';
         current_card[3].innerText = result.alerts[0].event;
         current_card[3].classList.add("custom-alert");
+        current_card[3].setAttribute('data-bs-toggle', 'modal');
+        current_card[3].setAttribute('data-bs-target', '#alertPopUp-');
+        createAlertModal('', result.alerts);
     }
     const lis = current_card[4].getElementsByTagName("li");
     lis[0].innerText = "Umidità: " + current_weather.humidity + "%";
@@ -225,7 +234,6 @@ function hourlyWeather(result, hourly) {
         </div>
      */
     const hourly_card = document.getElementById('today-weather');
-
 
     if (hourly_card.children.length == 0) {// se è la prima volta sulla pagina genero l'html
         for (let i = 0; i < 24; i++) {
