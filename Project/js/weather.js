@@ -37,7 +37,7 @@ async function suggestion() {
                 for (let i = 0; i < result.length; i++) {
                     const li = document.createElement('li');
                     li.id = i;
-                    if (result[i].local_names) {
+                    if (result[i].local_names && result[i].local_names.it) {
                         li.innerText = result[i].local_names.it + ", " + result[i].country;
                     } else {
                         li.innerText = result[i].name + ", " + result[i].country;
@@ -102,7 +102,7 @@ function currentWeatherHomePage() {
 }
 
 // funzione per la ricerca e l'inserimento del meteo nelle card
-function setWeather(lat, lon, id_card) {
+async function setWeather(lat, lon, id_card) {
     const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
     const params = {
         lat: lat,
@@ -115,7 +115,7 @@ function setWeather(lat, lon, id_card) {
     const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
     const call = onecall_url + query_weather;
 
-    fetch(call)
+    await fetch(call)
         .then(response => response.json())
         .then(result => {
             //console.log(result);
@@ -132,6 +132,9 @@ function setWeather(lat, lon, id_card) {
                 citycard[3].style.display = 'block';
                 //console.log(result.alerts);
                 citycard[3].innerText = result.alerts[0].event;
+                if (result.alerts.length > 0) {
+                    citycard[3].innerText += " (+" + result.alerts.length + " allerte)";
+                }
                 citycard[3].setAttribute('data-bs-toggle', 'modal');
                 citycard[3].setAttribute('data-bs-target', '#alertPopUp-' + id_card);
                 citycard[3].classList.add("custom-alert");
@@ -211,6 +214,9 @@ function currentWeather(result, current_weather) {
     if (result.alerts) {
         current_card[3].style.display = 'block';
         current_card[3].innerText = result.alerts[0].event;
+        if (result.alerts.length > 0) {
+            current_card[3].innerText += " (+" + result.alerts.length + " allerte)";
+        }
         current_card[3].classList.add("custom-alert");
         current_card[3].setAttribute('data-bs-toggle', 'modal');
         current_card[3].setAttribute('data-bs-target', '#alertPopUp-');

@@ -124,11 +124,17 @@ function createAlertModal(id_card, alerts) {
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="alertPopUpLabel">Modal title</h5>
+                        <h5 class="modal-title" id="alertPopUpLabel">Allerte Meteo</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- qui genero la descrizione dell'alert cliccato -->
+                        Allerta 1 ('event')
+                        Inviato da: 'sender_name'
+                        descrizione
+                        ...
+                        Allerta n ('event')
+                        Inviato da: 'sender_name'
+                        descrizione
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -145,7 +151,6 @@ function createAlertModal(id_card, alerts) {
     const title = document.createElement('h5');
     const button = document.createElement('button');
     const modalBody = document.createElement('div');
-    const description = document.createElement('p');
     const modalFooter = document.createElement('div');
     const button1 = document.createElement('button');
     // inserisco classi, id e attributi agli elementi
@@ -169,9 +174,15 @@ function createAlertModal(id_card, alerts) {
     button1.type = 'button';
     button1.setAttribute('data-bs-dismiss', 'modal');
     // inserisco le informazioni
-    title.innerText = alerts[0].event;
-    description.innerText = "Inviato da: " + alerts[0].sender_name + "\n\n" + alerts[0].description;
+    title.innerText = 'Allerte Meteo';
     button1.innerText = 'Close';
+    const allerte = [];
+    for (let i = 0; i < alerts.length; i++) {
+        const description = document.createElement('p');
+        const info = "Evento: " + alerts[i].event + "\nInviato da: " + alerts[i].sender_name + "\nDescrizione: " + alerts[i].description + "\n\n";
+        description.innerText += info;
+        allerte.push(description);
+    }
     // lo inserisco nella pagina
     const main = document.getElementById('main');
     main.appendChild(modal);
@@ -179,6 +190,8 @@ function createAlertModal(id_card, alerts) {
     modalDialog.appendChild(modalContent);
     modalContent.append(modalHeader, modalBody, modalFooter);
     modalHeader.append(title, button);
-    modalBody.append(description);
+    for (let i = 0; i < allerte.length; i++) {
+        modalBody.append(allerte[i]);
+    }
     modalFooter.append(button1);
 }
