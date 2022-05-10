@@ -107,6 +107,15 @@ function errorFunction() {
     alert("Geocoder failed");
 }
 
+// funzione che converte da gradi (0-360-720-...) in 'bussola' (N, O, S, E, ...)
+// spiegazione: https://stackoverflow.com/a/7490772
+function degToCompass(gradi) {
+    let val = ((gradi / 22.5) + 0.5);
+    val = Math.trunc(val);   // tronco 'val' senza arrotondare
+    const compassValues = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
+    return new String(compassValues[val % 16]);
+}
+
 // conversione da timestamp Unix, UTC in data
 function timestampToDate(timestamp, offset) {
     const tz = new Date('August 19, 1975 23:15:30').getTimezoneOffset() * 60;
@@ -204,7 +213,7 @@ function createAlertModal(id_card, alerts) {
     modalHeader.append(title, button);
     for (let i = 0; i < allerte.length; i++) {
         modalBody.append(allerte[i]);
-        if (i < allerte.length-1) {
+        if (i < allerte.length - 1) {
             const divider = document.createElement('hr');
             modalBody.append(divider);
         }

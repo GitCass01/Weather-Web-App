@@ -143,7 +143,7 @@ async function setWeather(lat, lon, id_card) {
             const lis = citycard[4].getElementsByTagName("li");
             lis[0].innerText = "Umidità: " + result.current.humidity + "%";
             lis[1].innerText = "Pressione: " + result.current.pressure + " hPa";
-            lis[2].innerText = "Vento: " + result.current.wind_speed + " m/s";
+            lis[2].innerText = "Vento: " + result.current.wind_speed + " m/s " + degToCompass(result.current.wind_deg);
         })
         .catch(err => console.log("err: ", err));
 }
@@ -225,7 +225,7 @@ function currentWeather(result, current_weather) {
     const lis = current_card[4].getElementsByTagName("li");
     lis[0].innerText = "Umidità: " + current_weather.humidity + "%";
     lis[1].innerText = "Pressione: " + current_weather.pressure + " hPa";
-    lis[2].innerText = "Vento: " + current_weather.wind_speed + " m/s";
+    lis[2].innerText = "Vento: " + current_weather.wind_speed + "m/s " + degToCompass(result.current.wind_deg);
 }
 
 function hourlyWeather(result, hourly) {
@@ -266,7 +266,7 @@ function hourlyWeather(result, hourly) {
             image_hourly.src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
             image_hourly.alt = hourly[i].weather[0].description;
             info1.innerText = Math.round(hourly[i].temp) + '°C - ' + Math.round(hourly[i].feels_like) + '°C';
-            info2.innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s   UV: ' + (hourly[i].uvi * 100).toFixed(0);
+            info2.innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg) + ' UV: ' + (hourly[i].uvi * 100).toFixed(0);
             info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
 
             hourly_card.appendChild(info_container);
@@ -285,7 +285,7 @@ function hourlyWeather(result, hourly) {
             ora[1].src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
             ora[1].alt = hourly[i].weather[0].description;
             ora[2].innerText = Math.round(hourly[i].temp) + '°C - ' + Math.round(hourly[i].feels_like) + '°C';
-            ora[3].innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s   UV: ' + (hourly[i].uvi * 100).toFixed(0);
+            ora[3].innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg) + ' UV: ' + (hourly[i].uvi * 100).toFixed(0);
             ora[4].innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
         }
     }
@@ -303,7 +303,7 @@ function dailyWeather(result, daily_weather) {
         let info = day_card[0].getElementsByTagName("p");
         info[0].innerText = daily_weather[i].weather[0].description;
         info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C \t Min: " + Math.round(daily_weather[i].temp.min) + "°C";
-        info[2].innerText = "Precipitazioni: " + daily_weather[i].pop * 100 + "% \t Vento: " + daily_weather[i].wind_speed + "m/s";
+        info[2].innerText = "Precipitazioni: " + daily_weather[i].pop * 100 + "% \t Vento: " + daily_weather[i].wind_speed + "m/s " + degToCompass(result.current.wind_deg);
         info[3].innerText = daily_weather[i].pressure + "hPa \t Umidità: " + daily_weather[i].humidity + "% \t UV: " + daily_weather[i].uvi;
         let image = day_card[0].getElementsByTagName("img");
         image[0].src = "https://openweathermap.org/img/wn/" + daily_weather[i].weather[0].icon + "@2x.png";
