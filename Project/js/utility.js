@@ -117,7 +117,8 @@ function timestampToDate(timestamp, offset) {
 }
 
 function createAlertModal(id_card, alerts) {
-    /*
+    /* come deve venire il modal di bootstrap in HTML:
+    
         <div id="alert" class="badge rounded-pill text-dark" data-bs-toggle="modal" data-bs-target="#alertPopUp"></div>
 
         <div class="modal fade" id="alertPopUp" tabindex="-1" aria-labelledby="alertPopUpLabel" aria-hidden="true">

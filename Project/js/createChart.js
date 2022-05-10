@@ -78,7 +78,17 @@ async function generateChart(lat, lon) {
     const info = await findTempData(lat, lon);
     //console.log(info);
 
-    document.getElementById('chartContainer').innerHTML = "<canvas id='myChart'></canvas>";
+    // document.getElementById('chartContainer').innerHTML = "<canvas id='myChart'></canvas>"; --> poco sicuro
+    // soluzione:
+    if (document.getElementById('chartContainer').children.length == 1) {
+        //console.log('cancello il vecchio chart...');
+        document.getElementById('chartContainer').children[0].remove();
+    }
+    const chartContainer = document.getElementById('chartContainer');
+    const chart = document.createElement('canvas');
+    chart.id = 'myChart';
+    chartContainer.appendChild(chart);
+
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',

@@ -1,5 +1,16 @@
 function initializeMap(lat, lon) {
-    document.getElementById('weatherMap').innerHTML = "<div id='map' class='my-3'></div>";
+    //document.getElementById('weatherMap').innerHTML = "<div id='map' class='my-3'></div>"; --> non sicuro
+    // soluzione
+    if (document.getElementById('weatherMap').children.length == 1) {
+        //console.log('cancello la vecchia mappa...');
+        document.getElementById('weatherMap').children[0].remove();
+    }
+    const mapContainer = document.getElementById('weatherMap');
+    const mappa = document.createElement('div');
+    mappa.className = 'my-3';
+    mappa.id = 'map';
+    mapContainer.appendChild(mappa);
+
     const map = L.map('map').setView([lat, lon], 9);
     var marker = L.marker([lat, lon]).addTo(map);
 
