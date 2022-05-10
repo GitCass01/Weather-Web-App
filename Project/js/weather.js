@@ -132,7 +132,7 @@ async function setWeather(lat, lon, id_card) {
                 citycard[3].style.display = 'block';
                 //console.log(result.alerts);
                 citycard[3].innerText = result.alerts[0].event;
-                if (result.alerts.length > 0) {
+                if (result.alerts.length > 1) {
                     citycard[3].innerText += " (+" + result.alerts.length + " allerte)";
                 }
                 citycard[3].setAttribute('data-bs-toggle', 'modal');
@@ -214,7 +214,7 @@ function currentWeather(result, current_weather) {
     if (result.alerts) {
         current_card[3].style.display = 'block';
         current_card[3].innerText = result.alerts[0].event;
-        if (result.alerts.length > 0) {
+        if (result.alerts.length > 1) {
             current_card[3].innerText += " (+" + result.alerts.length + " allerte)";
         }
         current_card[3].classList.add("custom-alert");

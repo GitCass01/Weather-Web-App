@@ -129,11 +129,11 @@ function createAlertModal(id_card, alerts) {
                     </div>
                     <div class="modal-body">
                         Allerta 1 ('event')
-                        Inviato da: 'sender_name'
+                        'sender_name'
                         descrizione
                         ...
                         Allerta n ('event')
-                        Inviato da: 'sender_name'
+                        'sender_name'
                         descrizione
                     </div>
                     <div class="modal-footer">
@@ -178,9 +178,20 @@ function createAlertModal(id_card, alerts) {
     button1.innerText = 'Close';
     const allerte = [];
     for (let i = 0; i < alerts.length; i++) {
-        const description = document.createElement('p');
-        const info = "Evento: " + alerts[i].event + "\nInviato da: " + alerts[i].sender_name + "\nDescrizione: " + alerts[i].description + "\n\n";
-        description.innerText += info;
+        const description = document.createElement('div');
+        const description1 = document.createElement('p');
+        const bold = document.createElement('strong');
+        const description2 = document.createElement('p');
+        const italic = document.createElement('i');
+        const description3 = document.createElement('p');
+
+        bold.innerText = alerts[i].event + "\n";
+        italic.innerText = alerts[i].sender_name + "\n"
+        description3.innerText += alerts[i].description + "\n";
+
+        description1.append(bold);
+        description2.append(italic);
+        description.append(description1, description2, description3);
         allerte.push(description);
     }
     // lo inserisco nella pagina
@@ -192,6 +203,10 @@ function createAlertModal(id_card, alerts) {
     modalHeader.append(title, button);
     for (let i = 0; i < allerte.length; i++) {
         modalBody.append(allerte[i]);
+        if (i < allerte.length-1) {
+            const divider = document.createElement('hr');
+            modalBody.append(divider);
+        }
     }
     modalFooter.append(button1);
 }

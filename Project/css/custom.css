@@ -2,10 +2,6 @@ body {
     font-family: 'Roboto', serif;
 }
 
-.featurette-divider {
-    margin: 4rem 0;
-}
-
 #hidden-card {
     display: none;
 }
