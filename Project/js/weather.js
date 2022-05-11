@@ -243,6 +243,7 @@ function hourlyWeather(result, hourly) {
 
     if (hourly_card.children.length == 0) {// se è la prima volta sulla pagina genero l'html
         for (let i = 0; i < 24; i++) {
+            console.log(hourly[i]);
             const data = timestampToDate(hourly[i].dt, result.timezone_offset);
 
             const info_container = document.createElement('div');
@@ -251,6 +252,30 @@ function hourlyWeather(result, hourly) {
             const info1 = document.createElement('p');
             const info2 = document.createElement('p');
             const info3 = document.createElement('p');
+            const rain = document.createElement('img');
+            const pressure = document.createElement('img');
+            const humidity = document.createElement('img');
+            const wind = document.createElement('img');
+
+            rain.src = 'images/rain.png';
+            rain.alt = 'probabilità di precipitazione';
+            rain.className = 'icon';
+            pressure.src = 'images/pressure.png';
+            pressure.alt = 'pressione';
+            pressure.className = 'icon';
+            humidity.src = 'images/humidity.png';
+            humidity.alt = 'umidità';
+            humidity.className = 'icon';
+            wind.src = 'images/wind.png';
+            wind.alt = 'vento';
+            wind.className = 'icon';
+
+            const pop = document.createTextNode(' ' + hourly[i].pop + '%   ');
+            const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + '    ');
+            const vento = document.createTextNode(' ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg));
+
+            const umidità = document.createTextNode(hourly[i].humidity + '%   ');
+            const pressione = document.createTextNode(hourly[i].pressure + 'hPa');
 
             if (i == 23) {
                 info_container.className = 'col-xl-3';
@@ -266,8 +291,8 @@ function hourlyWeather(result, hourly) {
             image_hourly.src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
             image_hourly.alt = hourly[i].weather[0].description;
             info1.innerText = Math.round(hourly[i].temp) + '°C - ' + Math.round(hourly[i].feels_like) + '°C';
-            info2.innerText = 'pioggia: ' + hourly[i].pop + '%     UV: ' + (hourly[i].uvi * 100).toFixed(0) + "     " + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg);
-            info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
+            info2.append(rain, pop, uv, wind, vento);               //info2.innerText = 'pioggia: ' + hourly[i].pop + '%     UV: ' + Math.trunc(hourly[i].uvi) + "     " + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg);
+            info3.append(humidity, umidità, pressure, pressione);   //info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
 
             hourly_card.appendChild(info_container);
             info_container.append(info_title, image_hourly, info1, info2, info3);

@@ -89,6 +89,11 @@ h6 {
     font-weight: bold;
 }
 
+.icon {
+    width: 18px;
+    height: 18px;
+}
+
 .suggestion-elements {
     border-style: solid;
     border-width: 1px;
