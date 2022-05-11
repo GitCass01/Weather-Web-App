@@ -1,6 +1,6 @@
 // shadow on mouse hover per le card - JQuery
 $(document).ready(function () {
-    $(".card").hover(
+    $(".clickable-card").hover(
         function () {
             $(this).addClass("shadow");
         },

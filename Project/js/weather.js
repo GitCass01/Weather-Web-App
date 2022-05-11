@@ -243,7 +243,7 @@ function hourlyWeather(result, hourly) {
 
     if (hourly_card.children.length == 0) {// se è la prima volta sulla pagina genero l'html
         for (let i = 0; i < 24; i++) {
-            console.log(hourly[i]);
+            //console.log(hourly[i]);
             const data = timestampToDate(hourly[i].dt, result.timezone_offset);
 
             const info_container = document.createElement('div');
