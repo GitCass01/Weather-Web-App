@@ -68,16 +68,16 @@ body {
     white-space: nowrap;
 }
 
-#today-weather>.col-md-3 {
+#today-weather>.col-xl-3 {
     display: inline-block;
 }
 
-#today-weather>.col-md-3>img {
+#today-weather>.col-xl-3>img {
     height: 48px;
     width: 48px;
 }
 
-#today-weather>.col-md-3>p, .giornata-white-space>p {
+#today-weather>.col-xl-3>p, .giornata-white-space>p {
     white-space: pre;
 }
 

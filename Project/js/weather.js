@@ -253,9 +253,9 @@ function hourlyWeather(result, hourly) {
             const info3 = document.createElement('p');
 
             if (i == 23) {
-                info_container.className = 'col-md-3';
+                info_container.className = 'col-xl-3';
             } else {
-                info_container.className = 'col-md-3 border border-top-0 border-start-0 border-bottom-0 border-2';
+                info_container.className = 'col-xl-3 border border-top-0 border-start-0 border-bottom-0 border-2';
             }
             info_container.id = 'ora' + i;
             image_hourly.className = 'card-img-top';
@@ -266,7 +266,7 @@ function hourlyWeather(result, hourly) {
             image_hourly.src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
             image_hourly.alt = hourly[i].weather[0].description;
             info1.innerText = Math.round(hourly[i].temp) + '°C - ' + Math.round(hourly[i].feels_like) + '°C';
-            info2.innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg) + ' UV: ' + (hourly[i].uvi * 100).toFixed(0);
+            info2.innerText = 'pioggia: ' + hourly[i].pop + '%     UV: ' + (hourly[i].uvi * 100).toFixed(0) + "     " + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg);
             info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
 
             hourly_card.appendChild(info_container);
