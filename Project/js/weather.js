@@ -271,7 +271,7 @@ function hourlyWeather(result, hourly) {
             wind.className = 'icon';
 
             const pop = document.createTextNode(' ' + hourly[i].pop + '%   ');
-            const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + '    ');
+            const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + ' di 10    ');
             const vento = document.createTextNode(' ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg));
 
             const umidità = document.createTextNode(hourly[i].humidity + '%   ');
@@ -290,7 +290,7 @@ function hourlyWeather(result, hourly) {
             info_title.innerText = data.toLocaleTimeString(undefined, { month: "numeric", day: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
             image_hourly.src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
             image_hourly.alt = hourly[i].weather[0].description;
-            info1.innerText = Math.round(hourly[i].temp) + '°C - ' + Math.round(hourly[i].feels_like) + '°C';
+            info1.innerText = Math.round(hourly[i].feels_like) + '°C';
             info2.append(rain, pop, uv, wind, vento);               //info2.innerText = 'pioggia: ' + hourly[i].pop + '%     UV: ' + Math.trunc(hourly[i].uvi) + "     " + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg);
             info3.append(humidity, umidità, pressure, pressione);   //info3.innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
 
