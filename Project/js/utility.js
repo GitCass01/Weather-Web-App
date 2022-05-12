@@ -2,26 +2,24 @@
 
 //toggle dark mode
 function toggleDarkMode() {
+    const badge = document.querySelector('.badge');
     if (document.getElementById('toggle-mode').checked == false) {
         document.getElementById('css-light').disabled = false;
         document.getElementById('css-dark').disabled = true;
-        $(document).ready(function () {
-            $(".badge").removeClass("dark-alert");
-            $(".badge").addClass("custom-alert");
-        })
+        badge.classList.remove('dark-alert');
+        badge.classList.add('custom-alert');
         localStorage.setItem('toggle-mode', JSON.stringify({ 'darkMode': '', 'date': new Date().getTime() }));
     } else {
         document.getElementById('css-light').disabled = true;
         document.getElementById('css-dark').disabled = false;
-        $(document).ready(function () {
-            $(".badge").removeClass("custom-alert");
-            $(".badge").addClass("dark-alert");
-        })
+        badge.classList.remove('custom-alert');
+        badge.classList.add('dark-alert');
         localStorage.setItem('toggle-mode', JSON.stringify({ 'darkMode': 'checked', 'date': new Date().getTime() }));
     }
 }
 
 function checkDarkMode() {
+    const badge = document.querySelector('.badge');
     if (localStorage.getItem('toggle-mode')) {
         let obj = JSON.parse(localStorage.getItem('toggle-mode'));
 
@@ -36,27 +34,23 @@ function checkDarkMode() {
             document.getElementById('css-light').disabled = true;
             document.getElementById('css-dark').disabled = false;
             document.getElementById('toggle-mode').setAttribute('checked', 'true');
-            $(document).ready(function () {
-                $(".badge").removeClass("custom-alert");
-                $(".badge").addClass("dark-alert");
-            })
+            badge.classList.remove('custom-alert');
+            badge.classList.add('dark-alert');
         } else {
             document.getElementById('css-light').disabled = false;
             document.getElementById('css-dark').disabled = true;
-            $(document).ready(function () {
-                $(".badge").removeClass("dark-alert");
-                $(".badge").addClass("custom-alert");
-            })
+            badge.classList.remove('dark-alert');
+            badge.classList.add('custom-alert');
         }
     }
 }
 
 var searchBox = document.getElementById("floatingInput");
-searchBox.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.getElementById("searchBtn").click();
-  }
+searchBox.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("searchBtn").click();
+    }
 });
 
 // geolocation (+ reverse geocoding)
