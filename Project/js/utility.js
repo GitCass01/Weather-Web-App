@@ -61,6 +61,14 @@ function checkDarkMode() {
     }
 }
 
+var searchBox = document.getElementById("floatingInput");
+searchBox.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("searchBtn").click();
+  }
+});
+
 // geolocation (+ reverse geocoding)
 function getLocation() {
     if (navigator.geolocation) {
