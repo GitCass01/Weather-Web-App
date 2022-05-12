@@ -10,6 +10,10 @@ body {
     border-radius: 10px;
 }
 
+.clickable-card:hover {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+}
+
 .card-body>img {
     width: 100px;
     height: 100px;

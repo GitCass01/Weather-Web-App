@@ -1,14 +1,4 @@
-// shadow on mouse hover per le card - JQuery
-$(document).ready(function () {
-    $(".clickable-card").hover(
-        function () {
-            $(this).addClass("shadow");
-        },
-        function () {
-            $(this).removeClass("shadow");
-        }
-    );
-});
+
 
 //toggle dark mode
 function toggleDarkMode() {
