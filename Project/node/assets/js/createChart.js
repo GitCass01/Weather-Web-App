@@ -58,6 +58,9 @@ async function generateChart(lat, lon) {
                 }
             },
             maintainAspectRatio: false,
+            interaction: {
+                intersect: false,
+            },
         }
     });
 
