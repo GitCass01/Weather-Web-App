@@ -270,7 +270,7 @@ function hourlyWeather(result, hourly) {
             wind.alt = 'vento';
             wind.className = 'icon';
 
-            const pop = document.createTextNode(' ' + hourly[i].pop + '%   ');
+            const pop = document.createTextNode(' ' + Math.round(hourly[i].pop * 100) + '%   ');
             const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + ' di 10    ');
             const vento = document.createTextNode(' ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg));
 
@@ -310,7 +310,7 @@ function hourlyWeather(result, hourly) {
             ora[1].src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
             ora[1].alt = hourly[i].weather[0].description;
             ora[2].innerText = Math.round(hourly[i].temp) + '°C - ' + Math.round(hourly[i].feels_like) + '°C';
-            ora[3].innerText = 'prob: ' + hourly[i].pop + '%   ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg) + ' UV: ' + (hourly[i].uvi * 100).toFixed(0);
+            ora[3].innerText = 'prob: ' + Math.round(hourly[i].pop * 100) + '%   ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg) + ' UV: ' + (hourly[i].uvi * 100).toFixed(0);
             ora[4].innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
         }
     }
@@ -328,26 +328,22 @@ function dailyWeather(result, daily_weather) {
         let info = day_card[0].getElementsByTagName("p");
         info[0].innerText = daily_weather[i].weather[0].description;
         info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C \t Min: " + Math.round(daily_weather[i].temp.min) + "°C";
-        info[2].innerText = "Precipitazioni: " + daily_weather[i].pop * 100 + "% \t Vento: " + daily_weather[i].wind_speed + "m/s " + degToCompass(result.current.wind_deg);
+        info[2].innerText = "Precipitazioni: " + Math.round(daily_weather[i].pop * 100) + "% \t Vento: " + daily_weather[i].wind_speed + "m/s " + degToCompass(result.current.wind_deg);
         info[3].innerText = daily_weather[i].pressure + "hPa \t Umidità: " + daily_weather[i].humidity + "% \t UV: " + daily_weather[i].uvi;
         let image = day_card[0].getElementsByTagName("img");
         image[0].src = "https://openweathermap.org/img/wn/" + daily_weather[i].weather[0].icon + "@2x.png";
         image[0].alt = daily_weather[i].weather[0].description;
         //mattina
         info = day_card[1].getElementsByTagName("p");
-        info[0].innerText = Math.round(daily_weather[i].temp.morn) + "°C";
-        info[1].innerText = Math.round(daily_weather[i].feels_like.morn) + "°C";
+        info[0].innerText = Math.round(daily_weather[i].feels_like.morn) + "°C";
         //pomeriggio
         info = day_card[2].getElementsByTagName("p");
-        info[0].innerText = Math.round(daily_weather[i].temp.day) + "°C";
-        info[1].innerText = Math.round(daily_weather[i].feels_like.day) + "°C";
+        info[0].innerText = Math.round(daily_weather[i].feels_like.day) + "°C";
         //sera
         info = day_card[3].getElementsByTagName("p");
-        info[0].innerText = Math.round(daily_weather[i].temp.eve) + "°C";
-        info[1].innerText = Math.round(daily_weather[i].feels_like.eve) + "°C";
+        info[0].innerText = Math.round(daily_weather[i].feels_like.eve) + "°C";
         //notte
         info = day_card[4].getElementsByTagName("p");
-        info[0].innerText = Math.round(daily_weather[i].temp.night) + "°C";
-        info[1].innerText = Math.round(daily_weather[i].feels_like.night) + "°C";
+        info[0].innerText = Math.round(daily_weather[i].feels_like.night) + "°C";
     }
 }
