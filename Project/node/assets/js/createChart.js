@@ -1,6 +1,44 @@
-async function generateChart(lat, lon) {
-    const info = await findTempData(lat, lon);
-    //console.log(info);
+// 'database' locale
+/*  struttura degli oggetti salvati in localStorage (stessa cosa per chartRains)
+    'chartTemperatures' =  {
+        'Buccinasco, IT': {
+            'dt': data_caricamento_dati,
+            'data': {
+                'dates': [],
+                'temp_max': [],
+                'temp_min': [],
+            }
+        },
+        ...
+    }
+*/
+if (!localStorage.getItem('chartTemperatures')) {
+    console.log('Creo chartTemperatures...');
+    const chartTemperatures = JSON.stringify({});
+    localStorage.setItem('chartTemperatures', chartTemperatures);
+}
+if (!localStorage.getItem('chartRains')) {
+    console.log('Creo chartRains...');
+    const chartRains = JSON.stringify({});
+    localStorage.setItem('chartRains', chartRains);
+}
+
+async function generateChart() {
+    const city = JSON.parse(localStorage.getItem('cityWeekly'));
+    // controllo se i dati delle temperature (chart di default) sono presenti e aggiornati
+    if (JSON.parse(localStorage.getItem('chartTemperatures'))[city.name]) {
+        // se i dati sono 'del giorno prima' di un giorno li aggiorno
+        const saveDate = new Date(JSON.parse(localStorage.getItem('chartTemperatures'))[city.name].dt);
+        if (saveDate.toDateString() != new Date().toDateString()) {
+            console.log('Aggiorno dati');
+            await findTempData(city.lat, city.lon);
+        }
+    } else {
+        console.log('Creo dati');
+        await findTempData(city.lat, city.lon);
+    }
+
+    const info = JSON.parse(localStorage.getItem('chartTemperatures'))[city.name].data;
 
     // document.getElementById('chartContainer').innerHTML = "<canvas id='myChart'></canvas>"; --> poco sicuro
     // soluzione:
@@ -64,13 +102,30 @@ async function generateChart(lat, lon) {
         }
     });
 
+    // controllo se i dati della pioggia sono presenti e aggiornati
+    if (JSON.parse(localStorage.getItem('chartRains'))[city.name]) {
+        // se i dati sono 'del giorno prima' di un giorno li aggiorno
+        const saveDate = new Date(JSON.parse(localStorage.getItem('chartRains'))[city.name].dt);
+        if (saveDate.toDateString() != new Date().toDateString()) {
+            console.log('Aggiorno dati');
+            const data = await findRainData(city.lat, city.lon);
+        }
+    } else {
+        console.log('Creo dati');
+        await findRainData(city.lat, city.lon);
+    }
+
+    // i due event listener per il cambio di chart
     document.getElementById('temperature').addEventListener('click', async (e) => {
-        const city = JSON.parse(localStorage.getItem('cityWeekly'));
-        const temp_data = await findTempData(city.lat, city.lon);
+        const city = JSON.parse(localStorage.getItem('cityWeekly')).name;
 
         myChart.config.type = 'line';
         myChart.config.options.scales.y.title.text = 'Gradi Celsius';
+        myChart.config.options.plugins.title.text = 'Grafico delle Temperature Massime e Minime';
         var data = myChart.config.data;
+
+        const temp_data = JSON.parse(localStorage.getItem('chartTemperatures'))[city].data;
+
         data.datasets[0].data = temp_data.temp_max;
         data.datasets[0].label = 'temperatura massima';
         const obj = {
@@ -86,11 +141,13 @@ async function generateChart(lat, lon) {
     });
 
     document.getElementById('rain').addEventListener('click', async (e) => {
-        const city = JSON.parse(localStorage.getItem('cityWeekly'));
-        const rain = await findRainData(city.lat, city.lon);
+        const city = JSON.parse(localStorage.getItem('cityWeekly')).name;
+
+        const rain = JSON.parse(localStorage.getItem('chartRains'))[city].data;
 
         myChart.config.type = 'bar';
         myChart.config.options.scales.y.title.text = 'mm (millimetri)';
+        myChart.config.options.plugins.title.text = 'Grafico del totale di pioggia in mm';
         var data = myChart.config.data;
         data.datasets[0].data = rain.rain_total_mm;
         data.datasets[0].label = 'totale pioggia(mm)';
@@ -173,7 +230,13 @@ async function findTempData(lat, lon) {
         })
         .catch(err => console.log("err: ", err));
 
-    return { dates, temp_max, temp_min };
+    const data = { dates, temp_max, temp_min };
+
+    // aggiorno i dati nel 'database'
+    const city = JSON.parse(localStorage.getItem('cityWeekly')).name;
+    const dataStored = JSON.parse(localStorage.getItem('chartTemperatures'));
+    dataStored[city] = { dt: new Date().getTime(), data: data };
+    localStorage.setItem('chartTemperatures', JSON.stringify(dataStored));
 }
 
 // retrieving rain (max, min) from 5 days ago (historical data from openweather.com)
@@ -245,5 +308,11 @@ async function findRainData(lat, lon) {
         })
         .catch(err => console.log("err: ", err));
 
-    return { dates, rain_total_mm };
+    const data = { dates, rain_total_mm };
+
+    // aggiorno i dati nel 'database'
+    const city = JSON.parse(localStorage.getItem('cityWeekly')).name;
+    const dataStored = JSON.parse(localStorage.getItem('chartRains'));
+    dataStored[city] = { dt: new Date().getTime(), data: data };
+    localStorage.setItem('chartRains', JSON.stringify(dataStored));
 }

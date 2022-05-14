@@ -201,7 +201,7 @@ async function weeklyWeather() {
             currentWeather(result, current_weather);
             hourlyWeather(result, hourly);
             dailyWeather(result, daily_weather);
-            generateChart(lat, lon);
+            generateChart();
         })
         .catch(err => console.log("err: ", err));
 }
