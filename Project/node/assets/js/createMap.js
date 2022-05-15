@@ -28,7 +28,7 @@ function initializeMap(lat, lon) {
 
     const osmTiles = L.tileLayer(osmUrl, { transparency: true, opacity: '1', attribution });
 
-    const owmRainsUrl = 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=fb1d036e9880437a98ec66f6e4daab01';
+    const owmRainsUrl = 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=' + API_KEY;
     const owmRainTiles = L.tileLayer(owmRainsUrl, { attribution });
 
     var marker = L.marker([lat, lon]).bindPopup(JSON.parse(localStorage.getItem('cityWeekly')).name);
@@ -45,7 +45,7 @@ function initializeMap(lat, lon) {
 
     var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-    const owmTempUrl = 'https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=fb1d036e9880437a98ec66f6e4daab01';
+    const owmTempUrl = 'https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=' + API_KEY;
     const owmTempTiles = L.tileLayer(owmTempUrl, { attribution });
     layerControl.addBaseLayer(owmTempTiles, 'Temperature');
 }

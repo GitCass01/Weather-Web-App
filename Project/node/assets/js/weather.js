@@ -1,3 +1,5 @@
+const API_KEY = 'fb1d036e9880437a98ec66f6e4daab01';
+
 // necessario per evitare le ambiguità causati dai nomi
 const cityHomePage = {
     'Milano, IT': { lat: 45.463619, lon: 9.188120 },
@@ -15,7 +17,7 @@ async function suggestion() {
     const params = {
         q: city,
         limit: 5,
-        appid: 'fb1d036e9880437a98ec66f6e4daab01'
+        appid: API_KEY
     };
     const query = new URLSearchParams(params).toString().replace("%2C", ",");
     const final_url = geo_url + query;
@@ -110,7 +112,7 @@ async function setWeather(lat, lon, id_card) {
         exclude: 'minutely,hourly,daily',
         units: 'metric',
         lang: 'it',
-        appid: 'fb1d036e9880437a98ec66f6e4daab01'
+        appid: API_KEY
     }
     const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
     const call = onecall_url + query_weather;
@@ -184,7 +186,7 @@ async function weeklyWeather() {
         exclude: 'minutely',
         units: 'metric',
         lang: 'it',
-        appid: 'fb1d036e9880437a98ec66f6e4daab01'
+        appid: API_KEY
     }
     const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
     const call = onecall_url + query_weather;

@@ -175,7 +175,7 @@ async function findTempData(lat, lon) {
             dt: pastDate,
             units: 'metric',
             lang: 'it',
-            appid: 'fb1d036e9880437a98ec66f6e4daab01'
+            appid: API_KEY
         }
         const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
         const call = onecall_url + query_weather;
@@ -213,7 +213,7 @@ async function findTempData(lat, lon) {
         exclude: 'current,minutely,hourly,alerts',
         units: 'metric',
         lang: 'it',
-        appid: 'fb1d036e9880437a98ec66f6e4daab01'
+        appid: API_KEY
     }
     const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
     const call = onecall_url + query_weather;
@@ -256,7 +256,7 @@ async function findRainData(lat, lon) {
             dt: pastDate,
             units: 'metric',
             lang: 'it',
-            appid: 'fb1d036e9880437a98ec66f6e4daab01'
+            appid: API_KEY
         }
         const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
         const call = onecall_url + query_weather;
@@ -287,7 +287,7 @@ async function findRainData(lat, lon) {
         exclude: 'current,minutely,hourly,alerts',
         units: 'metric',
         lang: 'it',
-        appid: 'fb1d036e9880437a98ec66f6e4daab01'
+        appid: API_KEY
     }
     const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
     const call = onecall_url + query_weather;
