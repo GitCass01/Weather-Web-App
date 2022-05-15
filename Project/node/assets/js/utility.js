@@ -1,25 +1,27 @@
-
-
 //toggle dark mode
 function toggleDarkMode() {
-    const badge = document.querySelector('.badge');
+    const badge = document.querySelectorAll('.badge');
     if (document.getElementById('toggle-mode').checked == false) {
         document.getElementById('css-light').disabled = false;
         document.getElementById('css-dark').disabled = true;
-        badge.classList.remove('dark-alert');
-        badge.classList.add('custom-alert');
+        for (let i = 0; i < badge.length; i++) {
+            badge[i].classList.remove('dark-alert');
+            badge[i].classList.add('custom-alert');
+        }
         localStorage.setItem('toggle-mode', JSON.stringify({ 'darkMode': '', 'date': new Date().getTime() }));
     } else {
         document.getElementById('css-light').disabled = true;
         document.getElementById('css-dark').disabled = false;
-        badge.classList.remove('custom-alert');
-        badge.classList.add('dark-alert');
+        for (let i = 0; i < badge.length; i++) {
+            badge[i].classList.remove('custom-alert');
+            badge[i].classList.add('dark-alert');
+        }
         localStorage.setItem('toggle-mode', JSON.stringify({ 'darkMode': 'checked', 'date': new Date().getTime() }));
     }
 }
 
 function checkDarkMode() {
-    const badge = document.querySelector('.badge');
+    const badge = document.querySelectorAll('.badge');
     if (localStorage.getItem('toggle-mode')) {
         let obj = JSON.parse(localStorage.getItem('toggle-mode'));
 
@@ -34,13 +36,19 @@ function checkDarkMode() {
             document.getElementById('css-light').disabled = true;
             document.getElementById('css-dark').disabled = false;
             document.getElementById('toggle-mode').setAttribute('checked', 'true');
-            badge.classList.remove('custom-alert');
-            badge.classList.add('dark-alert');
+            for (let i = 0; i < badge.length; i++) {
+                badge[i].classList.remove('custom-alert');
+                badge[i].classList.add('dark-alert');
+            }
+
         } else {
             document.getElementById('css-light').disabled = false;
             document.getElementById('css-dark').disabled = true;
-            badge.classList.remove('dark-alert');
-            badge.classList.add('custom-alert');
+            for (let i = 0; i < badge.length; i++) {
+                badge[i].classList.remove('dark-alert');
+                badge[i].classList.add('custom-alert');
+            }
+
         }
     }
 }

@@ -64,6 +64,10 @@ body {
     margin: 4rem 0;
 }
 
+a {
+    color: #094fb6;
+}
+
 /*meteo orario di oggi "scrollabile"*/
 #today-weather {
     height: 100%;
