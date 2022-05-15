@@ -23,6 +23,8 @@ if (!localStorage.getItem('chartRains')) {
     localStorage.setItem('chartRains', chartRains);
 }
 
+// check if the local data (rain/temperature) are present and up to date, if not it retrieve this data
+// generate the 'default' chart -> temperature chart
 async function generateChart() {
     const city = JSON.parse(localStorage.getItem('cityWeekly'));
     // controllo se i dati delle temperature (chart di default) sono presenti e aggiornati
@@ -158,7 +160,8 @@ async function generateChart() {
 }
 
 // retrieving temperature (max, min) from 5 days ago (historical data from openweather.com)
-// and weekly (8 days - today included) temperature (max, min) 
+// and weekly (8 days - today included) temperature (max, min)
+// the info are saved locally into localStorage
 async function findTempData(lat, lon) {
     const dates = [];
     const temp_max = [];
@@ -239,8 +242,9 @@ async function findTempData(lat, lon) {
     localStorage.setItem('chartTemperatures', JSON.stringify(dataStored));
 }
 
-// retrieving rain (max, min) from 5 days ago (historical data from openweather.com)
-// and weekly (8 days - today included) rain (max, min) 
+// retrieving total rain mm from 5 days ago (historical data from openweather.com)
+// and weekly (8 days - today included) total rain mm 
+// the info are saved locally into localStorage
 async function findRainData(lat, lon) {
     const dates = [];
     const rain_total_mm = [];

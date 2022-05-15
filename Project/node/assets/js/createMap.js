@@ -11,21 +11,28 @@ function initializeMap(lat, lon) {
     mappa.id = 'map';
     mapContainer.appendChild(mappa);
 
+    // credits
     const attribution = 'Map Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, Weather Data &copy; <a href="https://www.openweathermap.org">OpenWeatherMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
 
-    //https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png --> use it for dark mode
+    // layer URLs
     const darkURL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-    const osmDarkTiles = L.tileLayer(darkURL, { transparency: true, opacity: '1', attribution });
     const lightURL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-    const osmLightTiles = L.tileLayer(lightURL, { transparency: true, opacity: '1', attribution });
-
     const owmRainsUrl = 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=' + API_KEY;
+    const owmTempUrl = 'https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=' + API_KEY;
+
+    // layer tiles
+    const osmDarkTiles = L.tileLayer(darkURL, { transparency: true, opacity: '1', attribution });
+    const osmLightTiles = L.tileLayer(lightURL, { transparency: true, opacity: '1', attribution });
+    const owmTempTiles = L.tileLayer(owmTempUrl, { attribution });
     const owmRainTiles = L.tileLayer(owmRainsUrl, { attribution });
 
+    // current position marker
     var marker = L.marker([lat, lon]).bindPopup(JSON.parse(localStorage.getItem('cityWeekly')).name);
 
+    // map config
     const map = L.map('map', { layers: [owmRainTiles, marker] }).setView([lat, lon], 9);
 
+    // layer controls
     var baseMaps = {
         "Piogge": owmRainTiles,
     };
@@ -35,11 +42,10 @@ function initializeMap(lat, lon) {
     };
 
     var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-    const owmTempUrl = 'https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=' + API_KEY;
-    const owmTempTiles = L.tileLayer(owmTempUrl, { attribution });
+    
     layerControl.addBaseLayer(owmTempTiles, 'Temperature');
 
+    // 'openstreetmap' layer based on toggle-mode (dark/ligt mode)
     let osmTiles = osmLightTiles;
     if (localStorage.getItem('toggle-mode')) {
         let obj = JSON.parse(localStorage.getItem('toggle-mode'));
