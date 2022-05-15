@@ -11,9 +11,6 @@ function initializeMap(lat, lon) {
     mappa.id = 'map';
     mapContainer.appendChild(mappa);
 
-    const map = L.map('map').setView([lat, lon], 9);
-    var marker = L.marker([lat, lon]).addTo(map);
-
     const attribution = 'Map Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, Weather Data &copy; <a href="https://www.openweathermap.org">OpenWeatherMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
 
     //https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png --> use it for dark mode
@@ -28,12 +25,27 @@ function initializeMap(lat, lon) {
     } else {
         osmUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
     }
-    
-    const osmTiles = L.tileLayer(osmUrl, { transparency: true, opacity: '1', attribution});
 
-    const owmUrl = 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=fb1d036e9880437a98ec66f6e4daab01';
-    const owmTiles = L.tileLayer(owmUrl, { attribution });
+    const osmTiles = L.tileLayer(osmUrl, { transparency: true, opacity: '1', attribution });
 
-    osmTiles.addTo(map);
-    owmTiles.addTo(map);
+    const owmRainsUrl = 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=fb1d036e9880437a98ec66f6e4daab01';
+    const owmRainTiles = L.tileLayer(owmRainsUrl, { attribution });
+
+    var marker = L.marker([lat, lon]).bindPopup(JSON.parse(localStorage.getItem('cityWeekly')).name);
+
+    const map = L.map('map', { layers: [osmTiles, owmRainTiles, marker] }).setView([lat, lon], 9);
+
+    var baseMaps = {
+        "Piogge": owmRainTiles,
+    };
+
+    var overlayMaps = {
+        "Posizione": marker
+    };
+
+    var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+    const owmTempUrl = 'https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=fb1d036e9880437a98ec66f6e4daab01';
+    const owmTempTiles = L.tileLayer(owmTempUrl, { attribution });
+    layerControl.addBaseLayer(owmTempTiles, 'Temperature');
 }
