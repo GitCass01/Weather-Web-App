@@ -36,7 +36,7 @@ async function generateChart() {
             await findTempData(city.lat, city.lon);
         }
     } else {
-        console.log('Creo dati');
+        console.log('Creo dati temperature');
         await findTempData(city.lat, city.lon);
     }
 
@@ -113,7 +113,7 @@ async function generateChart() {
             const data = await findRainData(city.lat, city.lon);
         }
     } else {
-        console.log('Creo dati');
+        console.log('Creo dati pioggia');
         await findRainData(city.lat, city.lon);
     }
 
@@ -171,19 +171,13 @@ async function findTempData(lat, lon) {
     for (let i = 5; i >= 1; i--) {
         let pastDate = Math.round(new Date().setDate(today.getDate() - i) / 1000); // voglio la data in secondi per openweathermap
 
-        const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall/timemachine?';
-        const params = {
-            lat: lat,
-            lon: lon,
-            dt: pastDate,
-            units: 'metric',
-            lang: 'it',
-            appid: API_KEY
-        }
-        const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
-        const call = onecall_url + query_weather;
-
-        await fetch(call)
+        await fetch('oldData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 'lat': lat, 'lon': lon, 'dt': pastDate }),
+        })
             .then(response => response.json())
             .then(result => {
                 //console.log(result);
@@ -209,19 +203,13 @@ async function findTempData(lat, lon) {
             .catch(err => console.log("err: ", err));
     }
 
-    const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
-    const params = {
-        lat: lat,
-        lon: lon,
-        exclude: 'current,minutely,hourly,alerts',
-        units: 'metric',
-        lang: 'it',
-        appid: API_KEY
-    }
-    const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
-    const call = onecall_url + query_weather;
-
-    await fetch(call)
+    await fetch('/weatherData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 'lat': lat, 'lon': lon, 'exclude': 'current,minutely,hourly,alerts' }),
+    })
         .then(response => response.json())
         .then(result => {
             //console.log(result);
@@ -253,19 +241,13 @@ async function findRainData(lat, lon) {
     for (let i = 5; i >= 1; i--) {
         let pastDate = Math.round(new Date().setDate(today.getDate() - i) / 1000); // voglio la data in secondi per openweathermap
 
-        const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall/timemachine?';
-        const params = {
-            lat: lat,
-            lon: lon,
-            dt: pastDate,
-            units: 'metric',
-            lang: 'it',
-            appid: API_KEY
-        }
-        const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
-        const call = onecall_url + query_weather;
-
-        await fetch(call)
+        await fetch('oldData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 'lat': lat, 'lon': lon, 'dt': pastDate }),
+        })
             .then(response => response.json())
             .then(result => {
                 //console.log(result);
@@ -284,19 +266,13 @@ async function findRainData(lat, lon) {
             .catch(err => console.log("err: ", err));
     }
 
-    const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
-    const params = {
-        lat: lat,
-        lon: lon,
-        exclude: 'current,minutely,hourly,alerts',
-        units: 'metric',
-        lang: 'it',
-        appid: API_KEY
-    }
-    const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
-    const call = onecall_url + query_weather;
-
-    await fetch(call)
+    await fetch('/weatherData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 'lat': lat, 'lon': lon, 'exclude': 'current,minutely,hourly,alerts' }),
+    })
         .then(response => response.json())
         .then(result => {
             //console.log(result);

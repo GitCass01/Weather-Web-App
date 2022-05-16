@@ -1,3 +1,5 @@
+const API_KEY = 'fb1d036e9880437a98ec66f6e4daab01';
+
 function initializeMap(lat, lon) {
     //document.getElementById('weatherMap').innerHTML = "<div id='map' class='my-3'></div>"; --> non sicuro
     // soluzione
@@ -30,7 +32,7 @@ function initializeMap(lat, lon) {
     var marker = L.marker([lat, lon]).bindPopup(JSON.parse(localStorage.getItem('cityWeekly')).name);
 
     // map config
-    const map = L.map('map', { layers: [owmRainTiles, marker] }).setView([lat, lon], 9);
+    const map = L.map('map').setView([lat, lon], 9);
 
     // layer controls
     var baseMaps = {
@@ -54,6 +56,8 @@ function initializeMap(lat, lon) {
         }
     }
     osmTiles.addTo(map);
+    owmRainTiles.addTo(map);
+    marker.addTo(map);
 
     const toggle = document.getElementById('toggle-mode');
     toggle.addEventListener('click', (e) => {

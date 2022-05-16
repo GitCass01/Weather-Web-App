@@ -1,5 +1,3 @@
-const API_KEY = 'fb1d036e9880437a98ec66f6e4daab01';
-
 // necessario per evitare le ambiguità causati dai nomi
 const cityHomePage = {
     'Milano, IT': { lat: 45.463619, lon: 9.188120 },
@@ -95,7 +93,7 @@ async function showMe(lat, lon, name) {
 
 // CURRENT WEATHER (card in homepage: Milano, Londra, Tokyo, New York)
 // direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=Milano&limit=3&appid={API_KEY}
-// one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&appid={API_KEY}
+// one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&units=metric&lang=it&appid={API_KEY}
 function currentWeatherHomePage() {
     setWeather(cityHomePage['Milano, IT'].lat, cityHomePage['Milano, IT'].lon, 'card-milano');
     setWeather(cityHomePage['Londra, GB'].lat, cityHomePage['Londra, GB'].lon, 'card-londra');
@@ -105,19 +103,13 @@ function currentWeatherHomePage() {
 
 // funzione per la ricerca e l'inserimento del meteo nelle card
 async function setWeather(lat, lon, id_card) {
-    const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
-    const params = {
-        lat: lat,
-        lon: lon,
-        exclude: 'minutely,hourly,daily',
-        units: 'metric',
-        lang: 'it',
-        appid: API_KEY
-    }
-    const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
-    const call = onecall_url + query_weather;
-
-    await fetch(call)
+    fetch("/weatherData", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 'lat': lat, 'lon': lon, 'exclude': 'minutely,hourly,alerts' }),
+    })
         .then(response => response.json())
         .then(result => {
             //console.log(result);
@@ -147,7 +139,9 @@ async function setWeather(lat, lon, id_card) {
             lis[1].innerText = "Pressione: " + result.current.pressure + " hPa";
             lis[2].innerText = "Vento: " + result.current.wind_speed + " m/s " + degToCompass(result.current.wind_deg);
         })
-        .catch(err => console.log("err: ", err));
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
 
 // salva le info della città cliccata (card) per mostrare le previsioni settimanali
@@ -179,19 +173,13 @@ async function weeklyWeather() {
 
     initializeMap(lat, lon);
 
-    const onecall_url = 'https://api.openweathermap.org/data/2.5/onecall?';
-    const params = {
-        lat: lat,
-        lon: lon,
-        exclude: 'minutely',
-        units: 'metric',
-        lang: 'it',
-        appid: API_KEY
-    }
-    const query_weather = new URLSearchParams(params).toString().replaceAll("%2C", ",");
-    const call = onecall_url + query_weather;
-
-    await fetch(call)
+    await fetch('/weatherData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 'lat': lat, 'lon': lon, 'exclude': 'minutely' }),
+    })
         .then(response => response.json())
         .then(result => {
             //console.log(result);
