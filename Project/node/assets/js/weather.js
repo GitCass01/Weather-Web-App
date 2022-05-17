@@ -8,15 +8,17 @@ const cityHomePage = {
 
 // dà la possibilità all'utente di scegliere la città da un 'suggestion box' rispetto allo 'state' e alla latitudine e longitudine
 // in quanto la ricerca per nome introduce ambiguità
-async function suggestion() {
+async function suggestion(id_suggestion) {
     const city = document.getElementById('floatingInput').value;
 
-    const ul = document.getElementsByClassName('suggestion-elements');
-    ul[0].style.display = 'block';
+    const ul = document.getElementById(id_suggestion);
+    ul.style.display = 'block';
 
-    const ulChildren = document.getElementsByClassName('suggestion-elements')[0].children;
-    for (let i = 0; i < ulChildren.length; i++) {
-        ulChildren[i].remove();
+    const ulChildren = ul.children;
+    const numChildren = ulChildren.length;
+    for (let i = 0; i < numChildren; i++) {
+        const child = document.getElementById(i);
+        ul.removeChild(child);
     }
 
     await fetch('/geo', {
@@ -43,7 +45,7 @@ async function suggestion() {
                         li.innerText += " : " + result[i].state;
                     }
                     li.setAttribute('onclick', 'select(this)');
-                    ul[0].append(li);
+                    ul.append(li);
                     const obj = { 'name': li.innerText.split(" : ")[0], lat: result[i].lat, 'lon': result[i].lon };
                     arr.push(obj);
                 }
@@ -62,13 +64,15 @@ function select(e) {
     const lon = obj[e.id].lon;
     const name = document.getElementById('floatingInput').value.split(" : ")[0];
 
-    const ul = document.getElementsByClassName('suggestion-elements');
-    const ulChildren = document.getElementsByClassName('suggestion-elements')[0].children;
     const ulId = e.parentNode.id;
-    for (let i = 0; i < ulChildren.length; i++) {
-        ulChildren[i].remove();
+    const ul = document.getElementById(ulId);
+    const ulChildren = ul.children;
+    const numChildren = ulChildren.length
+    for (let i = 0; i < numChildren; i++) {
+        const child = document.getElementById(i);
+        ul.removeChild(child);
     }
-    ul[0].style.display = 'none';
+    ul.style.display = 'none';
     sessionStorage.removeItem('suggestions');
     localStorage.setItem('cityWeekly', JSON.stringify(obj[e.id]));
 
