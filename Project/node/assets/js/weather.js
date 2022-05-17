@@ -11,15 +11,6 @@ const cityHomePage = {
 async function suggestion() {
     const city = document.getElementById('floatingInput').value;
 
-    const geo_url = 'https://api.openweathermap.org/geo/1.0/direct?';
-    const params = {
-        q: city,
-        limit: 5,
-        appid: API_KEY
-    };
-    const query = new URLSearchParams(params).toString().replace("%2C", ",");
-    const final_url = geo_url + query;
-
     const ul = document.getElementsByClassName('suggestion-elements');
     ul[0].style.display = 'block';
 
@@ -28,7 +19,13 @@ async function suggestion() {
         ulChildren[i].remove();
     }
 
-    await fetch(final_url)
+    await fetch('/geo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 'city': city }),
+    })
         .then(response => response.json())
         .then(result => {
             //console.log(result);
@@ -88,27 +85,27 @@ async function showMe(lat, lon, name) {
 
     card.style.display = 'block';
     document.getElementById('city').innerText = name;
-    setWeather(lat, lon, 'hidden-card-body');
+    setWeather(name, lat, lon, 'hidden-card-body');
 }
 
 // CURRENT WEATHER (card in homepage: Milano, Londra, Tokyo, New York)
 // direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=Milano&limit=3&appid={API_KEY}
 // one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&units=metric&lang=it&appid={API_KEY}
 function currentWeatherHomePage() {
-    setWeather(cityHomePage['Milano, IT'].lat, cityHomePage['Milano, IT'].lon, 'card-milano');
-    setWeather(cityHomePage['Londra, GB'].lat, cityHomePage['Londra, GB'].lon, 'card-londra');
-    setWeather(cityHomePage['Tokyo, JP'].lat, cityHomePage['Tokyo, JP'].lon, 'card-tokyo');
-    setWeather(cityHomePage['New York, US'].lat, cityHomePage['New York, US'].lon, 'card-newyork');
+    setWeather('Milano, IT', cityHomePage['Milano, IT'].lat, cityHomePage['Milano, IT'].lon, 'card-milano');
+    setWeather('Londra, GB', cityHomePage['Londra, GB'].lat, cityHomePage['Londra, GB'].lon, 'card-londra');
+    setWeather('Tokyo, JP', cityHomePage['Tokyo, JP'].lat, cityHomePage['Tokyo, JP'].lon, 'card-tokyo');
+    setWeather('New York, US', cityHomePage['New York, US'].lat, cityHomePage['New York, US'].lon, 'card-newyork');
 }
 
 // funzione per la ricerca e l'inserimento del meteo nelle card
-async function setWeather(lat, lon, id_card) {
-    fetch("/weatherData", {
+async function setWeather(city, lat, lon, id_card) {
+    await fetch("/weatherData", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 'lat': lat, 'lon': lon, 'exclude': 'minutely,hourly,alerts' }),
+        body: JSON.stringify({ 'city': city, 'lat': lat, 'lon': lon, 'exclude': 'minutely,hourly,alerts' }),
     })
         .then(response => response.json())
         .then(result => {
@@ -178,7 +175,7 @@ async function weeklyWeather() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 'lat': lat, 'lon': lon, 'exclude': 'minutely' }),
+        body: JSON.stringify({ 'city': name, 'lat': lat, 'lon': lon, 'exclude': 'minutely' }),
     })
         .then(response => response.json())
         .then(result => {
