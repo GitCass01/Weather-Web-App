@@ -88,7 +88,7 @@ app.post('/weatherData', async function (req, res) {
     const today = new Date().getTime();
     try {
         const saveDate = weatherData.getData('/' + req.body.city + '/dt');
-        if (parseInt(Math.abs(saveDate - today) / (1000 * 60) % 60) >= 10) {
+        if (parseInt(Math.abs(saveDate - today) / (1000 * 60)) >= 10) {
             console.log('Aggiorno weatherData per ' + req.body.city);
             await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.body.lat + '&lon=' + req.body.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
                 .then(response => {
@@ -225,7 +225,7 @@ async function updateChartTemperatures(req) {
     }
 
     const saveDate = weatherData.getData('/' + req.body.city);
-    if (parseInt(Math.abs(saveDate.dt - today) / (1000 * 60) % 60) >= 10) { // se sono passati 10 minuti
+    if (parseInt(Math.abs(saveDate.dt - today) / (1000 * 60)) >= 10) { // se sono passati 10 minuti
         console.log('Aggiorno weatherData per ' + req.body.city);
         await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.body.lat + '&lon=' + req.body.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
             .then(response => {
