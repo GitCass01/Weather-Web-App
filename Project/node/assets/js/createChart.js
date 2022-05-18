@@ -12,17 +12,6 @@
         ...
     }
 */
-if (!localStorage.getItem('chartTemperatures')) {
-    console.log('Creo chartTemperatures...');
-    const chartTemperatures = JSON.stringify({});
-    localStorage.setItem('chartTemperatures', chartTemperatures);
-}
-if (!localStorage.getItem('chartRains')) {
-    console.log('Creo chartRains...');
-    const chartRains = JSON.stringify({});
-    localStorage.setItem('chartRains', chartRains);
-}
-
 // check if the local data (rain/temperature) are present and up to date, if not it retrieve this data
 // generate the 'default' chart -> temperature chart
 async function generateChart() {

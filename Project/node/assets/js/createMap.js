@@ -29,7 +29,7 @@ function initializeMap(lat, lon) {
     const owmRainTiles = L.tileLayer(owmRainsUrl, { attribution });
 
     // current position marker
-    var marker = L.marker([lat, lon]).bindPopup(JSON.parse(localStorage.getItem('cityWeekly')).name);
+    var marker = L.marker([lat, lon]).bindPopup(JSON.parse(localStorage.getItem('cityWeekly')).name.split(" : ")[0]);
 
     // map config
     const map = L.map('map').setView([lat, lon], 9);

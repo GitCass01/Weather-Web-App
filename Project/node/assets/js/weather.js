@@ -46,7 +46,7 @@ async function suggestion(id_suggestion) {
                     }
                     li.setAttribute('onclick', 'select(this)');
                     ul.append(li);
-                    const obj = { 'name': li.innerText.split(" : ")[0], lat: result[i].lat, 'lon': result[i].lon };
+                    const obj = { 'name': li.innerText, lat: result[i].lat, 'lon': result[i].lon };
                     arr.push(obj);
                 }
                 sessionStorage.setItem('suggestions', JSON.stringify(arr));
@@ -62,7 +62,7 @@ function select(e) {
     const obj = JSON.parse(sessionStorage.getItem('suggestions'));
     const lat = obj[e.id].lat;
     const lon = obj[e.id].lon;
-    const name = document.getElementById('floatingInput').value.split(" : ")[0];
+    const fullName = document.getElementById('floatingInput').value;
 
     const ulId = e.parentNode.id;
     const ul = document.getElementById(ulId);
@@ -77,29 +77,29 @@ function select(e) {
     localStorage.setItem('cityWeekly', JSON.stringify(obj[e.id]));
 
     if (ulId === 'indexSuggestion') {
-        showMe(lat, lon, name);
+        showMe(lat, lon, fullName);
     } else if (ulId === 'weeklySuggestion') {
         weeklyWeather();
     }
 }
 
 // funzione per mostrare la card specifica per la città innserita nella search bar + current weather
-async function showMe(lat, lon, name) {
+async function showMe(lat, lon, fullName) {
     let card = document.getElementById('hidden-card');
 
     card.style.display = 'block';
-    document.getElementById('city').innerText = name;
-    setWeather(name, lat, lon, 'hidden-card-body');
+    document.getElementById('city').innerText = fullName.split(" : ")[0];
+    setWeather(fullName, lat, lon, 'hidden-card-body');
 }
 
 // CURRENT WEATHER (card in homepage: Milano, Londra, Tokyo, New York)
 // direct geocoding call : http://api.openweathermap.org/geo/1.0/direct?q=Milano&limit=3&appid={API_KEY}
 // one call api : https://api.openweathermap.org/data/2.5/onecall?lat=xxxx&lon=xxxx&exclude=minutely,hourly,daily&units=metric&lang=it&appid={API_KEY}
 function currentWeatherHomePage() {
-    setWeather('Milano, IT', cityHomePage['Milano, IT'].lat, cityHomePage['Milano, IT'].lon, 'card-milano');
-    setWeather('Londra, GB', cityHomePage['Londra, GB'].lat, cityHomePage['Londra, GB'].lon, 'card-londra');
+    setWeather('Milano, IT : Lombardy', cityHomePage['Milano, IT'].lat, cityHomePage['Milano, IT'].lon, 'card-milano');
+    setWeather('Londra, GB : England', cityHomePage['Londra, GB'].lat, cityHomePage['Londra, GB'].lon, 'card-londra');
     setWeather('Tokyo, JP', cityHomePage['Tokyo, JP'].lat, cityHomePage['Tokyo, JP'].lon, 'card-tokyo');
-    setWeather('New York, US', cityHomePage['New York, US'].lat, cityHomePage['New York, US'].lon, 'card-newyork');
+    setWeather('New York, US : New York', cityHomePage['New York, US'].lat, cityHomePage['New York, US'].lon, 'card-newyork');
 }
 
 // funzione per la ricerca e l'inserimento del meteo nelle card
@@ -146,9 +146,9 @@ async function setWeather(city, lat, lon, id_card) {
 }
 
 // salva le info della città cliccata (card) per mostrare le previsioni settimanali
-function saveCity(name) {
-    const obj = { 'name': name, 'lat': cityHomePage[name].lat, 'lon': cityHomePage[name].lon };
-    localStorage.setItem('cityWeekly', JSON.stringify(obj));
+function saveCity(fullName) {
+    const name = fullName.split(" : ")[0];
+    localStorage.setItem('cityWeekly', JSON.stringify({ 'name': fullName, 'lat': cityHomePage[name].lat, 'lon': cityHomePage[name].lon }));
 }
 
 // weekly (7 days) weather for 'weather.html' page
@@ -157,20 +157,15 @@ async function weeklyWeather() {
     // 1. card clickata nella 'index.html'
     // 2. altrimenti uso Milano come posizione 'placeholder'
     // 3. search box -> aggiorno
-    let lat = 45.463619;
-    let lon = 9.188120;
-    let name = "Milano, IT";
-
-    if (localStorage.getItem('cityWeekly')) {
-        const city = JSON.parse(localStorage.getItem('cityWeekly'));
-        name = city.name;
-        lat = city.lat;
-        lon = city.lon;
-    } else {
-        localStorage.setItem('cityWeekly', JSON.stringify({ name: 'Milano, IT', lat: 45.463619, lon: 9.188120 }));
+    if (!localStorage.getItem('cityWeekly')) {
+        localStorage.setItem('cityWeekly', JSON.stringify({ name: 'Milano, IT : Lombardy', lat: 45.463619, lon: 9.188120 }));
     }
+    const city = JSON.parse(localStorage.getItem('cityWeekly'));
+    const lat = city.lat;
+    const lon = city.lon;
+    const name = city.name;
 
-    document.getElementById('cityNameWeekly').innerText = "Previsioni settimanali di " + name;
+    document.getElementById('cityNameWeekly').innerText = "Previsioni settimanali di " + name.split(" : ")[0];
 
     initializeMap(lat, lon);
 
