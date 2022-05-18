@@ -32,7 +32,7 @@ function initializeMap(lat, lon) {
     var marker = L.marker([lat, lon]).bindPopup(JSON.parse(localStorage.getItem('cityWeekly')).name.split(" : ")[0]);
 
     // map config
-    const map = L.map('map').setView([lat, lon], 9);
+    const map = L.map('map', {minZoom: 1, zoomSnap: 0.5}).setView([lat, lon], 9);
 
     // layer controls
     var baseMaps = {
@@ -44,7 +44,7 @@ function initializeMap(lat, lon) {
     };
 
     var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-    
+
     layerControl.addBaseLayer(owmTempTiles, 'Temperature');
 
     // 'openstreetmap' layer based on toggle-mode (dark/ligt mode)
@@ -58,6 +58,12 @@ function initializeMap(lat, lon) {
     osmTiles.addTo(map);
     owmRainTiles.addTo(map);
     marker.addTo(map);
+
+    // creo i bounds per la mappa
+    var southWest = L.latLng(-85.0511287798066, -185.62500000000003),
+        northEast = L.latLng(84.92832092949963, 209.53125),
+        bounds = L.latLngBounds(southWest, northEast);
+    map.setMaxBounds(bounds);
 
     const toggle = document.getElementById('toggle-mode');
     toggle.addEventListener('click', (e) => {
