@@ -8,8 +8,8 @@ const chartRains = new JsonDB(new Config('./assets/databases/chartRains', true, 
 const axios = require('axios');
 const schedule = require('node-schedule');
 
-// ogni giorno alle 0:10:0 aggiorna i chartData
-const job = schedule.scheduleJob('10 * * * * *', updateChartData);
+// ogni giorno alle 0:30:0 aggiorna i chartData
+const job = schedule.scheduleJob('30 0 * * *', updateChartData);
 
 //updateChartData();
 
