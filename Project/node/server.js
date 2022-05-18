@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');  // necessario per leggere il contenu
 // database json
 const JsonDB = require("node-json-db").JsonDB;
 const Config = require("node-json-db/dist/lib/JsonDBConfig").Config;
+const { Worker, workerData } = require('worker_threads')
 
 // Configure dotenv package
 require("dotenv").config();
@@ -12,13 +13,51 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 8080;
 
-/*
-    weatherData/oldData: {
+// weatherDataWorker thread
+const weatherDataWorker = new Worker(__dirname + '/assets/js/weatherDataWorker.js', { workerData: 'Prova' });
+weatherDataWorker.on("message", result => {
+    console.log(result);
+});
+weatherDataWorker.on("error", error => {
+    console.log(error);
+});
+weatherDataWorker.on("exit", exitCode => {
+    console.log(exitCode);
+})
+
+// chartWorker thread
+const chartWorker = new Worker(__dirname + '/assets/js/chartWorker.js', { workerData: 'Prova' });
+chartWorker.on("message", result => {
+    console.log(result);
+});
+chartWorker.on("error", error => {
+    console.log(error);
+});
+chartWorker.on("exit", exitCode => {
+    console.log(exitCode);
+})
+
+
+/* Databases
+    weatherData: {
         city: {
             dt:
             data: {
-
+                
             }
+        }
+    }
+
+    oldData: {
+        city: {
+            dt:
+            data: [
+            {
+                dt: 
+                ...
+            },
+            ...
+            ]
         }
     }
 
@@ -43,7 +82,6 @@ const port = process.env.PORT || 8080;
         }
     }
 */
-
 const weatherData = new JsonDB(new Config(__dirname + '/assets/databases/weatherData', true, false, '/'));
 const oldData = new JsonDB(new Config(__dirname + '/assets/databases/oldData', true, false, '/')); //5gg precedenti
 var chartTemperatures = new JsonDB(new Config(__dirname + '/assets/databases/chartTemperatures', true, false, '/'));
@@ -87,20 +125,8 @@ app.post('/weatherData', async function (req, res) {
     //console.log('invio risposta api weatherData');
     const today = new Date().getTime();
     try {
-        const saveDate = weatherData.getData('/' + req.body.city + '/dt');
-        if (parseInt(Math.abs(saveDate - today) / (1000 * 60)) >= 10) {
-            console.log('Aggiorno weatherData per ' + req.body.city);
-            await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.body.lat + '&lon=' + req.body.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
-                .then(response => {
-                    weatherData.push('/' + req.body.city, {
-                        dt: new Date().getTime(),
-                        data: response.data
-                    });
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
+        // il metodo getData() ritorna un errore se non esiste la entry nel deb
+        weatherData.getData('/' + req.body.city);
     } catch (error) {
         console.log('Creo weatherData per ' + req.body.city);
         await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.body.lat + '&lon=' + req.body.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
@@ -119,30 +145,22 @@ app.post('/weatherData', async function (req, res) {
 
 app.post('/chartTemperatures', async function (req, res) {
     try {
-        const saveDate = chartTemperatures.getData('/' + req.body.city + '/dt');
-        if (new Date(saveDate).toDateString() != new Date().toDateString()) {
-            console.log('Aggiorno dati chartTemperatures per: ' + req.body.city);
-            await updateChartTemperatures(req);
-        }
+        chartTemperatures.getData('/' + req.body.city);
     } catch (error) {
         console.log('Creo entry chartTemperatures per: ' + req.body.city);
         chartTemperatures.push('/' + req.body.city, {});
-        await updateChartTemperatures(req);
+        await getChartTemperatures(req);
     }
     res.send(chartTemperatures.getData('/' + req.body.city + '/data'));
 });
 
 app.post('/chartRains', async function (req, res) {
     try {
-        const saveDate = chartRains.getData('/' + req.body.city + '/dt');
-        if (new Date(saveDate).toDateString() != new Date().toDateString()) {
-            console.log('Aggiorno dati chartRains per: ' + req.body.city);
-            await updateChartRains(req);
-        }
+        chartRains.getData('/' + req.body.city);
     } catch (error) {
         console.log('Creo entry chartRains per: ' + req.body.city);
         chartRains.push('/' + req.body.city, {});
-        await updateChartRains(req);
+        await getChartRains(req);
     }
     res.send(chartRains.getData('/' + req.body.city + '/data'));
 });
@@ -156,61 +174,49 @@ function timestampToDate(timestamp, offset) {
     return date;
 }
 
-async function getOldData(req, dt) {
-    const today = new Date().getTime();
+async function getOldData(req) {
+    const today = new Date();
     try {
-        const saveDate = oldData.getData('/' + req.body.city + '/dt');
-        if (new Date(saveDate).toDateString() != new Date().toDateString()) {
-            console.log('Aggiorno oldData per ' + req.body.city);
-            await axios.get('https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=' + req.body.lat + '&lon=' + req.body.lon + '&dt=' + dt + '&units=metric&lang=it&appid=' + process.env.API_KEY)
+        oldData.getData('/' + req.body.city);
+    } catch (error) {
+        console.log('Creo oldData per ' + req.body.city);
+        const arrOldData = [];
+        for (let i = 5; i >= 1; i--) {
+            let pastDate = Math.round(new Date().setDate(today.getDate() - i) / 1000); // voglio la data in secondi per openweathermap
+
+            await axios.get('https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=' + req.body.lat + '&lon=' + req.body.lon + '&dt=' + pastDate + '&units=metric&lang=it&appid=' + process.env.API_KEY)
                 .then(response => {
-                    oldData.push('/' + req.body.city, {
-                        dt: new Date().getTime(),
-                        data: response.data
-                    });
-                    data = response.data;
+                    arrOldData.push(response.data);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         }
-    } catch (error) {
-        console.log('Creo oldData per ' + req.body.city);
-        await axios.get('https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=' + req.body.lat + '&lon=' + req.body.lon + '&dt=' + dt + '&units=metric&lang=it&appid=' + process.env.API_KEY)
-            .then(response => {
-                oldData.push('/' + req.body.city, {
-                    dt: new Date().getTime(),
-                    data: response.data
-                });
-                data = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
 
-    return oldData.getData('/' + req.body.city + '/data');
+        oldData.push('/' + req.body.city, {
+            dt: new Date().getTime(),
+            data: arrOldData
+        });
+    }
 };
 
-async function updateChartTemperatures(req) {
+async function getChartTemperatures(req) {
     const dates = [];
     const temp_max = [];
     const temp_min = [];
 
-    const today = new Date();
-    for (let i = 5; i >= 1; i--) {
-        let pastDate = Math.round(new Date().setDate(today.getDate() - i) / 1000); // voglio la data in secondi per openweathermap
 
-        const oldData = await getOldData(req, pastDate);
-
-        dates.push(timestampToDate(pastDate, oldData.timezone_offset).toLocaleDateString());
+    await getOldData(req);
+    const arrOldData = oldData.getData('/' + req.body.city + '/data');
+    arrOldData.forEach(daysBefore => {
+        dates.push(timestampToDate(daysBefore.current.dt, daysBefore.timezone_offset).toLocaleDateString());
 
         // l'api non fornisce la temp max e min relative ai giorni precedenti (historical)
         // quindi itero sulle ore del giorno e ricavo le temp max e min
-        let max = oldData.current.temp;
-        let min = oldData.current.temp;
+        let max = daysBefore.current.temp;
+        let min = daysBefore.current.temp;
         for (let i = 0; i < 24; i++) {
-            let tmp = oldData.hourly[i].temp;
+            let tmp = daysBefore.hourly[i].temp;
             if (tmp < min) {
                 min = tmp;
             }
@@ -221,23 +227,7 @@ async function updateChartTemperatures(req) {
 
         temp_max.push(Math.round(max));
         temp_min.push(Math.round(min));
-
-    }
-
-    const saveDate = weatherData.getData('/' + req.body.city);
-    if (parseInt(Math.abs(saveDate.dt - today) / (1000 * 60)) >= 10) { // se sono passati 10 minuti
-        console.log('Aggiorno weatherData per ' + req.body.city);
-        await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.body.lat + '&lon=' + req.body.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
-            .then(response => {
-                weatherData.push('/' + req.body.city, {
-                    dt: new Date().getTime(),
-                    data: response.data
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+    });
 
     const daily = weatherData.getData('/' + req.body.city + '/data/daily');
     const timezone_offset = weatherData.getData('/' + req.body.city + '/data/timezone_offset');
@@ -256,30 +246,27 @@ async function updateChartTemperatures(req) {
     });
 }
 
-async function updateChartRains(req) {
+async function getChartRains(req) {
     const dates = [];
     const rain_total_mm = [];
 
-    const today = new Date();
-    for (let i = 5; i >= 1; i--) {
-        let pastDate = Math.round(new Date().setDate(today.getDate() - i) / 1000); // voglio la data in secondi per openweathermap
-
-        const oldData = await getOldData(req, pastDate);
-
-        dates.push(timestampToDate(pastDate, oldData.timezone_offset).toLocaleDateString());
+    await getOldData(req);
+    const arrOldData = oldData.getData('/' + req.body.city + '/data');
+    arrOldData.forEach(daysBefore => {
+        dates.push(timestampToDate(daysBefore.current.dt, daysBefore.timezone_offset).toLocaleDateString());
 
         // l'api non fornisce l'umidità max e min relative ai giorni precedenti (historical)
         // quindi itero sulle ore del giorno e ricavo l'umidità max e min
         let mm = 0;
         for (let i = 0; i < 24; i++) {
-            if (oldData.hourly[i].rain) {
-                mm += oldData.hourly[i].rain["1h"];
+            if (daysBefore.hourly[i].rain) {
+                mm += daysBefore.hourly[i].rain["1h"];
             }
         }
         rain_total_mm.push(mm);
+    });
 
-    }
-
+    const today = new Date().getTime();
     const saveDate = weatherData.getData('/' + req.body.city);
     if (parseInt(Math.abs(saveDate.dt - today) / (1000 * 60) % 60) >= 10) { // se sono passati 10 minuti
         console.log('Aggiorno weatherData per ' + req.body.city);
