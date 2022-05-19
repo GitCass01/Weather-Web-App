@@ -28,7 +28,7 @@ async function updateChartData() {
     }
 
     parentPort.postMessage({
-        status: 'oldData, chartTemperatures, chartRains Aggiornati in data: ' + new Date().toLocaleString()
+        status: new Date().toLocaleString() + ': oldData, chartTemperatures, chartRains Aggiornati'
     })
 }
 

@@ -23,7 +23,7 @@ async function updateCurrentWeatherData() {
         await axios.get('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&lang=it&appid=' + process.env.API_KEY)
             .then(response => {
                 const currentWeather = response.data;
-                dataObj.dt = new Date().getTime()/1000;
+                dataObj.dt = Math.floor(new Date().getTime()/1000);
                 dataObj.weather = currentWeather.weather;
                 dataObj.wind_speed = currentWeather.wind.speed;
                 dataObj.wind_deg = currentWeather.wind.deg;
@@ -42,7 +42,7 @@ async function updateCurrentWeatherData() {
     }
 
     parentPort.postMessage({
-        status: 'current weather in weatherData Aggiornato in data: ' + new Date().toLocaleString()
+        status: new Date().toLocaleString() + ': current weather in weatherData Aggiornato'
     })
 }
 
@@ -67,6 +67,6 @@ async function updateWeatherData() {
     }
 
     parentPort.postMessage({
-        status: 'weatherData Aggiornato in data: ' + new Date().toLocaleString()
+        status: new Date().toLocaleString() + ': weatherData Aggiornato'
     })
 }

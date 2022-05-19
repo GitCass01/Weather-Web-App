@@ -304,4 +304,4 @@ async function getChartRains(req) {
 }
 
 app.listen(port);
-console.log('Server started at http://localhost:' + port + ' in data: ' + new Date().toLocaleString());
+console.log(new Date().toLocaleString() + ': Server started at http://localhost:' + port);
