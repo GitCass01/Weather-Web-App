@@ -23,7 +23,7 @@ parentPort.on('message', async (data) => {
     await getChartData(data);
 });
 
-updateChartData();
+// updateChartData();
 
 async function updateChartData() {
     const objData = weatherData.getData('/');

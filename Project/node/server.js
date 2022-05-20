@@ -48,19 +48,6 @@ chartWorker.on("exit", exitCode => {
         }
     }
 
-    oldData: {
-        city: {
-            dt:
-            data: [
-            {
-                dt: 
-                ...
-            },
-            ...
-            ]
-        }
-    }
-
     chartTemperatures: {
         city: {
             dt: 

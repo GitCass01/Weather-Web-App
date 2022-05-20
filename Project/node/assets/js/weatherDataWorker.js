@@ -16,7 +16,7 @@ try {
     }
 } catch (error) { }
 
-// updateWeatherData();                                             // eseguito appena il worker viene startato dal main thread
+// updateWeatherData();
 
 var intervalId = setInterval(updateCurrentWeatherData, 600000);     // ogni 10 minuti aggiorno tutti i 'current' in weatherData
 
