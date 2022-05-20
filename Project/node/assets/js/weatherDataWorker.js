@@ -7,6 +7,14 @@ const schedule = require('node-schedule');
 
 // ogni giorno alle 0:30:0 aggiorna weatherData tramite one call api
 const job = schedule.scheduleJob('30 0 * * *', updateWeatherData);
+// oppure se le saveDate sono di un giorno precedente (il server era 'spento' alle 0:30:0 e non ha aggiornato automaticamente)
+try {
+    const saveDate = new Date(weatherData.getData('/' + Object.keys(weatherData.getData('/'))[0] + '/dt'));
+    const today = new Date();
+    if (!(saveDate.getDate() === today.getDate() && saveDate.getMonth() === today.getMonth() && saveDate.getFullYear() === today.getFullYear())) {
+        updateWeatherData();
+    }
+} catch (error) { }
 
 // updateWeatherData();                                             // eseguito appena il worker viene startato dal main thread
 
@@ -23,7 +31,7 @@ async function updateCurrentWeatherData() {
         await axios.get('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&lang=it&appid=' + process.env.API_KEY)
             .then(response => {
                 const currentWeather = response.data;
-                dataObj.dt = Math.floor(new Date().getTime()/1000);
+                dataObj.dt = Math.floor(new Date().getTime() / 1000);
                 dataObj.weather = currentWeather.weather;
                 dataObj.wind_speed = currentWeather.wind.speed;
                 dataObj.wind_deg = currentWeather.wind.deg;
