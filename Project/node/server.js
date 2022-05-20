@@ -5,7 +5,11 @@ const bodyParser = require('body-parser');  // necessario per leggere il contenu
 // database json
 const JsonDB = require("node-json-db").JsonDB;
 const Config = require("node-json-db/dist/lib/JsonDBConfig").Config;
-const { Worker, workerData } = require('worker_threads')
+const { Worker, workerData } = require('worker_threads');
+const morgan = require('morgan');
+const fs = require('fs');
+
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'));
 
 // Configure dotenv package
 require("dotenv").config();
@@ -78,6 +82,7 @@ app.use(express.static(__dirname + '/assets'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan('combined', {stream: accessLogStream}));
 
 // index.html
 app.get('/', function (req, res) {
