@@ -16,7 +16,7 @@ try {
     }
 } catch (error) { }
 
-// updateWeatherData();
+//updateWeatherData();
 
 var intervalId = setInterval(updateCurrentWeatherData, 600000);     // ogni 10 minuti aggiorno tutti i 'current' in weatherData
 
@@ -50,7 +50,7 @@ async function updateCurrentWeatherData() {
     }
 
     parentPort.postMessage({
-        status: new Date().toLocaleString() + ': current weather in weatherData Aggiornato'
+        status: 'current weather in weatherData Aggiornato'
     })
 }
 
@@ -75,6 +75,6 @@ async function updateWeatherData() {
     }
 
     parentPort.postMessage({
-        status: new Date().toLocaleString() + ': weatherData Aggiornato'
+        status: 'weatherData Aggiornato'
     })
 }

@@ -1,0 +1,9 @@
+20-05-2022 20:25:46 info: Server started at http://localhost:3000
+20-05-2022 20:25:48 http: ::1 GET /weather.html 304 - - 2.371 ms
+20-05-2022 20:25:48 http: ::1 POST /weatherData 200 17472 - 12.361 ms
+20-05-2022 20:25:48 http: ::1 POST /chartTemperatures 200 271 - 1.102 ms
+20-05-2022 20:26:02 http: ::1 POST /geo 200 299 - 289.965 ms
+20-05-2022 20:26:03 warn: Creo weatherData per Brescia, IT : Lombardy
+20-05-2022 20:26:03 http: ::1 POST /weatherData 200 17661 - 238.426 ms
+20-05-2022 20:26:03 warn: Creo chartTemperatures e chartRains per: Brescia, IT : Lombardy
+20-05-2022 20:26:04 http: ::1 POST /chartTemperatures 200 271 - 889.558 ms

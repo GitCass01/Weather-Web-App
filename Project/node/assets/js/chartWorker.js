@@ -19,7 +19,7 @@ try {
 } catch (error) { }
 
 parentPort.on('message', async (data) => {
-    console.log('Aggiorno chartTemperatures, chartRains...');
+    //console.log('Aggiorno chartTemperatures, chartRains...');
     await getChartData(data);
 });
 
@@ -36,7 +36,7 @@ async function updateChartData() {
     }
 
     parentPort.postMessage({
-        status: new Date().toLocaleString() + ': chartTemperatures, chartRains Aggiornati',
+        status: 'chartTemperatures, chartRains Aggiornati',
         code: 'update'
     })
 }
@@ -47,7 +47,7 @@ async function getChartData(data) {
     await getChartTempRain(data.lat, data.lon, data.city);
 
     parentPort.postMessage({
-        status: new Date().toLocaleString() + ': oldData, chartTemperatures, chartRains Aggiornati per: ' + data.city,
+        status: 'oldData, chartTemperatures, chartRains Aggiornati per: ' + data.city,
         code: 'get'
     })
 }

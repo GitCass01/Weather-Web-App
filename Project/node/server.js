@@ -1,15 +1,16 @@
 const express = require('express');
 const path = require('path');
+// api call
 const axios = require('axios'); // utile per semplificare le chiamate alle api - rispetto al normale 'http', dato che 'fetch' non è ancora supportato in nodejs
 const bodyParser = require('body-parser');  // necessario per leggere il contenuto del 'body' di una richiesta in POST
 // database json
 const JsonDB = require("node-json-db").JsonDB;
 const Config = require("node-json-db/dist/lib/JsonDBConfig").Config;
+// worker thread
 const { Worker, workerData } = require('worker_threads');
-const morgan = require('morgan');
-const fs = require('fs');
-
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'));
+// loggers
+const morgan = require("./utils/middleware");
+const logger = require("./utils/logger");
 
 // Configure dotenv package
 require("dotenv").config();
@@ -20,25 +21,25 @@ const port = process.env.PORT || 8080;
 // weatherDataWorker thread
 const weatherDataWorker = new Worker(__dirname + '/assets/js/weatherDataWorker.js', { workerData: 'Prova' });
 weatherDataWorker.on("message", result => {
-    console.log(result);
+    logger.info(result.status);
 });
 weatherDataWorker.on("error", error => {
-    console.log(error);
+    logger.error(error);
 });
 weatherDataWorker.on("exit", exitCode => {
-    console.log(exitCode);
+    logger.warn(exitCode);
 })
 
 // chartWorker thread
 const chartWorker = new Worker(__dirname + '/assets/js/chartWorker.js', { workerData: 'Prova' });
 chartWorker.on("message", result => {
-    console.log(result);
+    logger.info(result);
 });
 chartWorker.on("error", error => {
-    console.log(error);
+    logger.error(error);
 });
 chartWorker.on("exit", exitCode => {
-    console.log(exitCode);
+    logger.warn(exitCode);
 })
 
 
@@ -82,7 +83,7 @@ app.use(express.static(__dirname + '/assets'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(morgan('combined', {stream: accessLogStream}));
+app.use(morgan);
 
 // index.html
 app.get('/', function (req, res) {
@@ -112,7 +113,7 @@ app.post('/geo', async function (req, res) {
             res.send(response.data);
         })
         .catch(error => {
-            console.log(error);
+            logger.error(error);
         });
 });
 
@@ -123,7 +124,7 @@ app.post('/weatherData', async function (req, res) {
         // il metodo getData() ritorna un errore se non esiste la entry nel deb
         weatherData.getData('/' + req.body.city);
     } catch (error) {
-        console.log('Creo weatherData per ' + req.body.city);
+        logger.warn('Creo weatherData per ' + req.body.city);
         await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.body.lat + '&lon=' + req.body.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
             .then(response => {
                 weatherData.push('/' + req.body.city, {
@@ -132,7 +133,7 @@ app.post('/weatherData', async function (req, res) {
                 });
             })
             .catch(error => {
-                console.log(error);
+                logger.error(error);
             });
     }
     res.send(weatherData.getData('/' + req.body.city + '/data'));
@@ -142,7 +143,7 @@ app.post('/chartTemperatures', async function (req, res) {
     try {
         chartTemperatures.getData('/' + req.body.city);
     } catch (error) {
-        console.log('Creo chartTemperatures e chartRains per: ' + req.body.city);
+        logger.warn('Creo chartTemperatures e chartRains per: ' + req.body.city);
         await getChartData(req);
     }
     res.send(chartTemperatures.getData('/' + req.body.city + '/data'));
@@ -163,7 +164,7 @@ async function getOldData(req) {
                 arrOldData.push(response.data);
             })
             .catch(error => {
-                console.log(error);
+                logger.error(error);
             });
     }
 
@@ -249,4 +250,4 @@ function timestampToDate(timestamp, offset) {
 }
 
 app.listen(port);
-console.log(new Date().toLocaleString() + ': Server started at http://localhost:' + port);
+logger.info('Server started at http://localhost:' + port);
