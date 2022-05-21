@@ -1,4 +1,20 @@
 {
+    "name": "weather-web-app",
+    "description": "web app for hourly, daily, weekly weather",
+    "main": "server.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/GitCass01/Weather-Web-App"
+    },
+    "keywords": [
+        "weather",
+        "weekly weather",
+        "daily weather",
+        "hourly weather",
+        "node",
+        "openweathermap"
+    ],
+    "author": "Davide Carniselli",
     "dependencies": {
         "axios": "^0.27.2",
         "body-parser": "^1.20.0",
