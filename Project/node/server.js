@@ -21,7 +21,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // weatherDataWorker thread
-const weatherDataWorker = new Worker(__dirname + '/assets/js/weatherDataWorker.js', { workerData: 'Prova' });
+const weatherDataWorker = new Worker(__dirname + '/utils/weatherDataWorker.js', { workerData: 'Prova' });
 weatherDataWorker.on("message", result => {
     logger.info(result.status);
 });
@@ -33,7 +33,7 @@ weatherDataWorker.on("exit", exitCode => {
 })
 
 // chartWorker thread
-const chartWorker = new Worker(__dirname + '/assets/js/chartWorker.js', { workerData: 'Prova' });
+const chartWorker = new Worker(__dirname + '/utils/chartWorker.js', { workerData: 'Prova' });
 chartWorker.on("message", result => {
     logger.info(result);
 });
@@ -43,7 +43,6 @@ chartWorker.on("error", error => {
 chartWorker.on("exit", exitCode => {
     logger.warn(exitCode);
 })
-
 
 /* Databases
     weatherData: {
