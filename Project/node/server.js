@@ -258,8 +258,8 @@ app.post('/contactMe', function (req, res) {
             user: process.env.mail,
             pass: process.env.pass
         }
-        /* necessario abilitare 'support for 'less secure' apps' per il servizio gmail
-        tls: {
+        // necessario abilitare 'support for 'less secure' apps' per il servizio gmail
+        /*tls: {
             rejectUnauthorized: false // oppure controllare antivirus causa problema
         }*/
     });
