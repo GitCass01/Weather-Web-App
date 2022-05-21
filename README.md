@@ -10,4 +10,4 @@ Per scaricare questi moduli portati nell cartella 'Project/node' e digita 'node 
 Troverai un file chiamato '.env_sample' dove dovrai inserire le varie informazioni sensibili e private (come l'api key di openweathermap), successivamente rinomina il file come '.env'
 
 ## Avvio server
-Basterà portarsi in 'Project/node' e digitare 'node server.js', aprire un browser e digitare l'url *localhost:3000*
+Basterà portarsi in 'Project/node' e digitare *'node server.js'*, aprire un browser e digitare l'url *localhost:3000*
