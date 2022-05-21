@@ -1,7 +1,0 @@
-21-05-2022 11:16:19 error: self signed certificate in certificate chain
-21-05-2022 11:16:50 error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials n1-20020a1c2701000000b003942a244ec5sm4094834wmn.10 - gsmtp
-21-05-2022 11:17:17 error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials i17-20020adfaad1000000b0020d0c37b350sm5367378wrc.27 - gsmtp
-21-05-2022 11:18:36 error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials y10-20020a7bcd8a000000b003942a244f54sm4735497wmj.45 - gsmtp

@@ -9,8 +9,8 @@ const Config = require("node-json-db/dist/lib/JsonDBConfig").Config;
 // worker thread
 const { Worker, workerData } = require('worker_threads');
 // loggers
-const morgan = require("./utils/logs/morganMiddleware");
-const logger = require("./utils/logs/logger");
+const morgan = require("./utils/morganMiddleware");
+const logger = require("./utils/logger");
 // mail
 const nodemailer = require('nodemailer');
 
