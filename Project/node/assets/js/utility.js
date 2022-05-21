@@ -220,3 +220,35 @@ function createAlertModal(id_card, alerts) {
     }
     modalFooter.append(button1);
 }
+
+const contactMe = document.getElementById('btnContactMe');
+contactMe.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('user-name');
+    const surname = document.getElementById('user-surname');
+    const email = document.getElementById('user-email');
+    const text = document.getElementById('user-comment');
+
+    const contactData = {
+        name: name.value,
+        surname: surname.value,
+        email: email.value,
+        message: text.value
+    }
+
+    fetch('/contactMe', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.code === 'Success') {
+                alert('Mail inviata');
+            }
+        })
+        .catch(err => console.log("err: ", err));
+});

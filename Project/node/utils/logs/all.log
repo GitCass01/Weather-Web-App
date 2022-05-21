@@ -1,0 +1,100 @@
+20-05-2022 20:25:46 info: Server started at http://localhost:3000
+20-05-2022 20:25:48 http: ::1 GET /weather.html 304 - - 2.371 ms
+20-05-2022 20:25:48 http: ::1 POST /weatherData 200 17472 - 12.361 ms
+20-05-2022 20:25:48 http: ::1 POST /chartTemperatures 200 271 - 1.102 ms
+20-05-2022 20:26:02 http: ::1 POST /geo 200 299 - 289.965 ms
+20-05-2022 20:26:03 warn: Creo weatherData per Brescia, IT : Lombardy
+20-05-2022 20:26:03 http: ::1 POST /weatherData 200 17661 - 238.426 ms
+20-05-2022 20:26:03 warn: Creo chartTemperatures e chartRains per: Brescia, IT : Lombardy
+20-05-2022 20:26:04 http: ::1 POST /chartTemperatures 200 271 - 889.558 ms
+21-05-2022 11:00:44 info: Server started at http://localhost:3000
+21-05-2022 11:01:01 http: ::1 GET /post? 404 143 - 5.527 ms
+21-05-2022 11:01:24 http: ::1 GET /post? 404 143 - 3.033 ms
+21-05-2022 11:01:49 info: Server started at http://localhost:3000
+21-05-2022 11:01:57 http: ::1 GET / 200 14158 - 12.824 ms
+21-05-2022 11:02:27 info: Server started at http://localhost:3000
+21-05-2022 11:02:30 http: ::1 GET / 200 14158 - 10.180 ms
+21-05-2022 11:02:31 http: ::1 POST /weatherData 200 17818 - 18.760 ms
+21-05-2022 11:02:31 http: ::1 POST /weatherData 200 17715 - 2.340 ms
+21-05-2022 11:02:31 http: ::1 POST /weatherData 200 17876 - 1.694 ms
+21-05-2022 11:02:31 http: ::1 POST /weatherData 200 21057 - 1.545 ms
+21-05-2022 11:03:40 info: Server started at http://localhost:3000
+21-05-2022 11:03:48 http: ::1 GET / 200 14158 - 8.119 ms
+21-05-2022 11:03:49 http: ::1 POST /weatherData 200 17818 - 19.857 ms
+21-05-2022 11:03:49 http: ::1 POST /weatherData 200 17715 - 1.727 ms
+21-05-2022 11:03:49 http: ::1 POST /weatherData 200 17876 - 1.288 ms
+21-05-2022 11:03:49 http: ::1 POST /weatherData 200 21057 - 0.751 ms
+21-05-2022 11:04:11 info: Server started at http://localhost:3000
+21-05-2022 11:04:26 info: Server started at http://localhost:3000
+21-05-2022 11:04:27 http: ::1 GET / 200 14158 - 4.201 ms
+21-05-2022 11:04:28 http: ::1 POST /weatherData 200 17818 - 15.862 ms
+21-05-2022 11:04:28 http: ::1 POST /weatherData 200 17715 - 1.439 ms
+21-05-2022 11:04:28 http: ::1 POST /weatherData 200 17876 - 1.292 ms
+21-05-2022 11:04:28 http: ::1 POST /weatherData 200 21057 - 1.069 ms
+21-05-2022 11:04:42 http: ::1 POST /contactMe 500 1878 - 6.734 ms
+21-05-2022 11:05:03 info: Server started at http://localhost:3000
+21-05-2022 11:05:06 http: ::1 GET / 200 14158 - 4.360 ms
+21-05-2022 11:05:07 http: ::1 POST /weatherData 200 17818 - 12.105 ms
+21-05-2022 11:05:07 http: ::1 POST /weatherData 200 17715 - 1.212 ms
+21-05-2022 11:05:07 http: ::1 POST /weatherData 200 17876 - 1.390 ms
+21-05-2022 11:05:07 http: ::1 POST /weatherData 200 21057 - 0.995 ms
+21-05-2022 11:06:34 info: Server started at http://localhost:3000
+21-05-2022 11:06:37 http: ::1 GET / 200 14158 - 5.200 ms
+21-05-2022 11:06:37 http: ::1 POST /weatherData 200 17818 - 10.319 ms
+21-05-2022 11:06:37 http: ::1 POST /weatherData 200 17715 - 2.289 ms
+21-05-2022 11:06:37 http: ::1 POST /weatherData 200 17876 - 1.011 ms
+21-05-2022 11:06:37 http: ::1 POST /weatherData 200 21057 - 1.415 ms
+21-05-2022 11:08:07 info: Server started at http://localhost:3000
+21-05-2022 11:08:09 http: ::1 GET / 200 14158 - 8.261 ms
+21-05-2022 11:08:09 http: ::1 POST /weatherData 200 17818 - 12.107 ms
+21-05-2022 11:08:09 http: ::1 POST /weatherData 200 17715 - 2.422 ms
+21-05-2022 11:08:09 http: ::1 POST /weatherData 200 17876 - 0.837 ms
+21-05-2022 11:08:09 http: ::1 POST /weatherData 200 21057 - 1.500 ms
+21-05-2022 11:10:30 info: Server started at http://localhost:3000
+21-05-2022 11:10:32 http: ::1 GET / 200 14158 - 6.190 ms
+21-05-2022 11:10:32 http: ::1 POST /weatherData 200 17818 - 16.608 ms
+21-05-2022 11:10:32 http: ::1 POST /weatherData 200 17715 - 3.521 ms
+21-05-2022 11:10:32 http: ::1 POST /weatherData 200 17876 - 1.298 ms
+21-05-2022 11:10:33 http: ::1 POST /weatherData 200 21057 - 3.343 ms
+21-05-2022 11:10:41 http: ::1 POST /contactMe 200 18 - 985.824 ms
+21-05-2022 11:12:17 info: Server started at http://localhost:3000
+21-05-2022 11:12:19 http: ::1 GET / 200 14158 - 5.576 ms
+21-05-2022 11:12:20 http: ::1 POST /weatherData 200 17818 - 15.569 ms
+21-05-2022 11:12:20 http: ::1 POST /weatherData 200 17715 - 1.359 ms
+21-05-2022 11:12:20 http: ::1 POST /weatherData 200 17876 - 1.492 ms
+21-05-2022 11:12:20 http: ::1 POST /weatherData 200 21057 - 1.114 ms
+21-05-2022 11:12:26 http: ::1 POST /contactMe 200 18 - 1162.400 ms
+21-05-2022 11:15:33 info: Server started at http://localhost:3000
+21-05-2022 11:15:35 http: ::1 GET / 200 14158 - 7.918 ms
+21-05-2022 11:15:35 http: ::1 POST /weatherData 200 17818 - 7.585 ms
+21-05-2022 11:15:35 http: ::1 POST /weatherData 200 17715 - 2.057 ms
+21-05-2022 11:15:35 http: ::1 POST /weatherData 200 17876 - 0.648 ms
+21-05-2022 11:15:35 http: ::1 POST /weatherData 200 21057 - 1.441 ms
+21-05-2022 11:16:19 error: self signed certificate in certificate chain
+21-05-2022 11:16:36 info: Server started at http://localhost:3000
+21-05-2022 11:16:50 error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials n1-20020a1c2701000000b003942a244ec5sm4094834wmn.10 - gsmtp
+21-05-2022 11:17:00 info: Server started at http://localhost:3000
+21-05-2022 11:17:05 http: ::1 GET / 304 - - 7.568 ms
+21-05-2022 11:17:05 http: ::1 POST /weatherData 200 17818 - 7.565 ms
+21-05-2022 11:17:05 http: ::1 POST /weatherData 200 17715 - 1.191 ms
+21-05-2022 11:17:05 http: ::1 POST /weatherData 200 17876 - 0.755 ms
+21-05-2022 11:17:05 http: ::1 POST /weatherData 200 21057 - 0.869 ms
+21-05-2022 11:17:17 error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials i17-20020adfaad1000000b0020d0c37b350sm5367378wrc.27 - gsmtp
+21-05-2022 11:18:19 info: Server started at http://localhost:3000
+21-05-2022 11:18:24 http: ::1 GET / 304 - - 3.258 ms
+21-05-2022 11:18:24 http: ::1 POST /weatherData 200 17818 - 14.353 ms
+21-05-2022 11:18:24 http: ::1 POST /weatherData 200 17715 - 1.229 ms
+21-05-2022 11:18:24 http: ::1 POST /weatherData 200 17876 - 1.383 ms
+21-05-2022 11:18:24 http: ::1 POST /weatherData 200 21057 - 1.971 ms
+21-05-2022 11:18:36 error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials y10-20020a7bcd8a000000b003942a244f54sm4735497wmj.45 - gsmtp
+21-05-2022 11:19:10 info: Server started at http://localhost:3000
+21-05-2022 11:19:12 http: ::1 GET / 304 - - 4.327 ms
+21-05-2022 11:19:12 http: ::1 POST /weatherData 200 17818 - 18.253 ms
+21-05-2022 11:19:12 http: ::1 POST /weatherData 200 17715 - 2.547 ms
+21-05-2022 11:19:12 http: ::1 POST /weatherData 200 17876 - 1.227 ms
+21-05-2022 11:19:12 http: ::1 POST /weatherData 200 21057 - 2.966 ms
+21-05-2022 11:19:19 info: Email inviata: 250 2.0.0 OK  1653124760 s9-20020a7bc389000000b0039482d95ab7sm3820763wmj.24 - gsmtp
+21-05-2022 11:19:19 http: ::1 POST /contactMe 200 18 - 1254.006 ms

@@ -46,11 +46,11 @@ const transports = [
     }),
     // abilita la stampa dei soli messaggi di errore in error.log
     new winston.transports.File({
-        filename: 'utils/error.log',
+        filename: 'utils/logs/error.log',
         level: 'error',
     }),
     // abilita la stampa di tutti i messaggi in all.log
-    new winston.transports.File({ filename: 'utils/all.log' }),
+    new winston.transports.File({ filename: 'utils/logs/all.log' }),
 ]
 
 // creo il logger che sarà esportata e che verrà usato per stampare i log

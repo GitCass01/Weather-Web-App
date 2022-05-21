@@ -1,5 +1,5 @@
 const morgan = require("morgan");
-const logger = require("../utils/logger");
+const logger = require("./logger");
 
 const stream = {
   // usa il livello 'http' del logger winston

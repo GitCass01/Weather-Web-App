@@ -9,8 +9,10 @@ const Config = require("node-json-db/dist/lib/JsonDBConfig").Config;
 // worker thread
 const { Worker, workerData } = require('worker_threads');
 // loggers
-const morgan = require("./utils/middleware");
-const logger = require("./utils/logger");
+const morgan = require("./utils/logs/morganMiddleware");
+const logger = require("./utils/logs/logger");
+// mail
+const nodemailer = require('nodemailer');
 
 // Configure dotenv package
 require("dotenv").config();
@@ -244,10 +246,40 @@ async function getChartData(req) {
 function timestampToDate(timestamp, offset) {
     const tz = new Date('August 19, 1975 23:15:30').getTimezoneOffset() * 60;
     // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-    var date = new Date((timestamp + offset + tz) * 1000);
+    const date = new Date((timestamp + offset + tz) * 1000);
 
     return date;
 }
+
+app.post('/contactMe', function (req, res) {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.mail,
+            pass: process.env.pass
+        }
+        /* necessario abilitare 'support for 'less secure' apps' per il servizio gmail
+        tls: {
+            rejectUnauthorized: false // oppure controllare antivirus causa problema
+        }*/
+    });
+
+    const mailOptions = {
+        from: req.body.email,
+        to: process.env.mail,
+        subject: 'Messaggio da: ' + req.body.email,
+        text: req.body.message
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            logger.error(error);
+        } else {
+            logger.info('Email inviata: ' + info.response);
+            res.send({ code: 'Success' });
+        }
+    });
+});
 
 app.listen(port);
 logger.info('Server started at http://localhost:' + port);
