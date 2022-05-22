@@ -116,7 +116,7 @@ async function setWeather(city, lat, lon, id_card) {
             //console.log(result);
             let citycard = document.getElementById(id_card).children;
 
-            citycard[0].innerText = timestampToDate(result.current.dt, result.timezone_offset).toLocaleString();
+            citycard[0].innerText = timestampToDate(parseInt(new Date().getTime() / 1000), result.timezone_offset).toLocaleString();
             citycard[1].src = "https://openweathermap.org/img/wn/" + result.current.weather[0].icon + "@2x.png";
             citycard[1].alt = result.current.weather[0].description;
             citycard[2].innerText = Math.round(result.current.temp) + "° " + result.current.weather[0].description;
@@ -195,7 +195,7 @@ async function weeklyWeather() {
 function currentWeather(result, current_weather) {
     //current weather
     const current_card = document.getElementById('current-weather').children;
-    current_card[0].innerText = timestampToDate(current_weather.dt, result.timezone_offset).toLocaleString();
+    current_card[0].innerText = timestampToDate(parseInt(new Date().getTime() / 1000), result.timezone_offset).toLocaleString();
     current_card[1].src = "https://openweathermap.org/img/wn/" + current_weather.weather[0].icon + "@2x.png";
     current_card[1].alt = current_weather.weather[0].description;
     current_card[2].innerText = Math.round(current_weather.temp) + "°C - " + current_weather.weather[0].description;

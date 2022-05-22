@@ -22,6 +22,14 @@ const colors = {
 }
 winston.addColors(colors)
 
+// filtro per prendere solo i log di livello 'http'
+const httpFilter = winston.format((info, opts) => {
+    return info.level === 'http' ? info : false
+});
+const notHttpFilter = winston.format((info, opts) => {
+    return info.level === 'http' ? false : info
+});
+
 // il formato del log
 const format = winston.format.combine(
     // aggiunge il timestamp del log
@@ -39,6 +47,7 @@ const transports = [
     // abilita la stampa in console
     new winston.transports.Console({
         format: winston.format.combine(
+            notHttpFilter(),
             winston.format.colorize({
                 all: true
             }),
@@ -49,8 +58,19 @@ const transports = [
         filename: 'utils/logs/error.log',
         level: 'error',
     }),
+    new winston.transports.File({
+        filename: 'utils/logs/access.log',
+        format: winston.format.combine(
+            httpFilter(),
+        ),
+    }),
     // abilita la stampa di tutti i messaggi in all.log
-    new winston.transports.File({ filename: 'utils/logs/all.log' }),
+    new winston.transports.File({ 
+        filename: 'utils/logs/app.log',
+        format: winston.format.combine(
+            notHttpFilter(),
+        ),
+    }),
 ]
 
 // creo il logger che sarà esportata e che verrà usato per stampare i log
