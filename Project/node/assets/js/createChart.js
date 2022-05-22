@@ -1,19 +1,3 @@
-// 'database' locale
-/*  struttura degli oggetti salvati in localStorage (stessa cosa per chartRains)
-    'chartTemperatures' =  {
-        'Buccinasco, IT': {
-            'dt': data_caricamento_dati,
-            'data': {
-                'dates': [],
-                'temp_max': [],
-                'temp_min': [],
-            }
-        },
-        ...
-    }
-*/
-// check if the local data (rain/temperature) are present and up to date, if not it retrieve this data
-// generate the 'default' chart -> temperature chart
 async function generateChart() {
     const city = JSON.parse(localStorage.getItem('cityWeekly'));
 

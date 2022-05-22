@@ -32,19 +32,6 @@ weatherDataWorker.on("exit", exitCode => {
     logger.warn(exitCode);
 })
 
-// chartWorker thread
-/*
-const chartWorker = new Worker(__dirname + '/utils/chartWorker.js', { workerData: 'Prova' });
-chartWorker.on("message", result => {
-    logger.info(result);
-});
-chartWorker.on("error", error => {
-    logger.error(error);
-});
-chartWorker.on("exit", exitCode => {
-    logger.warn(exitCode);
-})*/
-
 /* Databases
     weatherData: {
         city: {

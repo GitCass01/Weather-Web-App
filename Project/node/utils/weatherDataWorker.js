@@ -19,7 +19,7 @@ try {
     }
 } catch (error) { }
 
- updateWeatherData();
+// updateWeatherData();
 // updateChartData();
 
 var intervalId = setInterval(updateCurrentWeatherData, 600000);     // ogni 10 minuti aggiorno tutti i 'current' in weatherData
