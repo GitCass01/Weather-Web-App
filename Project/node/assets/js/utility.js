@@ -125,6 +125,83 @@ function timestampToDate(timestamp, offset) {
     return date;
 }
 
+// dà la possibilità all'utente di scegliere la città da un 'suggestion box' rispetto allo 'state' e alla latitudine e longitudine
+// in quanto la ricerca per nome introduce ambiguità
+async function suggestion(id_suggestion) {
+    const city = document.getElementById('floatingInput').value;
+
+    const ul = document.getElementById(id_suggestion);
+    ul.style.display = 'block';
+
+    const ulChildren = ul.children;
+    const numChildren = ulChildren.length;
+    for (let i = 0; i < numChildren; i++) {
+        const child = document.getElementById(i);
+        ul.removeChild(child);
+    }
+
+    await fetch('/geo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 'city': city }),
+    })
+        .then(response => response.json())
+        .then(result => {
+            //console.log(result);
+            let arr = [];
+            if (result[0]) {
+                for (let i = 0; i < result.length; i++) {
+                    const li = document.createElement('li');
+                    li.id = i;
+                    if (result[i].local_names && result[i].local_names.it) {
+                        li.innerText = result[i].local_names.it + ", " + result[i].country;
+                    } else {
+                        li.innerText = result[i].name + ", " + result[i].country;
+                    }
+                    if (result[i].state) {
+                        li.innerText += " : " + result[i].state;
+                    }
+                    li.setAttribute('onclick', 'select(this)');
+                    ul.append(li);
+                    const obj = { 'name': li.innerText, lat: result[i].lat, 'lon': result[i].lon };
+                    arr.push(obj);
+                }
+                sessionStorage.setItem('suggestions', JSON.stringify(arr));
+            } else {
+                alert('Città non trovata!')
+            }
+        })
+        .catch(err => console.log("err: ", err));
+}
+
+function select(e) {
+    document.getElementById('floatingInput').value = e.innerText;
+    const obj = JSON.parse(sessionStorage.getItem('suggestions'));
+    const lat = obj[e.id].lat;
+    const lon = obj[e.id].lon;
+    const fullName = document.getElementById('floatingInput').value;
+
+    const ulId = e.parentNode.id;
+    const ul = document.getElementById(ulId);
+    const ulChildren = ul.children;
+    const numChildren = ulChildren.length
+    for (let i = 0; i < numChildren; i++) {
+        const child = document.getElementById(i);
+        ul.removeChild(child);
+    }
+    ul.style.display = 'none';
+    sessionStorage.removeItem('suggestions');
+    localStorage.setItem('cityWeekly', JSON.stringify(obj[e.id]));
+
+    if (ulId === 'indexSuggestion') {
+        showMe(lat, lon, fullName);
+    } else if (ulId === 'weeklySuggestion') {
+        weeklyWeather();
+    }
+}
+
 function createAlertModal(id_card, alerts) {
     /* come deve venire il modal di bootstrap in HTML:
     
@@ -220,35 +297,3 @@ function createAlertModal(id_card, alerts) {
     }
     modalFooter.append(button1);
 }
-
-const contactMe = document.getElementById('btnContactMe');
-contactMe.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById('user-name');
-    const surname = document.getElementById('user-surname');
-    const email = document.getElementById('user-email');
-    const text = document.getElementById('user-comment');
-
-    const contactData = {
-        name: name.value,
-        surname: surname.value,
-        email: email.value,
-        message: text.value
-    }
-
-    fetch('/contactMe', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(contactData),
-    })
-        .then(response => response.json())
-        .then(result => {
-            if (result.code === 'Success') {
-                alert('Mail inviata');
-            }
-        })
-        .catch(err => console.log("err: ", err));
-});
