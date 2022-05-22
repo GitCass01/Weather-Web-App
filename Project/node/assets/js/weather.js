@@ -16,18 +16,6 @@ async function weeklyWeather() {
 
     initializeMap(lat, lon);
 
-    /*if (window.Worker) {
-        const myWorker = new Worker("chartWorker.js");
-
-        myWorker.postMessage(5);
-
-        myWorker.onmessage = function (e) {
-            console.log('Message received from worker: ' + e.data);
-        }
-    } else {
-        console.log('Il tuo browser non supporta i Web Worker.');
-    }*/
-
     await fetch('/weatherData', {
         method: 'POST',
         headers: {

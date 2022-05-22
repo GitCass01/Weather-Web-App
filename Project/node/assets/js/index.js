@@ -32,11 +32,11 @@ async function setWeather(city, lat, lon, id_card) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 'city': city, 'lat': lat, 'lon': lon, 'exclude': 'minutely,hourly,alerts' }),
+        body: JSON.stringify({ 'city': city, 'lat': lat, 'lon': lon }),
     })
         .then(response => response.json())
         .then(result => {
-            //console.log(result);
+            console.log(result);
             let citycard = document.getElementById(id_card).children;
 
             citycard[0].innerText = timestampToDate(parseInt(new Date().getTime() / 1000), result.timezone_offset).toLocaleString();

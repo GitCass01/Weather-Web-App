@@ -96,6 +96,10 @@ app.get('/weather.html', function (req, res) {
     res.sendFile(path.join(__dirname, '/views/weather.html'));
 });
 
+app.get('/chartWorker.js', function (req, res) {
+    res.sendFile(path.join(__dirname, '/assets/js/chartWorker.js'));
+});
+
 app.post('/geo', async function (req, res) {
     await axios.get('https://api.openweathermap.org/geo/1.0/direct?q=' + req.body.city + '&limit=5&appid=' + process.env.API_KEY)
         .then(response => {
@@ -108,6 +112,7 @@ app.post('/geo', async function (req, res) {
 
 app.post('/weatherData', async function (req, res) {
     //console.log('invio risposta api weatherData');
+    //console.log(req.body);
     const today = new Date().getTime();
     try {
         // il metodo getData() ritorna un errore se non esiste la entry nel deb
