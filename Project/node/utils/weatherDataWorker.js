@@ -27,6 +27,7 @@ var intervalId = setInterval(updateCurrentWeatherData, 600000);     // ogni 10 m
 async function updateCurrentWeatherData() {
     //console.log('Aggiorno current weather...');
     logger.debug('Aggiorno current weather...');
+    let counter = 0;
 
     const objData = weatherData.getData('/');
     for (const [key, value] of Object.entries(objData)) {
@@ -52,16 +53,18 @@ async function updateCurrentWeatherData() {
             .catch(error => {
                 console.log(error);
             });
+            counter++;
     }
 
     parentPort.postMessage({
-        status: 'current weather in weatherData Aggiornato'
+        status: 'current weather in weatherData Aggiornato. Città aggiornate: ' + counter
     })
 }
 
 async function updateWeatherData() {
     //console.log('Aggiorno weatherData...');
     logger.debug('Aggiorno weatherData...');
+    let counter = 0;
 
     const objData = weatherData.getData('/');
     for (const [key, value] of Object.entries(objData)) {
@@ -78,13 +81,14 @@ async function updateWeatherData() {
             .catch(error => {
                 console.log(error);
             });
+        counter++;
     }
 
     // dopo aver aggiornato i weatherData aggiorno i chartData
     updateChartData();
 
     parentPort.postMessage({
-        status: 'weatherData Aggiornato'
+        status: 'weatherData Aggiornato. Città aggiornate: ' + counter
     })
 }
 
@@ -108,6 +112,8 @@ async function getOldData(lat, lon) {
 
 async function updateChartData() {
     logger.debug('Aggiorno chartTemperatures e chartRains...')
+    let counter = 0;
+
     const objData = weatherData.getData('/');
     for (const [key, value] of Object.entries(objData)) {
         const lat = value.data.lat;
@@ -115,11 +121,11 @@ async function updateChartData() {
 
         // console.log('chartTemperature e chartRains per ' + key);
         await getChartTempRain(lat, lon, key);
+        counter++;
     }
 
     parentPort.postMessage({
-        status: 'chartTemperatures, chartRains Aggiornati',
-        code: 'update'
+        status: 'chartTemperatures, chartRains Aggiornati. Città aggiornate: ' + counter
     })
 }
 
