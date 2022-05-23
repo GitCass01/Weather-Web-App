@@ -3,7 +3,7 @@ onmessage = async function (e) {
     const city = JSON.parse(e.data).city;
 
     let workerResult;
-    await fetch(JSON.parse(e.data).path, {
+    await fetch('/chartTemperatures', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -15,6 +15,7 @@ async function weeklyWeather() {
     document.getElementById('cityNameWeekly').innerText = "Previsioni settimanali di " + name.split(" : ")[0];
 
     initializeMap(lat, lon);
+    generateChart();
 
     await fetch('/weatherData', {
         method: 'POST',
@@ -34,7 +35,6 @@ async function weeklyWeather() {
             currentWeather(result, current_weather);
             hourlyWeather(result, hourly);
             dailyWeather(result, daily_weather);
-            generateChart();
         })
         .catch(err => console.log("err: ", err));
 }
@@ -131,22 +131,46 @@ function hourlyWeather(result, hourly) {
 
             hourly_card.appendChild(info_container);
             info_container.append(info_title, image_hourly, info1, info2, info3);
-
-            if (i == 23) {
-                break;
-            }
         }
     } else { // se l'html è già stato generato, aggiorno le informazioni
         for (let i = 0; i < 24; i++) {
             const data = timestampToDate(hourly[i].dt, result.timezone_offset);
 
+
+            const rain = document.createElement('img');
+            const pressure = document.createElement('img');
+            const humidity = document.createElement('img');
+            const wind = document.createElement('img');
+
+            rain.src = 'images/rain.png';
+            rain.alt = 'probabilità di precipitazione';
+            rain.className = 'icon';
+            pressure.src = 'images/pressure.png';
+            pressure.alt = 'pressione';
+            pressure.className = 'icon';
+            humidity.src = 'images/humidity.png';
+            humidity.alt = 'umidità';
+            humidity.className = 'icon';
+            wind.src = 'images/wind.png';
+            wind.alt = 'vento';
+            wind.className = 'icon';
+
+            const pop = document.createTextNode(' ' + Math.round(hourly[i].pop * 100) + '%   ');
+            const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + ' di 10    ');
+            const vento = document.createTextNode(' ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg));
+
+            const umidità = document.createTextNode(hourly[i].humidity + '%   ');
+            const pressione = document.createTextNode(hourly[i].pressure + 'hPa');
+
             const ora = document.getElementById("ora" + i).children;
             ora[0].innerText = data.toLocaleTimeString(undefined, { month: "numeric", day: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
             ora[1].src = "https://openweathermap.org/img/wn/" + hourly[i].weather[0].icon + "@2x.png";;
             ora[1].alt = hourly[i].weather[0].description;
-            ora[2].innerText = Math.round(hourly[i].temp) + '°C - ' + Math.round(hourly[i].feels_like) + '°C';
-            ora[3].innerText = 'prob: ' + Math.round(hourly[i].pop * 100) + '%   ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg) + ' UV: ' + (hourly[i].uvi * 100).toFixed(0);
-            ora[4].innerText = 'umidità: ' + hourly[i].humidity + '%   ' + hourly[i].pressure + 'hPa';
+            ora[2].innerText = Math.round(hourly[i].feels_like) + '°C';
+            ora[3].textContent = '';
+            ora[4].textContent = '';
+            ora[3].append(rain, pop, uv, wind, vento);
+            ora[4].append(humidity, umidità, pressure, pressione);
         }
     }
 }

@@ -1,6 +1,6 @@
-const city = JSON.parse(localStorage.getItem('cityWeekly'));
-
 function generateChart() {
+    const city = JSON.parse(localStorage.getItem('cityWeekly'));
+
     // document.getElementById('chartContainer').innerHTML = "<canvas id='myChart'></canvas>"; --> poco sicuro
     // soluzione:
     if (document.getElementById('chartContainer').children.length == 1) {
@@ -15,7 +15,7 @@ function generateChart() {
     if (window.Worker) {
         const myWorker = new Worker("/chartWorker.js");
 
-        myWorker.postMessage(JSON.stringify({ city: city, path: '/chartTemperatures' }));
+        myWorker.postMessage(JSON.stringify({ city: city }));
 
         myWorker.onmessage = function (e) {
             //console.log('Message received from worker');
