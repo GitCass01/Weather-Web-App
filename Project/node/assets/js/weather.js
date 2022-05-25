@@ -22,7 +22,7 @@ async function weeklyWeather() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 'city': name, 'lat': lat, 'lon': lon, 'exclude': 'minutely' }),
+        body: JSON.stringify({ 'city': name, 'lat': lat, 'lon': lon }),
     })
         .then(response => response.json())
         .then(result => {
