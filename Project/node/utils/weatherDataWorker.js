@@ -15,14 +15,16 @@ try {
     const saveDate = new Date(weatherData.getData('/' + Object.keys(weatherData.getData('/'))[0] + '/dt'));
     const today = new Date();
     if (!(saveDate.getDate() === today.getDate() && saveDate.getMonth() === today.getMonth() && saveDate.getFullYear() === today.getFullYear())) {
+        logger.debug('Aggiornamento weatherData all avvio: data di salvataggio non aggiornata');
         updateWeatherData();
     }
 } catch (error) { }
 
+var intervalId = setInterval(updateCurrentWeatherData, 600000);     // ogni 10 minuti aggiorno tutti i 'current' in weatherData
+
 // updateWeatherData();
 // updateChartData();
-
-var intervalId = setInterval(updateCurrentWeatherData, 600000);     // ogni 10 minuti aggiorno tutti i 'current' in weatherData
+// updateCurrentWeatherData();
 
 async function updateCurrentWeatherData() {
     //console.log('Aggiorno current weather...');
@@ -37,7 +39,7 @@ async function updateCurrentWeatherData() {
         await axios.get('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&lang=it&appid=' + process.env.API_KEY)
             .then(response => {
                 const currentWeather = response.data;
-                dataObj.dt = Math.floor(new Date().getTime() / 1000);
+                dataObj.dt = currentWeather.dt;
                 dataObj.weather = currentWeather.weather;
                 dataObj.wind_speed = currentWeather.wind.speed;
                 dataObj.wind_deg = currentWeather.wind.deg;
@@ -53,7 +55,7 @@ async function updateCurrentWeatherData() {
             .catch(error => {
                 console.log(error);
             });
-            counter++;
+        counter++;
     }
 
     parentPort.postMessage({
