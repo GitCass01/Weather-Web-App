@@ -140,13 +140,7 @@ async function suggestion(id_suggestion) {
         ul.removeChild(child);
     }
 
-    await fetch('/geo', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 'city': city }),
-    })
+    await fetch('/geo?city=' + city)
         .then(response => response.json())
         .then(result => {
             //console.log(result);

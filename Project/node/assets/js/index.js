@@ -27,16 +27,10 @@ function currentWeatherHomePage() {
 
 // funzione per la ricerca e l'inserimento del meteo nelle card
 async function setWeather(city, lat, lon, id_card) {
-    await fetch("/weatherData", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 'city': city, 'lat': lat, 'lon': lon }),
-    })
+    await fetch('/weatherData?city=' + city + '&lat=' + lat + '&lon=' + lon)
         .then(response => response.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
             let citycard = document.getElementById(id_card).children;
 
             citycard[0].innerText = timestampToDate(parseInt(new Date().getTime() / 1000), result.timezone_offset).toLocaleString();

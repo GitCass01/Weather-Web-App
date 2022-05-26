@@ -13,7 +13,7 @@ function generateChart() {
     chartContainer.appendChild(chart);
 
     if (window.Worker) {
-        const myWorker = new Worker("/chartWorker.js");
+        const myWorker = new Worker("js/chartWorker.js");
 
         myWorker.postMessage(JSON.stringify({ city: city }));
 
@@ -77,13 +77,7 @@ function generateChart() {
             // i due event listener per il cambio di chart
             document.getElementById('temperature').addEventListener('click', async (e) => {
                 let temp_data;
-                await fetch('/chartTemperatures', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 'city': city.name, 'lat': city.lat, 'lon': city.lon }),
-                })
+                await fetch('/chartTemperatures?city=' + city.name + '&lat=' + city.lat + '&lon=' + city.lon)
                     .then(response => response.json())
                     .then(result => {
                         temp_data = result;
@@ -111,13 +105,7 @@ function generateChart() {
 
             document.getElementById('rain').addEventListener('click', async (e) => {
                 let rain;
-                await fetch('/chartRains', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 'city': city.name, 'lat': city.lat, 'lon': city.lon }),
-                })
+                await fetch('/chartRains?city=' + city.name + '&lat=' + city.lat + '&lon=' + city.lon)
                     .then(response => response.json())
                     .then(result => {
                         rain = result;

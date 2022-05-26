@@ -17,13 +17,7 @@ async function weeklyWeather() {
     initializeMap(lat, lon);
     generateChart();
 
-    await fetch('/weatherData', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 'city': name, 'lat': lat, 'lon': lon }),
-    })
+    await fetch('/weatherData?city=' + name + '&lat=' + lat + '&lon=' + lon)
         .then(response => response.json())
         .then(result => {
             //console.log(result);
@@ -63,6 +57,7 @@ function currentWeather(result, current_weather) {
     lis[2].innerText = "Vento: " + current_weather.wind_speed + "m/s " + degToCompass(result.current.wind_deg);
 }
 
+// genera il meteo per le 24 ore successive
 function hourlyWeather(result, hourly) {
     //hourly weather: 24h 
     /**

@@ -96,12 +96,8 @@ app.get('/weather.html', function (req, res) {
     res.sendFile(path.join(__dirname, '/views/weather.html'));
 });
 
-app.get('/chartWorker.js', function (req, res) {
-    res.sendFile(path.join(__dirname, '/assets/js/chartWorker.js'));
-});
-
-app.post('/geo', async function (req, res) {
-    await axios.get('https://api.openweathermap.org/geo/1.0/direct?q=' + req.body.city + '&limit=5&appid=' + process.env.API_KEY)
+app.get('/geo', async function (req, res) {
+    await axios.get('https://api.openweathermap.org/geo/1.0/direct?q=' + req.query.city + '&limit=5&appid=' + process.env.API_KEY)
         .then(response => {
             res.send(response.data);
         })
@@ -110,18 +106,17 @@ app.post('/geo', async function (req, res) {
         });
 });
 
-app.post('/weatherData', async function (req, res) {
+app.get('/weatherData', async function (req, res) {
     //console.log('invio risposta api weatherData');
-    //console.log(req.body);
-    const today = new Date().getTime();
+    //console.log(req.query);
     try {
         // il metodo getData() ritorna un errore se non esiste la entry nel deb
-        weatherData.getData('/' + req.body.city);
+        weatherData.getData('/' + req.query.city);
     } catch (error) {
-        logger.warn('Creo weatherData per ' + req.body.city);
-        await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.body.lat + '&lon=' + req.body.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
+        logger.warn('Creo weatherData per ' + req.query.city);
+        await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.query.lat + '&lon=' + req.query.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
             .then(response => {
-                weatherData.push('/' + req.body.city, {
+                weatherData.push('/' + req.query.city, {
                     dt: new Date().getTime(),
                     data: response.data
                 });
@@ -130,30 +125,30 @@ app.post('/weatherData', async function (req, res) {
                 logger.error(error);
             });
     }
-    res.send(weatherData.getData('/' + req.body.city + '/data'));
+    res.send(weatherData.getData('/' + req.query.city + '/data'));
 });
 
-app.post('/chartTemperatures', async function (req, res) {
+app.get('/chartTemperatures', async function (req, res) {
     try {
-        chartTemperatures.getData('/' + req.body.city);
+        chartTemperatures.getData('/' + req.query.city);
     } catch (error) {
-        logger.warn('Creo chartTemperatures e chartRains per: ' + req.body.city);
-        await getChartData(req);
+        logger.warn('Creo chartTemperatures e chartRains per: ' + req.query.city);
+        await getChartData(req.query);
     }
-    res.send(chartTemperatures.getData('/' + req.body.city + '/data'));
+    res.send(chartTemperatures.getData('/' + req.query.city + '/data'));
 });
 
-app.post('/chartRains', async function (req, res) {
-    res.send(chartRains.getData('/' + req.body.city + '/data'));
+app.get('/chartRains', async function (req, res) {
+    res.send(chartRains.getData('/' + req.query.city + '/data'));
 });
 
-async function getOldData(req) {
+async function getOldData(query) {
     const today = new Date();
     const arrOldData = [];
     for (let i = 5; i >= 1; i--) {
         let pastDate = Math.round(new Date().setDate(today.getDate() - i) / 1000); // voglio la data in secondi per openweathermap
 
-        await axios.get('https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=' + req.body.lat + '&lon=' + req.body.lon + '&dt=' + pastDate + '&units=metric&lang=it&appid=' + process.env.API_KEY)
+        await axios.get('https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=' + query.lat + '&lon=' + query.lon + '&dt=' + pastDate + '&units=metric&lang=it&appid=' + process.env.API_KEY)
             .then(response => {
                 arrOldData.push(response.data);
             })
@@ -165,13 +160,13 @@ async function getOldData(req) {
     return arrOldData;
 };
 
-async function getChartData(req) {
+async function getChartData(query) {
     const dates = [];
     const temp_max = [];
     const temp_min = [];
     const rain_total_mm = [];
 
-    const arrOldData = await getOldData(req);
+    const arrOldData = await getOldData(query);
     arrOldData.forEach(daysBefore => {
         dates.push(timestampToDate(daysBefore.current.dt, daysBefore.timezone_offset).toLocaleDateString());
 
@@ -204,8 +199,8 @@ async function getChartData(req) {
         rain_total_mm.push(mm);
     });
 
-    const daily = weatherData.getData('/' + req.body.city + '/data/daily');
-    const timezone_offset = weatherData.getData('/' + req.body.city + '/data/timezone_offset');
+    const daily = weatherData.getData('/' + query.city + '/data/daily');
+    const timezone_offset = weatherData.getData('/' + query.city + '/data/timezone_offset');
     for (let i = 0; i < 8; i++) {
         dates.push(timestampToDate(daily[i].dt, timezone_offset).toLocaleDateString());
         temp_max.push(Math.round(daily[i].temp.max));
@@ -222,13 +217,13 @@ async function getChartData(req) {
     const dataRain = { dates, rain_total_mm };
 
     // salvo i dati nel db 'chartTemperatures'
-    chartTemperatures.push('/' + req.body.city, {
+    chartTemperatures.push('/' + query.city, {
         dt: new Date().getTime(),
         data: dataTemp
     });
 
     // salvo i dati nel db 'chartRains'
-    chartRains.push('/' + req.body.city, {
+    chartRains.push('/' + query.city, {
         dt: new Date().getTime(),
         data: dataRain
     });
