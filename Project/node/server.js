@@ -109,23 +109,29 @@ app.get('/geo', async function (req, res) {
 app.get('/weatherData', async function (req, res) {
     //console.log('invio risposta api weatherData');
     //console.log(req.query);
+    let data;
+    let check = false;
     try {
         // il metodo getData() ritorna un errore se non esiste la entry nel deb
-        weatherData.getData('/' + req.query.city);
+        data = weatherData.getData('/' + req.query.city + '/data');
     } catch (error) {
-        logger.warn('Creo weatherData per ' + req.query.city);
+        check = true;
         await axios.get('https://api.openweathermap.org/data/2.5/onecall?lat=' + req.query.lat + '&lon=' + req.query.lon + '&exclude=minutely&units=metric&lang=it&appid=' + process.env.API_KEY)
             .then(response => {
-                weatherData.push('/' + req.query.city, {
-                    dt: new Date().getTime(),
-                    data: response.data
-                });
+                data = response.data;
             })
             .catch(error => {
                 logger.error(error);
             });
     }
-    res.send(weatherData.getData('/' + req.query.city + '/data'));
+    res.send(data);
+    if (check) {
+        logger.warn('Creo weatherData per ' + req.query.city);
+        weatherData.push('/' + req.query.city, {
+            dt: new Date().getTime(),
+            data: data
+        });
+    }
 });
 
 app.get('/chartTemperatures', async function (req, res) {
@@ -142,6 +148,43 @@ app.get('/chartRains', async function (req, res) {
     res.send(chartRains.getData('/' + req.query.city + '/data'));
 });
 
+app.post('/contactMe', function (req, res) {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.mail,
+            pass: process.env.pass
+        }
+        // necessario abilitare 'support for 'less secure' apps' per il servizio gmail --> non più disponibile dal 30 maggio...
+        /*tls: {
+            rejectUnauthorized: false // oppure controllare antivirus causa problema
+        }*/
+    });
+
+    const mailOptions = {
+        from: req.body.email,
+        to: process.env.mail,
+        subject: 'Messaggio da: ' + req.body.email,
+        text: req.body.message
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            logger.error(error);
+            res.send({ code: 'Error' });
+        } else {
+            logger.info('Email inviata: ' + info.response);
+            res.send({ code: 'Success' });
+        }
+    });
+});
+
+app.listen(port);
+logger.info('Server started at http://localhost:' + port);
+
+/* FUNZIONI */
+
+/* chart data */
 async function getOldData(query) {
     const today = new Date();
     const arrOldData = [];
@@ -237,37 +280,3 @@ function timestampToDate(timestamp, offset) {
 
     return date;
 }
-
-app.post('/contactMe', function (req, res) {
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.mail,
-            pass: process.env.pass
-        }
-        // necessario abilitare 'support for 'less secure' apps' per il servizio gmail --> non più disponibile dal 30 maggio...
-        /*tls: {
-            rejectUnauthorized: false // oppure controllare antivirus causa problema
-        }*/
-    });
-
-    const mailOptions = {
-        from: req.body.email,
-        to: process.env.mail,
-        subject: 'Messaggio da: ' + req.body.email,
-        text: req.body.message
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            logger.error(error);
-            res.send({ code: 'Error' });
-        } else {
-            logger.info('Email inviata: ' + info.response);
-            res.send({ code: 'Success' });
-        }
-    });
-});
-
-app.listen(port);
-logger.info('Server started at http://localhost:' + port);

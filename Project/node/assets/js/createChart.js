@@ -71,6 +71,7 @@ function generateChart() {
                     interaction: {
                         intersect: false,
                     },
+                    animation: false,   // meno carino ma aumenta le performance
                 }
             });
 
@@ -98,6 +99,9 @@ function generateChart() {
                     borderWidth: 2,
                     tension: 0.1,
                 };
+                if (data.datasets.length == 2) {
+                    data.datasets.pop();
+                }
                 data.datasets.push(obj);
                 data.labels = temp_data.dates;
                 myChart.update();
@@ -118,7 +122,9 @@ function generateChart() {
                 var data = myChart.config.data;
                 data.datasets[0].data = rain.rain_total_mm;
                 data.datasets[0].label = 'totale pioggia(mm)';
-                data.datasets.pop();
+                if (data.datasets.length == 2) {
+                    data.datasets.pop();
+                }
                 data.labels = rain.dates;
                 myChart.update();
             });
