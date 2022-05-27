@@ -96,6 +96,8 @@ contactMe.addEventListener('click', (e) => {
         .then(result => {
             if (result.code === 'Success') {
                 alert('Mail inviata');
+            } else {
+                alert('Errore: mail non inviata');
             }
         })
         .catch(err => console.log("err: ", err));

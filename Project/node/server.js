@@ -245,7 +245,7 @@ app.post('/contactMe', function (req, res) {
             user: process.env.mail,
             pass: process.env.pass
         }
-        // necessario abilitare 'support for 'less secure' apps' per il servizio gmail
+        // necessario abilitare 'support for 'less secure' apps' per il servizio gmail --> non più disponibile dal 30 maggio...
         /*tls: {
             rejectUnauthorized: false // oppure controllare antivirus causa problema
         }*/
@@ -261,6 +261,7 @@ app.post('/contactMe', function (req, res) {
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             logger.error(error);
+            res.send({ code: 'Error' });
         } else {
             logger.info('Email inviata: ' + info.response);
             res.send({ code: 'Success' });
