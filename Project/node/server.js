@@ -148,6 +148,20 @@ app.get('/chartRains', async function (req, res) {
     res.send(chartRains.getData('/' + req.query.city + '/data'));
 });
 
+app.get('/getPrecipitationTiles', async function (req, res) {
+    const tileURL = 'https://tile.openweathermap.org/map/precipitation_new/' + req.query.z + '/' + req.query.x + '/' + req.query.y + '.png?appid=' + process.env.API_KEY;
+
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(tileURL);
+});
+
+app.get('/getTempTiles', async function (req, res) {
+    const tileURL = 'https://tile.openweathermap.org/map/temp_new/' + req.query.z + '/' + req.query.x + '/' + req.query.y + '.png?appid=' + process.env.API_KEY;
+
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(tileURL);
+});
+
 app.post('/contactMe', function (req, res) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',

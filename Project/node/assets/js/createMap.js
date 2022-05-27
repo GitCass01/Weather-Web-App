@@ -1,6 +1,4 @@
-const API_KEY = 'fb1d036e9880437a98ec66f6e4daab01';
-
-function initializeMap(lat, lon) {
+async function initializeMap(lat, lon) {
     //document.getElementById('weatherMap').innerHTML = "<div id='map' class='my-3'></div>"; --> non sicuro
     // soluzione
     if (document.getElementById('weatherMap').children.length == 1) {
@@ -19,20 +17,36 @@ function initializeMap(lat, lon) {
     // layer URLs
     const darkURL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
     const lightURL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-    const owmRainsUrl = 'https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=' + API_KEY;
-    const owmTempUrl = 'https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=' + API_KEY;
+    let owmRainsUrl = '';
+    let owmTempUrl = '';
+
+    // Soluzione per nascondere l'api key
+    // chiedo l'url dei tiles di openweathermap al server nodejs
+    await fetch('/getPrecipitationTiles?z={z}&x={x}&y={y}')
+        .then(response => response.text())
+        .then(result => {
+            owmRainsUrl = result;
+        })
+        .catch(err => console.log("err: ", err));
+
+    await fetch('/getTempTiles?z={z}&x={x}&y={y}')
+        .then(response => response.text())
+        .then(result => {
+            owmTempUrl = result;
+        })
+        .catch(err => console.log("err: ", err));
 
     // layer tiles
     const osmDarkTiles = L.tileLayer(darkURL, { transparency: true, opacity: '1', attribution });
     const osmLightTiles = L.tileLayer(lightURL, { transparency: true, opacity: '1', attribution });
-    const owmTempTiles = L.tileLayer(owmTempUrl, { attribution });
     const owmRainTiles = L.tileLayer(owmRainsUrl, { attribution });
+    const owmTempTiles = L.tileLayer(owmTempUrl, { attribution });
 
     // current position marker
     var marker = L.marker([lat, lon]).bindPopup(JSON.parse(localStorage.getItem('cityWeekly')).name.split(" : ")[0]);
 
     // map config
-    const map = L.map('map', {minZoom: 1, zoomSnap: 0.5}).setView([lat, lon], 9);
+    const map = L.map('map', { minZoom: 1, zoomSnap: 0.5 }).setView([lat, lon], 9);
 
     // layer controls
     var baseMaps = {
