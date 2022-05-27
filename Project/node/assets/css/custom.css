@@ -121,7 +121,8 @@ h6 {
 }
 
 .suggestion-elements li:hover {
-    background-color: red;
+    background-color: lightblue;
+    cursor: pointer;
 }
 
 .container-chart {
