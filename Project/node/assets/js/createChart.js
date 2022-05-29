@@ -52,12 +52,33 @@ function generateChart() {
                             title: {
                                 display: true,
                                 text: 'Gradi Celsius'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '°C'
+                                }
                             }
                         },
                         x: {
                             title: {
                                 display: true,
                                 text: 'Giorni'
+                            },
+                            ticks: {
+                                callback: function (value, index) {
+                                    if (index === 5) {
+                                        return this.getLabelForValue(value) + '\n(Oggi)'
+                                    } else {
+                                        return this.getLabelForValue(value)
+                                    }
+                                },
+                                color: (c) => {
+                                    if (c.index === 5) {
+                                        return 'red'
+                                    } else {
+                                        return 'black'
+                                    }
+                                }
                             }
                         }
                     },

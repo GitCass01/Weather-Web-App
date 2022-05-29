@@ -225,7 +225,7 @@ async function getChartData(query) {
 
     const arrOldData = await getOldData(query);
     arrOldData.forEach(daysBefore => {
-        dates.push(timestampToDate(daysBefore.current.dt, daysBefore.timezone_offset).toLocaleDateString());
+        dates.push('' + timestampToDate(daysBefore.current.dt, daysBefore.timezone_offset).toLocaleDateString());
 
         // l'api non fornisce la temp max e min relative ai giorni precedenti (historical)
         // quindi itero sulle ore del giorno e ricavo le temp max e min
@@ -259,7 +259,7 @@ async function getChartData(query) {
     const daily = weatherData.getData('/' + query.city + '/data/daily');
     const timezone_offset = weatherData.getData('/' + query.city + '/data/timezone_offset');
     for (let i = 0; i < 8; i++) {
-        dates.push(timestampToDate(daily[i].dt, timezone_offset).toLocaleDateString());
+        dates.push('' + timestampToDate(daily[i].dt, timezone_offset).toLocaleDateString());
         temp_max.push(Math.round(daily[i].temp.max));
         temp_min.push(Math.round(daily[i].temp.min));
 
