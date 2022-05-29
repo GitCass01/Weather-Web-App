@@ -101,11 +101,11 @@ function hourlyWeather(result, hourly) {
             wind.className = 'icon';
 
             const pop = document.createTextNode(' ' + Math.round(hourly[i].pop * 100) + '%   ');
-            const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + ' di 10    ');
+            const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + '/10    ');
             const vento = document.createTextNode(' ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg));
 
             const umidità = document.createTextNode(hourly[i].humidity + '%   ');
-            const pressione = document.createTextNode(hourly[i].pressure + 'hPa');
+            const pressione = document.createTextNode(hourly[i].pressure + ' hPa');
 
             if (i == 23) {
                 info_container.className = 'col-xl-3';
@@ -151,11 +151,11 @@ function hourlyWeather(result, hourly) {
             wind.className = 'icon';
 
             const pop = document.createTextNode(' ' + Math.round(hourly[i].pop * 100) + '%   ');
-            const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + ' di 10    ');
+            const uv = document.createTextNode('UV: ' + Math.trunc(hourly[i].uvi) + '/10    ');
             const vento = document.createTextNode(' ' + hourly[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg));
 
             const umidità = document.createTextNode(hourly[i].humidity + '%   ');
-            const pressione = document.createTextNode(hourly[i].pressure + 'hPa');
+            const pressione = document.createTextNode(hourly[i].pressure + ' hPa');
 
             const ora = document.getElementById("ora" + i).children;
             ora[0].innerText = data.toLocaleTimeString(undefined, { month: "numeric", day: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' - ' + hourly[i].weather[0].description;
@@ -176,14 +176,55 @@ function dailyWeather(result, daily_weather) {
         //data
         document.getElementById("g" + i).innerText = timestampToDate(daily_weather[i].dt, result.timezone_offset).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
 
+        // immagini
+        const rain = document.createElement('img');
+        const pressure = document.createElement('img');
+        const humidity = document.createElement('img');
+        const wind = document.createElement('img');
+        const max = document.createElement('img');
+        const min = document.createElement('img');
+
+        rain.src = 'images/rain.png';
+        rain.alt = 'probabilità di precipitazione';
+        rain.className = 'icon';
+        pressure.src = 'images/pressure.png';
+        pressure.alt = 'pressione';
+        pressure.className = 'icon';
+        humidity.src = 'images/humidity.png';
+        humidity.alt = 'umidità';
+        humidity.className = 'icon';
+        wind.src = 'images/wind.png';
+        wind.alt = 'vento';
+        wind.className = 'icon';
+        max.src = 'images/up.png';
+        max.alt = 'vento';
+        max.className = 'icon';
+        min.src = 'images/down.png';
+        min.alt = 'vento';
+        min.className = 'icon';
+
+        const max_temp = document.createTextNode('' + Math.round(daily_weather[i].temp.max) + '°C   ');
+        const min_temp = document.createTextNode('' + Math.round(daily_weather[i].temp.min) + '°C');
+        const pop = document.createTextNode('' + Math.round(daily_weather[i].pop * 100) + '%        ');
+        const vento = document.createTextNode('' + daily_weather[i].wind_speed + 'm/s ' + degToCompass(result.current.wind_deg));
+        const pressione = document.createTextNode(daily_weather[i].pressure + ' hPa   ');
+        const umidità = document.createTextNode(daily_weather[i].humidity + '%   ');
+        const uv = document.createTextNode('UV: ' + Math.trunc(daily_weather[i].uvi) + '/10');
+
         let day_card = document.getElementById("giorno" + i).children;
         day_card = day_card[0].getElementsByTagName("DIV");
         //giornata
         let info = day_card[0].getElementsByTagName("p");
         info[0].innerText = daily_weather[i].weather[0].description;
-        info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C \t Min: " + Math.round(daily_weather[i].temp.min) + "°C";
-        info[2].innerText = "Precipitazioni: " + Math.round(daily_weather[i].pop * 100) + "% \t Vento: " + daily_weather[i].wind_speed + "m/s " + degToCompass(result.current.wind_deg);
-        info[3].innerText = daily_weather[i].pressure + "hPa \t Umidità: " + daily_weather[i].humidity + "% \t UV: " + daily_weather[i].uvi;
+        //info[1].innerText = "Max: " + Math.round(daily_weather[i].temp.max) + "°C \t Min: " + Math.round(daily_weather[i].temp.min) + "°C";
+        info[1].textContent = '';
+        info[1].append(max, max_temp, min, min_temp);
+        //info[2].innerText = "Precipitazioni: " + Math.round(daily_weather[i].pop * 100) + "% \t Vento: " + daily_weather[i].wind_speed + "m/s " + degToCompass(result.current.wind_deg);
+        info[2].textContent = '';
+        info[2].append(rain, pop, wind, vento);
+        //info[3].innerText = daily_weather[i].pressure + "hPa \t Umidità: " + daily_weather[i].humidity + "% \t UV: " + daily_weather[i].uvi;
+        info[3].textContent = '';
+        info[3].append(pressure, pressione, humidity, umidità, uv);
         let image = day_card[0].getElementsByTagName("img");
         image[0].src = "https://openweathermap.org/img/wn/" + daily_weather[i].weather[0].icon + "@2x.png";
         image[0].alt = daily_weather[i].weather[0].description;
