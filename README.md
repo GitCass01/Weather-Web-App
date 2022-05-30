@@ -8,7 +8,7 @@ Per scaricare questi moduli portati nell cartella digita *'node install'* in una
 
 ## dotenv
 Troverai un file chiamato *'.env_sample'* dove dovrai inserire le varie informazioni sensibili e private (come l'api key di [openweathermap](https://openweathermap.org/api)), successivamente rinomina il file come *'.env'*.
-Nel file *.env_sample* troverai altre 2 variabili che indicheranno lo username e la password del tuo provider di email (*IMPORTANTE* il codice presente in *server.js* è configurato per funzionare con *gmail* e con dei requisiti che potrai leggere nella sezione [Risoluzione Problemi](Invio mail con il modulo 'nodemailer' (*gmail*))).
+Nel file *.env_sample* troverai altre 2 variabili che indicheranno lo username e la password del tuo provider di email (*IMPORTANTE* il codice presente in *server.js* è configurato per funzionare con *gmail* e con dei requisiti che potrai leggere nella sezione [Risoluzione Problemi](#Risoluzione-problemi)).
 
 ## Avvio server
 Basterà portarsi nella cartella del progetto e digitare *'node server.js'*, aprire un browser e digitare l'url *'localhost:3000'*
@@ -23,6 +23,8 @@ Basterà portarsi nella cartella del progetto e digitare *'node server.js'*, apr
         rejectUnauthorized: false // oppure controllare antivirus causa problema
     }
   ```
+  4. al seguente [link](https://nodemailer.com/usage/using-gmail/) potrai trovare più informazioni su come usare *gmail* con *nodemailer*
+  
 * Invio mail con altri servizi differenti da gmail (*es. custom smtp*)
   1. al seguente [link](https://nodemailer.com/smtp/) potrai vedere come modificare il codice presente in *server.js* per renderlo compatibile con un servizio smtp qualsiasi
   2. al seguente [link](https://nodemailer.com/transports/), invece troverai altri metodi per inviare mail tramite *nodemailer*
