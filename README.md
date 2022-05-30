@@ -8,7 +8,7 @@ Per scaricare questi moduli portati nell cartella digita *'node install'* in una
 
 ## dotenv
 Troverai un file chiamato *'.env_sample'* dove dovrai inserire le varie informazioni sensibili e private (come l'api key di [openweathermap](https://openweathermap.org/api)), successivamente rinomina il file come *'.env'*.
-Nel file *.env_sample* troverai altre 2 variabili che indicheranno lo username e la password del tuo provider di email (*IMPORTANTE* il codice presente in *server.js* è configurato per funzionare con *gmail* e con dei requisiti che potrai leggere nella sezione [Risoluzione Problemi](#Risoluzione-problemi)).
+Nel file *.env_sample* troverai altre 2 variabili che indicheranno lo username e la password del tuo provider di email (**IMPORTANTE** il codice presente in *server.js* è configurato per funzionare con *gmail* e con dei requisiti che potrai leggere nella sezione [Risoluzione Problemi](#Risoluzione-problemi)).
 
 ## Avvio server
 Basterà portarsi nella cartella del progetto e digitare *'node server.js'*, aprire un browser e digitare l'url *'localhost:3000'*
