@@ -14,8 +14,8 @@ Verranno inoltre generati e salvati i dati relativi ai grafici delle temperature
 * Aggiornamento Dati (tramite **worker_threads** e **weatherDataWorker.js**)
 Ad ogni avvio del server (node server.js) verranno aggiornati i dati di tutte le città salvate in *weatherData.json* e i corrispettivi dati dei grafici (*chartRains.json* e *chartTemperatures.json*) **SOLO SE** la data di salvataggio di quei dati è di almeno 1gg prima. Questo controllo è necessario in quanto se il server è stato "spento" per più di un giorno i dati non saranno aggiornati ad oggi.
 
-Una volta che il server è attivo, tramite il modulo **node-schedule**, il db *weatherData.json*(meteo corrente, orario e giornaliero), *chartRains.json* e *chartTemperatures.json*  verranno aggiornati ogni giorno alle 00:30.
-Inoltre la entry *current* nel db *weatherData.json* verrà aggiornata ogni 10 minuti, grazie alla funzione *setInterval* di js, in quanto i dati del *meteo corrente* vengono aggiornati ogni 10 minuti da *openweathermap* stesso come scritto nella loro [guida](https://openweathermap.org/guide).
+* Una volta che il server è attivo, tramite il modulo **node-schedule**, il db *weatherData.json*(meteo corrente, orario e giornaliero), *chartRains.json* e *chartTemperatures.json*  verranno aggiornati ogni giorno alle 00:30.
+* Inoltre la entry *current* nel db *weatherData.json* verrà aggiornata ogni 10 minuti, grazie alla funzione *setInterval* di js, in quanto i dati del *meteo corrente* vengono aggiornati ogni 10 minuti da *openweathermap* stesso come scritto nella loro [guida](https://openweathermap.org/guide).
 
 * Note per cambiare frequenza di aggiornamento
 1. Per cambiare frequenza di aggiornamento dei db tramite node-schedule basta cambiare il seguente codice nel file *weatherDataWorker.js*:
